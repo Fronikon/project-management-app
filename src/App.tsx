@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './App.css';
+import { Footer, Header, Main } from './components/index';
 
-function App() {
-  return <div className="App">App</div>;
-}
+const App: FC = () => {
+  return (
+    <div className="App">
+      <Header />
+      <Main />
+      <Footer />
+    </div>
+  );
+};
 
 export default App;
