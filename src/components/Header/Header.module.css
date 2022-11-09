@@ -178,6 +178,9 @@ input:checked + .slider::before {
   }
 
   .rightBlock {
+    flex-wrap: wrap;
+    justify-content: center;
+
     margin-right: 0;
   }
 }
