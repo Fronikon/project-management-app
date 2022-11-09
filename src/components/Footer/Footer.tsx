@@ -5,7 +5,9 @@ import rss from '../../assets/rss-logo.png';
 const Footer: FC = () => {
   return (
     <footer className={styles.footerWrapper}>
-      <img src={rss} alt="RssLogo" className={styles.logo} />
+      <a href="https://rs.school/react/" className={styles.logoLink}>
+        <img src={rss} alt="RssLogo" className={styles.logo} />
+      </a>
       <div className={styles.github}>
         <a href="https://github.com/Fronikon" className={styles.githubLink}>
           Dmitry Beresnev

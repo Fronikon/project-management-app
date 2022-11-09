@@ -36,6 +36,14 @@
   margin-left: 79px;
 }
 
+.logoLink:hover {
+  cursor: pointer;
+
+  transform: scale(1.2);
+
+  transition: 0.3s ease-in-out;
+}
+
 .year {
   margin-right: 79px;
 }
