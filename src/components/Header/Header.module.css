@@ -157,3 +157,27 @@ input:checked + .slider::before {
   border: 2px solid #000;
   border-radius: 5px;
 }
+
+@media screen and (max-width: 1440px) {
+  .heading {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .headerWrapper {
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+
+    height: auto;
+  }
+
+  .home {
+    margin-right: 0;
+  }
+
+  .rightBlock {
+    margin-right: 0;
+  }
+}
