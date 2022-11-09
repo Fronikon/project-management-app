@@ -1,26 +1,33 @@
 .headerWrapper {
-  height: 80px;
   display: flex;
-  background-color: #000000;
   justify-content: space-between;
+
+  height: 80px;
+
+  background-color: #000;
 }
 
-.leftBlock, .languageText {
+.leftBlock,
+.languageText {
   display: flex;
   align-items: center;
 }
 
 .rightBlock {
   display: flex;
-  margin: 0 64px 0 0;
   gap: 36px;
+
+  margin: 0 64px 0 0;
 }
 
-.home, .signIn, .signUp {
+.home,
+.signIn,
+.signUp {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   background-color: transparent;
   border: none;
 }
@@ -28,88 +35,111 @@
 .language {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: flex-end;
+
+  margin-bottom: 5px;
+
   background-color: transparent;
   border: none;
-  margin-bottom: 5px;
 }
 
 .heading {
-  color: #fff;
   margin: 0 164px 0 53px;
+
   font-size: 64px;
+  color: #fff;
 }
 
-.homeText, .signInText, .signUpText, .languageEng {
-  color: #fff;
+.homeText,
+.signInText,
+.signUpText,
+.languageEng {
   margin: 0;
-  font-weight: 700;
+
   font-size: 16px;
+  font-weight: 700;
   line-height: 24px;
+  color: #fff;
 }
 
 .languageRus {
-  color: #444444;
   margin: 0;
-  font-weight: 700;
+
   font-size: 16px;
+  font-weight: 700;
   line-height: 24px;
+  color: #444;
 }
 
 .languageText {
   gap: 14px;
+
   margin-top: 12px;
 }
 
-.signIn:hover, .signUp:hover, .home:hover {
-  scale: 1.2;
-  transition: .3s ease-in-out;
+.signIn:hover,
+.signUp:hover,
+.home:hover {
   cursor: pointer;
+
+  transition: 0.3s ease-in-out;
+
+  scale: 1.2;
 }
 
 /* Toggle switch */
 
 .switch {
   position: relative;
+
   display: inline-block;
+
   width: 138px;
   height: 20px;
 }
 
 .switch input {
-  opacity: 0;
   width: 0;
   height: 0;
+
+  opacity: 0;
 }
 
 .slider {
-  position: absolute;
   cursor: pointer;
+
+  position: absolute;
   top: 0;
-  left: 0;
   right: 0;
   bottom: 0;
+  left: 0;
+
   background-color: transparent;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border: 2px solid #FFFFFF;
+  border: 2px solid #fff;
+
+  transition: 0.4s;
+  transition: 0.4s;
 }
 
-.slider:before {
-  position: absolute;
+.slider::before {
   content: "";
-  height: 26px;
-  width: 26px;
+
+  position: absolute;
   left: 78px;
+
+  width: 26px;
+  height: 26px;
+
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+
+  transition: 0.4s;
+  transition: 0.4s;
 }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(-78px);
-  -ms-transform: translateX(-78px);
+input:checked + .slider::before {
+  transform: translateX(-78px);
+  transform: translateX(-78px);
   transform: translateX(-78px);
 }
 
@@ -117,10 +147,11 @@ input:checked + .slider:before {
   border-radius: 5px;
 }
 
-.slider.round:before {
-  background: #FFFFFF;
-  border: 2px solid #000000;
-  border-radius: 5px;
+.slider.round::before {
   width: 53px;
   height: 12px;
+
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
 }
