@@ -88,6 +88,12 @@
   scale: 1.2;
 }
 
+.signIn:active,
+.signUp:active,
+.home:active {
+  scale: 1;
+}
+
 /* Toggle switch */
 
 .switch {
@@ -117,6 +123,7 @@
 
   background-color: transparent;
   border: 2px solid #fff;
+
   transition: 0.4s;
 }
 
@@ -130,11 +137,11 @@
   height: 26px;
 
   background-color: white;
+
   transition: 0.4s;
 }
 
 input:checked + .slider::before {
-  transform: translateX(-78px);
   transform: translateX(-78px);
 }
 
