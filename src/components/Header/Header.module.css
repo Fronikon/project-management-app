@@ -1,0 +1,126 @@
+.headerWrapper {
+  height: 80px;
+  display: flex;
+  background-color: #000000;
+  justify-content: space-between;
+}
+
+.leftBlock, .languageText {
+  display: flex;
+  align-items: center;
+}
+
+.rightBlock {
+  display: flex;
+  margin: 0 64px 0 0;
+  gap: 36px;
+}
+
+.home, .signIn, .signUp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+}
+
+.language {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  margin-bottom: 5px;
+}
+
+.heading {
+  color: #fff;
+  margin: 0 164px 0 53px;
+  font-size: 64px;
+}
+
+.homeText, .signInText, .signUpText, .languageEng {
+  color: #fff;
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.languageRus {
+  color: #444444;
+  margin: 0;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.languageText {
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.signIn:hover, .signUp:hover, .home:hover {
+  scale: 1.2;
+  transition: .3s ease-in-out;
+  cursor: pointer;
+}
+
+/* Toggle switch */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 138px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border: 2px solid #FFFFFF;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 78px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(-78px);
+  -ms-transform: translateX(-78px);
+  transform: translateX(-78px);
+}
+
+.slider.round {
+  border-radius: 5px;
+}
+
+.slider.round:before {
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  width: 53px;
+  height: 12px;
+}
