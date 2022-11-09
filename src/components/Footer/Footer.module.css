@@ -1,0 +1,41 @@
+.footerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 84px;
+
+  background: #000;
+}
+
+.githubLink,
+.year {
+  font-size: 36px;
+  color: #fff;
+}
+
+.githubLink {
+  display: inline-block;
+
+  text-decoration: none;
+}
+
+.githubLink:hover {
+  cursor: pointer;
+
+  transform: scale(1.2);
+
+  transition: 0.3s ease-in-out;
+}
+
+.githubLink:nth-child(2) {
+  margin: 0 48px;
+}
+
+.logo {
+  margin-left: 79px;
+}
+
+.year {
+  margin-right: 79px;
+}
