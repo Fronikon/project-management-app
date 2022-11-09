@@ -88,6 +88,12 @@
   scale: 1.2;
 }
 
+.signIn:active,
+.signUp:active,
+.home:active {
+  scale: 1;
+}
+
 /* Toggle switch */
 
 .switch {
@@ -119,7 +125,6 @@
   border: 2px solid #fff;
 
   transition: 0.4s;
-  transition: 0.4s;
 }
 
 .slider::before {
@@ -134,12 +139,9 @@
   background-color: white;
 
   transition: 0.4s;
-  transition: 0.4s;
 }
 
 input:checked + .slider::before {
-  transform: translateX(-78px);
-  transform: translateX(-78px);
   transform: translateX(-78px);
 }
 
@@ -154,4 +156,31 @@ input:checked + .slider::before {
   background: #fff;
   border: 2px solid #000;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 1440px) {
+  .heading {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .headerWrapper {
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+
+    height: auto;
+  }
+
+  .home {
+    margin-right: 0;
+  }
+
+  .rightBlock {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    margin-right: 0;
+  }
 }
