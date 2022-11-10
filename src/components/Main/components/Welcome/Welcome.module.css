@@ -1,0 +1,38 @@
+.mainWrapper {
+  width: 100%;
+  height: 100%;
+
+  background-image: url("../../../../assets/welcome_background.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.textWrapper {
+  width: 691px;
+  height: 357px;
+  margin: 0 0 601px 435px;
+  padding-top: 180px;
+}
+
+.team {
+  display: flex;
+  gap: 36px;
+
+  margin-left: 120px;
+  padding-bottom: 56px;
+}
+
+.teamText {
+  margin-left: 497px;
+  padding-bottom: 52px;
+
+  font-size: 48px;
+  line-height: 64px;
+  color: #fff;
+}
+
+.text {
+  font-size: 48px;
+  line-height: 64px;
+  color: #fff;
+}
