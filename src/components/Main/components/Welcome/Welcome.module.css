@@ -1,17 +1,18 @@
 .mainWrapper {
-  width: 100%;
-  height: 100%;
-
   background-image: url("../../../../assets/welcome_background.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
 }
 
 .textWrapper {
   width: 691px;
   height: 357px;
-  margin: 0 0 601px 435px;
+  margin: 0 0 10px 435px;
   padding-top: 180px;
+}
+
+.cards {
+  margin: 0 0 20px 490px;
 }
 
 .team {
@@ -35,4 +36,136 @@
   font-size: 48px;
   line-height: 64px;
   color: #fff;
+}
+
+@media screen and (max-width: 1680px) {
+  .textWrapper {
+    margin: 0 0 10px 235px;
+    padding-top: 100px;
+  }
+
+  .cards {
+    margin: 0 0 20px 350px;
+  }
+}
+
+@media screen and (max-width: 1542px) {
+  .mainWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .textWrapper {
+    margin: 0;
+    margin-bottom: 10px;
+    padding-top: 100px;
+  }
+
+  .cards {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .team {
+    margin-left: 0;
+  }
+
+  .teamText {
+    margin-left: 0;
+  }
+
+  .teamWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 1192px) {
+  .textWrapper {
+    width: 541px;
+    height: 207px;
+    margin-bottom: 100px;
+    padding-top: 40px;
+  }
+
+  .cards {
+    scale: 0.82;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .textWrapper {
+    margin-bottom: 100px;
+    padding-top: 40px;
+  }
+
+  .cards {
+    display: none;
+  }
+
+  .text {
+    text-align: center;
+  }
+
+  .teamWrapper {
+    flex-direction: column-reverse;
+  }
+
+  .team {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 692px) {
+  .textWrapper {
+    width: 541px;
+    height: 207px;
+    margin-bottom: 50px;
+    padding-top: 20px;
+  }
+
+  .text {
+    font-size: 36px;
+    line-height: 64px;
+  }
+
+  .teamText {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 692px) {
+  .textWrapper {
+    width: 401px;
+    height: 207px;
+  }
+
+  .text {
+    font-size: 30px;
+    line-height: 64px;
+  }
+
+  .teamText {
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 402px) {
+  .textWrapper {
+    width: 301px;
+    height: 207px;
+    margin-bottom: 100px;
+    padding-top: 20px;
+  }
+
+  .text {
+    font-size: 24px;
+    line-height: 64px;
+  }
+
+  .teamText {
+    font-size: 24px;
+  }
 }

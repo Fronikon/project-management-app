@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Team from './Team/Team';
 import styles from './Welcome.module.css';
+import cards from '../../../../assets/cards.jpg';
 
 const Welcome: FC = () => {
   return (
@@ -10,6 +11,7 @@ const Welcome: FC = () => {
           Everyone can handle our application, just register and get started
         </p>
       </div>
+      <img src={cards} alt="cards" className={styles.cards} />
       <div className={styles.teamWrapper}>
         <div className={styles.team}>
           <Team />

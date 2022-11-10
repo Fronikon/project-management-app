@@ -162,6 +162,10 @@ input:checked + .slider::before {
   .heading {
     display: none;
   }
+
+  .leftBlock {
+    margin-left: 64px;
+  }
 }
 
 @media screen and (max-width: 770px) {
@@ -183,4 +187,13 @@ input:checked + .slider::before {
 
     margin-right: 0;
   }
+}
+
+@media screen and (max-width: 472px) {
+  .leftBlock {
+    justify-content: center;
+
+    margin-left: 0;
+  }
+
 }
