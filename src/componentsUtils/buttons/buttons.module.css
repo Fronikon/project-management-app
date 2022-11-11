@@ -1,0 +1,14 @@
+.button {
+  cursor: pointer;
+
+  padding: 0.1em 0.7em;
+
+  font-size: 2em;
+
+  border: none;
+  box-shadow: 0 4px 4px 0 #00000040;
+}
+
+.button:disabled {
+  cursor: inherit;
+}
