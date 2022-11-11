@@ -33,7 +33,9 @@
   position: relative;
   z-index: 100;
 
-  margin: 0 0 43px 238px;
+  display: block;
+
+  margin: 0 58px 43px auto;
 }
 
 .team {
