@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import styles from './CreateBoardForm.module.css';
+import formsStyles from '../forms.module.css';
 import { useForm, Controller } from 'react-hook-form';
-import ConfirmButton from '../buttons/ConfirmButton/ConfirmButton';
-import CancelButton from '../buttons/CancelButton/CancelButton';
-import TextInputForm from '../customInputsForm/TextInputForm/TextInputForm';
-import ColorInputForm from '../customInputsForm/ColorInputForm/ColorInputForm';
+import ConfirmButton from '../../buttons/ConfirmButton/ConfirmButton';
+import CancelButton from '../../buttons/CancelButton/CancelButton';
+import TextInputForm from '../../customInputsForm/TextInputForm/TextInputForm';
+import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
 
 interface PropsType {
   closeModal: () => void;
@@ -29,8 +30,8 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <h3 className={styles.title}>Create board</h3>
+    <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
+      <h3 className={formsStyles.title}>Create board</h3>
 
       <div className={styles.fields}>
         <Controller
@@ -75,7 +76,7 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
         />
       </div>
 
-      <div className={styles.buttons}>
+      <div className={formsStyles.buttons}>
         <ConfirmButton disabled={!isDirty || !!Object.keys(errors).length} />
         <CancelButton handleClick={closeModal} />
       </div>

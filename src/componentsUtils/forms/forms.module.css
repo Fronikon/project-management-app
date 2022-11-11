@@ -11,22 +11,12 @@
   box-shadow: 0 4px 4px 0 #00000040;
 }
 
-label {
-  cursor: pointer;
-
-  color: #444;
-}
-
 .title {
   margin-bottom: 1.5em;
 
   font-size: 2em;
   font-weight: 400;
   text-align: center;
-}
-
-.fields {
-  width: 100%;
 }
 
 .buttons {
