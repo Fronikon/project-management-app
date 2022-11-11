@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TeamListInterface } from '../../../../../types/interfaces';
+import { TeamListInterface } from '../../../../../types/teamTypes';
 import styles from './Team.module.css';
 import Andrey from '../../../../../assets/Andrey.png';
 import Dmitriy from '../../../../../assets/Dmitriy.png';
