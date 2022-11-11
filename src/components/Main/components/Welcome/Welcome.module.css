@@ -21,7 +21,7 @@
   position: relative;
   z-index: 100;
 
-  width: 691px;
+  width: 1212px;
   height: 357px;
   margin: 0 0 0 317px;
   padding-top: 90px;
@@ -152,9 +152,9 @@
   }
 
   .textWrapper {
-    width: 541px;
-    height: 207px;
-    margin-bottom: 100px;
+    width: 700px;
+    height: auto;
+    margin-bottom: 50px;
     padding-top: 40px;
   }
 
@@ -188,26 +188,8 @@
 
 @media screen and (max-width: 692px) {
   .textWrapper {
-    width: 541px;
-    height: 207px;
-    margin-bottom: 50px;
-    padding-top: 20px;
-  }
-
-  .text {
-    font-size: 36px;
-    line-height: 64px;
-  }
-
-  .teamText {
-    font-size: 36px;
-  }
-}
-
-@media screen and (max-width: 692px) {
-  .textWrapper {
     width: 401px;
-    height: 207px;
+    margin-bottom: 50px;
   }
 
   .text {
@@ -223,8 +205,7 @@
 @media screen and (max-width: 402px) {
   .textWrapper {
     width: 301px;
-    height: 207px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     padding-top: 20px;
   }
 

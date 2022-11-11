@@ -10,7 +10,8 @@ const Welcome: FC = () => {
     <div className={styles.mainWrapper}>
       <div className={styles.textWrapper}>
         <p className={styles.text}>
-          Everyone can handle our application, just register and get started
+          We will help you organize your work with the help of task board management tools. To do
+          this, register or sign in to your account
         </p>
       </div>
       <img src={cards} alt="cards" className={styles.cards} />
