@@ -1,0 +1,186 @@
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+
+  height: 80px;
+
+  background-color: #000;
+}
+
+.leftBlock,
+.languageText {
+  display: flex;
+  align-items: center;
+}
+
+.rightBlock {
+  display: flex;
+  gap: 36px;
+
+  margin: 0 64px 0 0;
+}
+
+.home,
+.signIn,
+.signUp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+  border: none;
+}
+
+.language {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-bottom: 5px;
+
+  background-color: transparent;
+  border: none;
+}
+
+.heading {
+  margin: 0 164px 0 53px;
+
+  font-size: 64px;
+  color: #fff;
+}
+
+.homeText,
+.signInText,
+.signUpText,
+.languageEng {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+}
+
+.languageRus {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #444;
+}
+
+.languageText {
+  gap: 14px;
+
+  margin-top: 12px;
+}
+
+.signIn:hover,
+.signUp:hover,
+.home:hover {
+  cursor: pointer;
+
+  transition: 0.3s ease-in-out;
+
+  scale: 1.2;
+}
+
+.signIn:active,
+.signUp:active,
+.home:active {
+  scale: 1;
+}
+
+/* Toggle switch */
+
+.switch {
+  position: relative;
+
+  display: inline-block;
+
+  width: 138px;
+  height: 20px;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+
+  opacity: 0;
+}
+
+.slider {
+  cursor: pointer;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: transparent;
+  border: 2px solid #fff;
+
+  transition: 0.4s;
+}
+
+.slider::before {
+  content: "";
+
+  position: absolute;
+  left: 78px;
+
+  width: 26px;
+  height: 26px;
+
+  background-color: white;
+
+  transition: 0.4s;
+}
+
+input:checked + .slider::before {
+  transform: translateX(-78px);
+}
+
+.slider.round {
+  border-radius: 5px;
+}
+
+.slider.round::before {
+  width: 53px;
+  height: 12px;
+
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 1440px) {
+  .heading {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .headerWrapper {
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+
+    height: auto;
+  }
+
+  .home {
+    margin-right: 0;
+  }
+
+  .rightBlock {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    margin-right: 0;
+  }
+}
