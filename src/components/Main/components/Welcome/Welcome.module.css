@@ -14,7 +14,7 @@
 }
 
 .mainWrapper {
-  background-image: url('../../../../assets/welcome_background.png');
+  background-image: url("../../../../assets/welcome_background.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
