@@ -14,9 +14,7 @@
 }
 
 .mainWrapper {
-  background-image: url("../../../../assets/welcome_background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #444;
 }
 
 .textWrapper {
