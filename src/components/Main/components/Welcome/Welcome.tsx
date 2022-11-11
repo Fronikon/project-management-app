@@ -16,9 +16,9 @@ const Welcome: FC = () => {
       </div>
       <img src={cards} alt="cards" className={styles.cards} />
       <div className={styles.teamWrapper}>
-        <div className={styles.team}>
+        <ul className={styles.team}>
           <Team />
-        </div>
+        </ul>
         <p className={styles.teamText}>Our Team</p>
       </div>
       <img src={D} alt="D" className={styles.letterD} />
