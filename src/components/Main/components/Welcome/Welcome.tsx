@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import Team from './Team/Team';
 import styles from './Welcome.module.css';
-import cards from '../../../../assets/cards.jpg';
+import cards from '../../../../assets/cards.png';
+import D from '../../../../assets/letterD.png';
+import K from '../../../../assets/letterK.png';
 
 const Welcome: FC = () => {
   return (
@@ -18,6 +20,8 @@ const Welcome: FC = () => {
         </div>
         <p className={styles.teamText}>Our Team</p>
       </div>
+      <img src={D} alt="D" className={styles.letterD} />
+      <img src={K} alt="K" className={styles.letterK} />
     </div>
   );
 };
