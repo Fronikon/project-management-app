@@ -2,11 +2,11 @@ const textData = {
   header: {
     signIn: {
       ru: 'Вход',
-      en: 'Sign in',
+      eng: 'Sign in',
     },
     exit: {
       ru: 'Выход',
-      en: 'Exit',
+      eng: 'Exit',
     },
     signUp: {
       ru: 'Регистрация',

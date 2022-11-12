@@ -1,22 +1,38 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import styles from './Header.module.css';
 import home from '../../assets/home_image.jpg';
 import signIn from '../../assets/sing_in.jpg';
 import signUp from '../../assets/sign_up.jpg';
+import { switchEng, switchRu } from '../../store/reducers/languageReducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import textData from '../../types/textData';
 
 const Header: FC = () => {
+  const language = useAppSelector((store) => store.language.value);
+  const dispatch = useAppDispatch();
+
+  const switchCheck = () => {
+    if (language === 'eng') {
+      dispatch(switchRu());
+    } else {
+      dispatch(switchEng());
+    }
+  };
+  // {
+  //   textData.header.home[language];
+  // }
   return (
     <header className={styles.headerWrapper}>
       <div className={styles.leftBlock}>
         <h1 className={styles.heading}>Doska</h1>
         <button className={styles.home}>
           <img src={home} alt="home" className={styles.homeImage} />
-          <p className={styles.homeText}>Home</p>
+          <p className={styles.homeText}>{textData.header.home[language]}</p>
         </button>
       </div>
       <div className={styles.rightBlock}>
         <div className={styles.language}>
-          <label className={styles.switch}>
+          <label className={styles.switch} onClick={switchCheck}>
             <input type="checkbox" />
             <span className={`${styles.slider} ${styles.round}`}></span>
           </label>
