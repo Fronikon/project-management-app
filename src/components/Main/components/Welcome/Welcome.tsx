@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import Team from './Team/Team';
 import styles from './Welcome.module.css';
 import cards from '../../../../assets/cards.png';
 import D from '../../../../assets/letterD.png';
 import K from '../../../../assets/letterK.png';
+import Team from './Team/team';
 
 const Welcome: FC = () => {
   return (
