@@ -3,7 +3,7 @@ import styles from './Welcome.module.css';
 import cards from '../../../../assets/cards.png';
 import D from '../../../../assets/letterD.png';
 import K from '../../../../assets/letterK.png';
-import Team from './Team/team';
+import Team from './Team/Team';
 
 const Welcome: FC = () => {
   return (
