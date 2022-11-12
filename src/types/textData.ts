@@ -60,6 +60,10 @@ const textData = {
       ru: 'Даниил',
       eng: 'Daniil',
     },
+    team: {
+      ru: 'Наша команда',
+      eng: 'Our team',
+    },
   },
   boardsPage: {
     todo: {

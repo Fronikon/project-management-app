@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import styles from './Header.module.css';
 import home from '../../assets/home_image.jpg';
 import signIn from '../../assets/sing_in.jpg';
@@ -14,13 +14,13 @@ const Header: FC = () => {
   const switchCheck = () => {
     if (language === 'eng') {
       dispatch(switchRu());
+      console.log('ru');
     } else {
       dispatch(switchEng());
+      console.log('eng');
     }
   };
-  // {
-  //   textData.header.home[language];
-  // }
+
   return (
     <header className={styles.headerWrapper}>
       <div className={styles.leftBlock}>
@@ -32,8 +32,8 @@ const Header: FC = () => {
       </div>
       <div className={styles.rightBlock}>
         <div className={styles.language}>
-          <label className={styles.switch} onClick={switchCheck}>
-            <input type="checkbox" />
+          <label className={styles.switch}>
+            <input type="checkbox" onClick={switchCheck} />
             <span className={`${styles.slider} ${styles.round}`}></span>
           </label>
           <div className={styles.languageText}>
@@ -43,11 +43,11 @@ const Header: FC = () => {
         </div>
         <button className={styles.signIn}>
           <img src={signIn} alt="signIn" className={styles.signInImage} />
-          <p className={styles.signInText}>Sign In</p>
+          <p className={styles.signInText}>{textData.header.signIn[language]}</p>
         </button>
         <button className={styles.signUp}>
           <img src={signUp} alt="signUp" className={styles.signUpImage} />
-          <p className={styles.signUpText}>Sign Up</p>
+          <p className={styles.signUpText}>{textData.header.signUp[language]}</p>
         </button>
       </div>
     </header>
