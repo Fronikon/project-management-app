@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './Footer.module.css';
-import rss from '../../assets/rss-logo.png';
+import rss from '../../assets/img/icons/rss-logo.png';
 
 const Footer: FC = () => {
   return (
