@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import styles from './Header.module.css';
-import home from '../../assets/home_image.jpg';
-import signIn from '../../assets/sing_in.jpg';
-import signUp from '../../assets/sign_up.jpg';
+import home from '../../assets/img/icons/home_image.jpg';
+import signIn from '../../assets/img/icons/sing_in.jpg';
+import signUp from '../../assets/img/icons/sign_up.jpg';
 
 const Header: FC = () => {
   return (
