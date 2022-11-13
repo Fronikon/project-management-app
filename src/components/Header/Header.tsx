@@ -37,8 +37,10 @@ const Header: FC = () => {
             <span className={`${styles.slider} ${styles.round}`}></span>
           </label>
           <div className={styles.languageText}>
-            <p className={styles.languageRus}>Русский</p>
-            <p className={styles.languageEng}>English</p>
+            <p className={`${styles.languageRus} ${language === 'ru' && styles.active}`}>Русский</p>
+            <p className={`${styles.languageEng} ${language === 'eng' && styles.active}`}>
+              English
+            </p>
           </div>
         </div>
         <button className={styles.signIn}>
