@@ -5,7 +5,7 @@ import signIn from '../../assets/sing_in.jpg';
 import signUp from '../../assets/sign_up.jpg';
 import { switchEng, switchRu } from '../../store/reducers/languageReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
-import textData from '../../types/textData';
+import textData from '../../data/textData';
 
 const Header: FC = () => {
   const language = useAppSelector((store) => store.language.value);
@@ -14,10 +14,8 @@ const Header: FC = () => {
   const switchCheck = () => {
     if (language === 'eng') {
       dispatch(switchRu());
-      console.log('ru');
     } else {
       dispatch(switchEng());
-      console.log('eng');
     }
   };
 

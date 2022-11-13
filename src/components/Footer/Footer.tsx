@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import styles from './Footer.module.css';
 import rss from '../../assets/rss-logo.png';
-import textData from '../../types/textData';
+import textData from '../../data/textData';
 import { useAppSelector } from '../../hooks/reduxHooks';
 
 const Footer: FC = () => {

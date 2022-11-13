@@ -12,7 +12,7 @@ const initialState: InitialStateType = {
   value: getLanguage() || 'eng',
 };
 
-const languageSlice = createSlice({
+const languageReducer = createSlice({
   name: 'language',
   initialState,
   reducers: {
@@ -25,6 +25,6 @@ const languageSlice = createSlice({
   },
 });
 
-export default languageSlice.reducer;
+export default languageReducer.reducer;
 
-export const { switchRu, switchEng } = languageSlice.actions;
+export const { switchRu, switchEng } = languageReducer.actions;

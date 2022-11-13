@@ -48,18 +48,6 @@ const textData = {
       ru: 'Мы поможем вам упорядочить вашу работу с помощью инструментов для управления доской с задачами. Для этого зарегистрируйтесь или войдите в свою учётную запись',
       eng: 'We will help you organize your work with the help of task board management tools. To do this, register or sign in to your account',
     },
-    Andrey: {
-      ru: 'Андрей',
-      eng: 'Andrey',
-    },
-    Dmitry: {
-      ru: 'Дмитрий',
-      eng: 'Dmitry',
-    },
-    Daniil: {
-      ru: 'Даниил',
-      eng: 'Daniil',
-    },
     team: {
       ru: 'Наша команда',
       eng: 'Our team',

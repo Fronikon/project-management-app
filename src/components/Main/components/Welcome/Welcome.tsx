@@ -5,7 +5,7 @@ import D from '../../../../assets/letterD.png';
 import K from '../../../../assets/letterK.png';
 import Team from './Team/Team';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
-import textData from '../../../../types/textData';
+import textData from '../../../../data/textData';
 
 const Welcome: FC = () => {
   const language = useAppSelector((store) => store.language.value);
