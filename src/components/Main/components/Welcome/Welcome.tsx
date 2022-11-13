@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import styles from './Welcome.module.css';
-import cards from '../../../../assets/cards.png';
-import D from '../../../../assets/letterD.png';
-import K from '../../../../assets/letterK.png';
+import cards from '../../../../assets/img/other/cards.png';
+import D from '../../../../assets/img/other/letterD.png';
+import K from '../../../../assets/img/other/letterK.png';
 import Team from './Team/Team';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
 import textData from '../../../../data/textData';

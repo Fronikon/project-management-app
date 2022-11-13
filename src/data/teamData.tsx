@@ -1,6 +1,6 @@
-import Andrey from '../assets/Andrey.png';
-import Dmitriy from '../assets/Dmitriy.png';
-import Daniil from '../assets/Daniil.png';
+import Andrey from '../assets/img/photos/Andrey.png';
+import Dmitriy from '../assets/img/photos/Dmitriy.png';
+import Daniil from '../assets/img/photos/Daniil.png';
 import { TeamListInterface } from '../types/teamTypes';
 
 export const teamList: TeamListInterface[] = [
