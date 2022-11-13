@@ -152,11 +152,7 @@
   left: 0;
 }
 
-.checkboxRu:checked + .slider::before {
-  transform: translateX(0);
-}
-
-.checkboxEng:checked + .slider::before {
+input:checked + .slider::before {
   transform: translateX(0);
 }
 

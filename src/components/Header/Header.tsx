@@ -33,13 +33,7 @@ const Header: FC = () => {
       <div className={styles.rightBlock}>
         <div className={styles.language}>
           <label className={styles.switch}>
-            <input
-              type="checkbox"
-              className={`${language === 'eng' && styles.checkboxEng} ${
-                language === 'ru' && styles.checkboxRu
-              }`}
-              onClick={switchCheck}
-            />
+            <input type="checkbox" onClick={switchCheck} />
             <span
               className={`${styles.slider} ${language === 'eng' && styles.sliderEng} ${
                 language === 'ru' && styles.sliderRu
