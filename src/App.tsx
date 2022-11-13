@@ -9,9 +9,7 @@ const App: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    document.addEventListener('unload', () => {
-      localStorage.setItem('language', language);
-    });
+    localStorage.setItem('language', language);
   }, [language]);
 
   useEffect(() => {

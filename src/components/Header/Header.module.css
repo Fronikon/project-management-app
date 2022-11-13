@@ -135,7 +135,6 @@
   content: "";
 
   position: absolute;
-  left: 78px;
 
   width: 26px;
   height: 26px;
@@ -145,8 +144,20 @@
   transition: 0.4s;
 }
 
-input:checked + .slider::before {
-  transform: translateX(-78px);
+.sliderEng::before {
+  left: 78px;
+}
+
+.sliderRu::before {
+  left: 0;
+}
+
+.checkboxRu:checked + .slider::before {
+  transform: translateX(0);
+}
+
+.checkboxEng:checked + .slider::before {
+  transform: translateX(0);
 }
 
 .slider.round {
