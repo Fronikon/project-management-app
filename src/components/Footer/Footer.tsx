@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 
 const Footer: FC = () => {
   const language = useAppSelector((store) => store.language.value);
-  const dispatch = useAppDispatch();
 
   return (
     <footer className={styles.footerWrapper}>
