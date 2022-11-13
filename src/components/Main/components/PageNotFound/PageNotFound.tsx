@@ -1,18 +1,19 @@
 import React, { FC } from 'react';
-import styles from '../../../../components/Main/components/PageNotFound/PageNotFound.module.css';
+import styles from './PageNotFound.module.css';
 import fone from '../../../../assets/404.png';
+import letterD from '../../../../assets/letterD.png';
+
+const title = {
+  ru: 'К сожалению такой страницы не существует',
+  en: 'Sorry, there is no such page',
+};
 
 const PageNotFound: FC = () => {
-  const title = {
-    ru: 'К сожалению такой страницы не существует',
-    en: 'Sorry, there is no such page',
-  };
-
   return (
     <div className={styles.wrapper}>
-      <span className={styles.letterD}>D</span>
-      <h2 className={styles.title}>{title.en}</h2>
-      <img className={styles.image} src={fone} alt="Error 404" />
+      <img className={styles.letterD} src={letterD} alt="Letter D." />
+      <h2 className={styles.title}>{title.ru}</h2>
+      <img className={styles.image} src={fone} alt="Error 404." />
     </div>
   );
 };

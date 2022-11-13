@@ -15,19 +15,19 @@
 
 .letterD {
   position: absolute;
-  top: max(-20vh, -14vw);
-  left: 10vw;
+  top: 1vh;
+  left: 15vw;
 
-  font-size: min(100vh, 60vw);
-  font-weight: 700;
-  color: #343434;
+  width: min(35vw, 55vh);
 }
 
 .title {
   z-index: 1;
 
   padding: 1rem;
+  padding-top: 2rem;
 
+  font-size: max(2rem, 4vw);
   color: #fff;
   text-align: center;
 }
