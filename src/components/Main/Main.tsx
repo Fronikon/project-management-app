@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import styles from './Main.module.css';
 import { Boards, Board, PageNotFound, SignIn, SignUp, Welcome } from './components/index';
 
 const Main: FC = () => {
   return (
-    <main>
+    <main className={styles.main}>
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/signIn" element={<SignIn />} />
