@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styles from './Footer.module.css';
 import rss from '../../assets/rss-logo.png';
 import textData from '../../types/textData';
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { useAppSelector } from '../../hooks/reduxHooks';
 
 const Footer: FC = () => {
   const language = useAppSelector((store) => store.language.value);
