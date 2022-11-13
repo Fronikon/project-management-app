@@ -1,0 +1,41 @@
+.wrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: calc(100vh - 84px - 80px);
+
+  background-color: #444;
+}
+
+.letterD {
+  position: absolute;
+  top: max(-20vh, -14vw);
+  left: 10vw;
+
+  font-size: min(100vh, 60vw);
+  font-weight: 700;
+  color: #343434;
+}
+
+.title {
+  z-index: 1;
+
+  padding: 1rem;
+
+  color: #fff;
+  text-align: center;
+}
+
+.image {
+  z-index: 1;
+
+  max-width: 100%;
+  height: auto;
+  padding: 1rem;
+}
