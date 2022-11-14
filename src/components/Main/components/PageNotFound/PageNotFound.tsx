@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styles from './PageNotFound.module.css';
-import fone from '../../../../assets/404.png';
-import letterD from '../../../../assets/letterD.png';
+import fone from '../../../../assets/img/other/404.png';
 
 const title = {
   ru: 'К сожалению такой страницы не существует',
@@ -11,7 +10,6 @@ const title = {
 const PageNotFound: FC = () => {
   return (
     <div className={styles.wrapper}>
-      <img className={styles.letterD} src={letterD} alt="Letter D." />
       <h2 className={styles.title}>{title.ru}</h2>
       <img className={styles.image} src={fone} alt="Error 404." />
     </div>
