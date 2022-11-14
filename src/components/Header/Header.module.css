@@ -152,10 +152,6 @@
   left: 0;
 }
 
-input:checked + .slider::before {
-  transform: translateX(0);
-}
-
 .slider.round {
   border-radius: 5px;
 }
