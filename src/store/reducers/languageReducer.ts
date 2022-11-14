@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { InitialStateType } from '../../types/languageTypes';
+
+interface InitialStateType {
+  value: 'ru' | 'eng';
+}
 
 const getLanguage = () => {
   const language = localStorage.getItem('language');
