@@ -13,10 +13,6 @@
   left: 1103px;
 }
 
-.mainWrapper {
-  background-color: #444;
-}
-
 .textWrapper {
   position: relative;
   z-index: 100;
