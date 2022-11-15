@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+
+  margin: 50px 0 0 42px;
+}
+
+.addColumnButton {
+  width: 384px;
+  height: 76px;
+
+  background: rgb(0 0 0 / 40%);
+  background-image: url("../../../../assets/img/icons/plus.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-size: contain;
+  border: 2px dashed black;
+}
+
+.newTaskModal {
+  display: none;
+}

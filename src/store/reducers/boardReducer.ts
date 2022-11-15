@@ -26,12 +26,12 @@ const boardReducer = createSlice({
     addColumn(state, action) {
       state.value.push(action.payload);
     },
-    // addTask(state, action) {
-    //   state.value[0].push(action.payload);
-    // },
+    addTask(state, action) {
+      state.value.push(action.payload);
+    },
   },
 });
 
 export default boardReducer.reducer;
 
-export const { addColumn } = boardReducer.actions;
+export const { addColumn, addTask } = boardReducer.actions;

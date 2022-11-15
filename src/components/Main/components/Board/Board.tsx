@@ -1,9 +1,11 @@
 import React, { FC } from 'react';
+import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import styles from './Board.module.css';
 
 const Board: FC = () => {
   const board = useAppSelector((store) => store.board.value);
+  const language = useAppSelector((store) => store.language.value);
   const dispatch = useAppDispatch();
 
   return (
@@ -24,6 +26,32 @@ const Board: FC = () => {
           </div>
         </div>
       ))}
+      <button className={styles.addColumnButton}></button>
+      <div className={styles.newColumnModal}>
+        <h2 className={styles.modalHeading}>{textData.boardsPage.newColumn[language]}</h2>
+        <input type="text" placeholder="placeholder" />
+        <div className={styles.btnsWrapper}>
+          <button className={styles.confirm}>{textData.general.confirm[language]}</button>
+          <button className={styles.cancel}>{textData.general.cancel[language]}</button>
+        </div>
+      </div>
+      <div className={styles.newTaskModal}>
+        <h2 className={styles.modalHeading}>{textData.boardsPage.newTask[language]}</h2>
+        <div className={styles.modalInputsWrapper}>
+          <input type="text" placeholder="placeholder" />
+          <input type="text" placeholder="placeholder" />
+          <div className={styles.colorWrapper}>
+            <div className={styles.colorTextWrapper}>
+              <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
+            </div>
+            <input type="color" className={styles.color} />
+          </div>
+        </div>
+        <div className={styles.btnsWrapper}>
+          <button className={styles.confirm}>{textData.general.confirm[language]}</button>
+          <button className={styles.cancel}>{textData.general.cancel[language]}</button>
+        </div>
+      </div>
     </div>
   );
 };
