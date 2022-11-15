@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import boardReducer from './reducers/boardReducer';
 import languageReducer from './reducers/languageReducer';
 
 export const store = configureStore({
   reducer: {
     language: languageReducer,
+    board: boardReducer,
   },
 });
 
