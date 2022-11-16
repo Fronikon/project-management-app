@@ -1,8 +1,12 @@
 import React, { FC } from 'react';
 import styles from './Footer.module.css';
+import textData from '../../data/textData';
+import { useAppSelector } from '../../hooks/reduxHooks';
 import rss from '../../assets/img/icons/rss-logo.png';
 
 const Footer: FC = () => {
+  const language = useAppSelector((store) => store.language.value);
+
   return (
     <footer className={styles.footerWrapper}>
       <a href="https://rs.school/react/" className={styles.logoLink}>
@@ -10,13 +14,13 @@ const Footer: FC = () => {
       </a>
       <div className={styles.github}>
         <a href="https://github.com/Fronikon" className={styles.githubLink}>
-          Dmitry Beresnev
+          {textData.footer.Dmitry[language]}
         </a>
         <a href="https://github.com/InnokentyKedrov" className={styles.githubLink}>
-          Andrey Lavrenov
+          {textData.footer.Andrey[language]}
         </a>
         <a href="https://github.com/karap9s" className={styles.githubLink}>
-          Daniil Sharenkov
+          {textData.footer.Daniil[language]}
         </a>
       </div>
       <p className={styles.year}>© 2022</p>

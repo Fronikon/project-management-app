@@ -82,4 +82,8 @@
 
     text-align: center;
   }
+
+  .githubLink:nth-child(2) {
+    margin: 0;
+  }
 }

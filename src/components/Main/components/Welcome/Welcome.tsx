@@ -4,22 +4,23 @@ import cards from '../../../../assets/img/other/cards.png';
 import D from '../../../../assets/img/other/letterD.png';
 import K from '../../../../assets/img/other/letterK.png';
 import Team from './Team/Team';
+import { useAppSelector } from '../../../../hooks/reduxHooks';
+import textData from '../../../../data/textData';
 
 const Welcome: FC = () => {
+  const language = useAppSelector((store) => store.language.value);
+
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.textWrapper}>
-        <p className={styles.text}>
-          We will help you organize your work with the help of task board management tools. To do
-          this, register or sign in to your account
-        </p>
+        <p className={styles.text}>{textData.welcomePage.textWrapper[language]}</p>
       </div>
       <img src={cards} alt="cards" className={styles.cards} />
       <div className={styles.teamWrapper}>
         <ul className={styles.team}>
           <Team />
         </ul>
-        <p className={styles.teamText}>Our Team</p>
+        <p className={styles.teamText}>{textData.welcomePage.team[language]}</p>
       </div>
       <img src={D} alt="D" className={styles.letterD} />
       <img src={K} alt="K" className={styles.letterK} />
