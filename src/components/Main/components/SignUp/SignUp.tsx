@@ -5,6 +5,8 @@ import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import { signUp } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
+import textData from '../../../../data/textData';
+import { useAppSelector } from '../../../../hooks/reduxHooks';
 
 export interface SignUpType {
   name: string;
@@ -13,6 +15,8 @@ export interface SignUpType {
 }
 
 const SignUp: FC = () => {
+  const language = useAppSelector((store) => store.language.value);
+
   const {
     handleSubmit,
     control,
@@ -34,7 +38,7 @@ const SignUp: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-      <h3 className={formsStyles.title}>Registration</h3>
+      <h3 className={formsStyles.title}>{textData.authPage.registration[language]}</h3>
 
       <div className={styles.fields}>
         <Controller
@@ -53,9 +57,9 @@ const SignUp: FC = () => {
               onChangeText={onChange}
               value={value || ''}
               error={error?.message}
-              label={'Name'}
+              label={textData.authPage.name[language]}
               type={'text'}
-              placeholder={'Enter name..'}
+              placeholder={textData.authPage.namePlaceholder[language]}
             />
           )}
         />
@@ -76,8 +80,8 @@ const SignUp: FC = () => {
               value={value || ''}
               error={error?.message}
               type={'text'}
-              label={'Login'}
-              placeholder={'Enter login..'}
+              label={textData.authPage.login[language]}
+              placeholder={textData.authPage.loginPlaceholder[language]}
             />
           )}
         />
@@ -98,8 +102,8 @@ const SignUp: FC = () => {
               value={value || ''}
               error={error?.message}
               type={'text'}
-              label={'Password'}
-              placeholder={'Enter password..'}
+              label={textData.authPage.password[language]}
+              placeholder={textData.authPage.passwordPlaceholder[language]}
             />
           )}
         />

@@ -132,6 +132,10 @@ const textData = {
       ru: 'Имя',
       eng: 'Name',
     },
+    namePlaceholder: {
+      ru: 'Введите ваше имя',
+      eng: 'Enter your name',
+    },
   },
   general: {
     confirmAction: {

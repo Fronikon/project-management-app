@@ -5,6 +5,8 @@ import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/Con
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
+import textData from '../../../../data/textData';
+import { useAppSelector } from '../../../../hooks/reduxHooks';
 
 export interface SignInType {
   login: string;
@@ -12,6 +14,8 @@ export interface SignInType {
 }
 
 const SignIn: FC = () => {
+  const language = useAppSelector((store) => store.language.value);
+
   const {
     handleSubmit,
     control,
@@ -32,7 +36,7 @@ const SignIn: FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-      <h3 className={formsStyles.title}>Registration</h3>
+      <h3 className={formsStyles.title}>{textData.authPage.signIn[language]}</h3>
 
       <div className={styles.fields}>
         <Controller
@@ -51,8 +55,8 @@ const SignIn: FC = () => {
               value={value || ''}
               error={error?.message}
               type={'text'}
-              label={'Login'}
-              placeholder={'Enter login..'}
+              label={textData.authPage.login[language]}
+              placeholder={textData.authPage.loginPlaceholder[language]}
             />
           )}
         />
@@ -73,8 +77,8 @@ const SignIn: FC = () => {
               value={value || ''}
               error={error?.message}
               type={'text'}
-              label={'Password'}
-              placeholder={'Enter password..'}
+              label={textData.authPage.password[language]}
+              placeholder={textData.authPage.passwordPlaceholder[language]}
             />
           )}
         />
