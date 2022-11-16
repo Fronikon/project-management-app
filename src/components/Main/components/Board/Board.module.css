@@ -16,6 +16,121 @@
   border: 2px dashed black;
 }
 
-.newTaskModal {
-  display: none;
+.popup {
+  position: absolute;
+  top: 80px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: calc(100vh - 164px);
+
+  background: rgb(0 0 0 / 40%);
+}
+
+.newTaskModal,
+.newColumnModal,
+.newChangeModal {
+  display: flex;
+  flex-direction: column;
+  gap: 73px;
+  align-items: center;
+
+  background-color: #fff;
+}
+
+.modalHeading {
+  margin-top: 48px;
+
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: -0.011em;
+}
+
+.modalInputsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 73px;
+}
+
+.input {
+  width: 360px;
+  height: 58px;
+  margin: 0 20px;
+}
+
+.input[type="text"] {
+  padding-left: 36px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 13px;
+  color: #b9b9b9;
+}
+
+.btnsWrapper {
+  display: flex;
+  justify-content: space-between;
+
+  width: 360px;
+  height: 58px;
+  margin: 0 20px 35px;
+}
+
+.confirm,
+.cancel {
+  width: 152px;
+  height: 42px;
+
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 13px;
+
+  border: none;
+}
+
+.confirm {
+  background-color: #ffbdae;
+}
+
+.cancel {
+  background-color: #b1d0ff;
+}
+
+.input,
+.confirm,
+.cancel,
+.newTaskModal,
+.newChangeModal,
+.newColumnModal {
+  box-shadow: -1px 3px 5px #000;
+}
+
+.colorWrapper {
+  display: flex;
+}
+
+.colorTextWrapper,
+.color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50%;
+  height: 100%;
+
+  border: none;
+}
+
+.colorText {
+  margin: 0 20px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: -0.011em;
 }
