@@ -45,10 +45,10 @@ const SignUp: FC = () => {
           name="name"
           control={control}
           rules={{
-            required: 'Please enter your name.',
+            required: `${textData.errors.required[language]}`,
             minLength: {
               value: 3,
-              message: 'The name must be at least 3 characters long.',
+              message: `${textData.errors.loginError[language]}`,
             },
           }}
           defaultValue={''}
@@ -68,10 +68,10 @@ const SignUp: FC = () => {
           name="login"
           control={control}
           rules={{
-            required: 'Please enter your login.',
+            required: `${textData.errors.required[language]}`,
             minLength: {
               value: 3,
-              message: 'The name must be at least 3 characters long.',
+              message: `${textData.errors.loginError[language]}`,
             },
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
@@ -90,10 +90,10 @@ const SignUp: FC = () => {
           name="password"
           control={control}
           rules={{
-            required: 'Please enter your password.',
+            required: `${textData.errors.required[language]}`,
             minLength: {
               value: 6,
-              message: 'The name must be at least 6 characters long.',
+              message: `${textData.errors.passwordError[language]}`,
             },
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (

@@ -137,6 +137,20 @@ const textData = {
       eng: 'Enter your name',
     },
   },
+  errors: {
+    required: {
+      ru: 'Это поле обязательно для заполнения',
+      eng: 'This field is required',
+    },
+    loginError: {
+      ru: 'Введите не менее 3 символов',
+      eng: 'Enter at least 3 characters',
+    },
+    passwordError: {
+      ru: 'Введите не менее 6 символов',
+      eng: 'Enter at least 6 characters',
+    },
+  },
   general: {
     confirmAction: {
       ru: 'Вы уверены?',
