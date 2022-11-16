@@ -22,8 +22,8 @@ interface InitialStateType {
 const initialState: InitialStateType = {
   isModalOpen: true,
   isColumnModalOpen: false,
-  isTaskModalOpen: false,
-  isChangeModalOpen: true,
+  isTaskModalOpen: true,
+  isChangeModalOpen: false,
   value: [] as ColumnArrayType[],
 };
 

@@ -38,7 +38,10 @@ const Board: FC = () => {
           {isColumnModalOpen && (
             <div className={styles.newColumnModal}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.newColumn[language]}</h2>
-              <input type="text" placeholder="Placeholder" className={styles.input} />
+              <fieldset className={styles.fieldset}>
+                <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
+                <input type="text" placeholder="Placeholder" className={styles.input} />
+              </fieldset>
               <div className={styles.btnsWrapper}>
                 <button className={styles.confirm}>{textData.general.confirm[language]}</button>
                 <button className={styles.cancel}>{textData.general.cancel[language]}</button>
@@ -49,8 +52,16 @@ const Board: FC = () => {
             <div className={styles.newTaskModal}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.newTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <input type="text" placeholder="Placeholder" className={styles.input} />
-                <input type="text" placeholder="Placeholder" className={styles.input} />
+                <fieldset className={styles.fieldset}>
+                  <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
+                  <input type="text" placeholder="Placeholder" className={styles.input} />
+                </fieldset>
+                <fieldset className={styles.fieldset}>
+                  <legend className={styles.legend}>
+                    {textData.boardsPage.description[language]}
+                  </legend>
+                  <input type="text" placeholder="Placeholder" className={styles.input} />
+                </fieldset>
                 <div className={`${styles.colorWrapper} ${styles.input}`}>
                   <div className={styles.colorTextWrapper}>
                     <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
@@ -68,8 +79,16 @@ const Board: FC = () => {
             <div className={styles.newChangeModal}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <input type="text" placeholder="Placeholder" className={styles.input} />
-                <input type="text" placeholder="Placeholder" className={styles.input} />
+                <fieldset className={styles.fieldset}>
+                  <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
+                  <input type="text" placeholder="Placeholder" className={styles.input} />
+                </fieldset>
+                <fieldset className={styles.fieldset}>
+                  <legend className={styles.legend}>
+                    {textData.boardsPage.description[language]}
+                  </legend>
+                  <input type="text" placeholder="Placeholder" className={styles.input} />
+                </fieldset>
                 <div className={`${styles.colorWrapper} ${styles.input}`}>
                   <div className={styles.colorTextWrapper}>
                     <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
