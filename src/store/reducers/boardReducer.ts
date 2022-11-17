@@ -1,14 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface TaskArrayType {
+interface TaskType {
+  id: number;
   title: string;
   description: string;
   color: string;
 }
 
-interface ColumnArrayType {
+interface ColumnType {
+  id: number;
   description: string;
-  column: TaskArrayType[];
+  column: TaskType[];
 }
 
 interface InitialStateType {
@@ -16,7 +18,7 @@ interface InitialStateType {
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
   isChangeModalOpen: boolean;
-  value: ColumnArrayType[];
+  value: ColumnType[];
 }
 
 const initialState: InitialStateType = {
@@ -24,7 +26,7 @@ const initialState: InitialStateType = {
   isColumnModalOpen: false,
   isTaskModalOpen: false,
   isChangeModalOpen: false,
-  value: [] as ColumnArrayType[],
+  value: [] as ColumnType[],
 };
 
 const boardReducer = createSlice({
