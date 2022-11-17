@@ -20,9 +20,9 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
-  isModalOpen: true,
+  isModalOpen: false,
   isColumnModalOpen: false,
-  isTaskModalOpen: true,
+  isTaskModalOpen: false,
   isChangeModalOpen: false,
   value: [] as ColumnArrayType[],
 };
@@ -37,16 +37,16 @@ const boardReducer = createSlice({
     addTask(state, action) {
       state.value.push(action.payload);
     },
-    openModal(state) {
+    toggleModal(state) {
       state.isModalOpen = !state.isModalOpen;
     },
-    openColumn(state) {
+    toggleColumn(state) {
       state.isColumnModalOpen = !state.isColumnModalOpen;
     },
-    openTask(state) {
+    toggleTask(state) {
       state.isTaskModalOpen = !state.isTaskModalOpen;
     },
-    openChange(state) {
+    toggleChange(state) {
       state.isChangeModalOpen = !state.isChangeModalOpen;
     },
   },
@@ -54,5 +54,5 @@ const boardReducer = createSlice({
 
 export default boardReducer.reducer;
 
-export const { addColumn, addTask, openModal, openColumn, openTask, openChange } =
+export const { addColumn, addTask, toggleModal, toggleColumn, toggleTask, toggleChange } =
   boardReducer.actions;
