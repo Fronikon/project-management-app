@@ -6,6 +6,8 @@ import ConfirmButton from '../../buttons/ConfirmButton/ConfirmButton';
 import CancelButton from '../../buttons/CancelButton/CancelButton';
 import TextInputForm from '../../customInputsForm/TextInputForm/TextInputForm';
 import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
+import { useAppDispatch } from './../../../hooks/reduxHooks';
+import { addBoardTAC } from '../../../store/reducers/boardsReducer';
 
 interface PropsType {
   closeModal: () => void;
@@ -23,9 +25,17 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
     control,
     formState: { errors, isDirty },
   } = useForm<FieldValuesType>();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValuesType): void => {
-    console.log(data);
+    dispatch(
+      addBoardTAC({
+        title: data.title,
+        description: data.description,
+        owner: 'string', // owner id
+        users: [],
+      })
+    );
     closeModal();
   };
 

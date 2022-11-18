@@ -4,7 +4,7 @@ import Modal from '../../../../componentsUtils/Modal/Modal';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
 import styles from './Boards.module.css';
 import { useAppDispatch } from './../../../../hooks/reduxHooks';
-import { getBoardsTAC } from '../../../../store/reducers/boardsReducer';
+import { deleteBoardTAC, getBoardsTAC } from '../../../../store/reducers/boardsReducer';
 
 const Boards: FC = () => {
   const dispatch = useAppDispatch();
@@ -46,11 +46,19 @@ const Boards: FC = () => {
         </li>
         {boards
           .map((board) => {
+            const deleteBoard = () => {
+              dispatch(deleteBoardTAC(board._id));
+            };
+
+            // const editBoard = () => {
+            //   dispatch(editBoardTAC());
+            // };
+
             return (
               <li className={styles.boardCard} key={board._id}>
                 <h3 className={styles.titleBoard}>
                   {board.title}
-                  <div onClick={() => console.log('delete')} className={styles.deleteButton}></div>
+                  <div onClick={deleteBoard} className={styles.deleteButton}></div>
                   <div onClick={() => console.log('edit')} className={styles.editButton}></div>
                 </h3>
                 <div className={styles.descriptionBoardWrapper}>
