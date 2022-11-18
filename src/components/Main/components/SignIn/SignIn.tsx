@@ -29,10 +29,8 @@ const SignIn: FC = () => {
   };
 
   useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-  });
+    reset();
+  }, [isSubmitSuccessful, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
@@ -43,17 +41,23 @@ const SignIn: FC = () => {
           name="login"
           control={control}
           rules={{
-            required: `${textData.errors.required[language]}`,
+            required: '1',
             minLength: {
               value: 3,
-              message: `${textData.errors.loginError[language]}`,
+              message: '2',
             },
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextInputForm
               onChangeText={onChange}
               value={value || ''}
-              error={error?.message}
+              error={
+                !error?.message
+                  ? ''
+                  : error?.message === '1'
+                  ? textData.errors.required[language]
+                  : textData.errors.loginError[language]
+              }
               type={'text'}
               label={textData.authPage.login[language]}
               placeholder={textData.authPage.loginPlaceholder[language]}
@@ -65,17 +69,23 @@ const SignIn: FC = () => {
           name="password"
           control={control}
           rules={{
-            required: `${textData.errors.required[language]}`,
+            required: '1',
             minLength: {
               value: 6,
-              message: `${textData.errors.passwordError[language]}`,
+              message: '2',
             },
           }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextInputForm
               onChangeText={onChange}
               value={value || ''}
-              error={error?.message}
+              error={
+                !error?.message
+                  ? ''
+                  : error?.message === '1'
+                  ? textData.errors.required[language]
+                  : textData.errors.passwordError[language]
+              }
               type={'text'}
               label={textData.authPage.password[language]}
               placeholder={textData.authPage.passwordPlaceholder[language]}

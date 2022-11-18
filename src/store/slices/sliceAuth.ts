@@ -10,7 +10,6 @@ const sliceAuth = createSlice({
   extraReducers: (builder) => {
     builder.addCase(signIn.fulfilled, (state, action) => {
       const temp = Object.values(action.payload);
-      console.log('temp: ', temp);
       state.token = temp[0];
     });
   },
