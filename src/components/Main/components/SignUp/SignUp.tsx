@@ -6,7 +6,7 @@ import { signUp } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../data/textData';
-import { useAppSelector } from '../../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 
 export interface SignUpType {
   name: string;
@@ -15,6 +15,7 @@ export interface SignUpType {
 }
 
 const SignUp: FC = () => {
+  const dispatch = useAppDispatch();
   const language = useAppSelector((store) => store.language.value);
 
   const {
@@ -26,8 +27,7 @@ const SignUp: FC = () => {
 
   const onSubmit = async (user: SignUpType) => {
     console.log(user);
-    const responce = await signUp(user);
-    console.log('responce: ', responce);
+    dispatch(signUp(user));
   };
 
   useEffect(() => {

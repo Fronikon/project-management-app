@@ -6,7 +6,7 @@ import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInpu
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import textData from '../../../../data/textData';
-import { useAppSelector } from '../../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 
 export interface SignInType {
   login: string;
@@ -14,6 +14,7 @@ export interface SignInType {
 }
 
 const SignIn: FC = () => {
+  const dispatch = useAppDispatch();
   const language = useAppSelector((store) => store.language.value);
 
   const {
@@ -24,8 +25,7 @@ const SignIn: FC = () => {
   } = useForm<SignInType>();
 
   const onSubmit = async (user: SignInType) => {
-    const responce = await signIn(user);
-    console.log('responce: ', responce);
+    dispatch(signIn(user));
   };
 
   useEffect(() => {
