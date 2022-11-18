@@ -6,6 +6,7 @@ import textData from '../../data/textData';
 import home from '../../assets/img/icons/home_image.jpg';
 import signIn from '../../assets/img/icons/sing_in.jpg';
 import signUp from '../../assets/img/icons/sign_up.jpg';
+import { NavLink } from 'react-router-dom';
 
 const Header: FC = () => {
   const language = useAppSelector((store) => store.language.value);
@@ -23,10 +24,10 @@ const Header: FC = () => {
     <header className={styles.headerWrapper}>
       <div className={styles.leftBlock}>
         <h1 className={styles.heading}>Doska</h1>
-        <button className={styles.home}>
+        <NavLink className={styles.home} to="/" end>
           <img src={home} alt="home" className={styles.homeImage} />
           <p className={styles.homeText}>{textData.header.home[language]}</p>
-        </button>
+        </NavLink>
       </div>
       <div className={styles.rightBlock}>
         <div className={styles.language}>
@@ -39,20 +40,22 @@ const Header: FC = () => {
             ></span>
           </label>
           <div className={styles.languageText}>
-            <p className={`${styles.languageRus} ${language === 'ru' && styles.active}`}>Русский</p>
-            <p className={`${styles.languageEng} ${language === 'eng' && styles.active}`}>
+            <p className={`${styles.languageRus} ${language === 'ru' && styles.activeLanguage}`}>
+              Русский
+            </p>
+            <p className={`${styles.languageEng} ${language === 'eng' && styles.activeLanguage}`}>
               English
             </p>
           </div>
         </div>
-        <button className={styles.signIn}>
+        <NavLink className={styles.signIn} to="/signIn" end>
           <img src={signIn} alt="signIn" className={styles.signInImage} />
           <p className={styles.signInText}>{textData.header.signIn[language]}</p>
-        </button>
-        <button className={styles.signUp}>
+        </NavLink>
+        <NavLink className={styles.signUp} to="/signUp" end>
           <img src={signUp} alt="signUp" className={styles.signUpImage} />
           <p className={styles.signUpText}>{textData.header.signUp[language]}</p>
-        </button>
+        </NavLink>
       </div>
     </header>
   );
