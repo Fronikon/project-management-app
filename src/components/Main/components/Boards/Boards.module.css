@@ -1,9 +1,94 @@
-.wrapper {
+.container {
+  margin: 0 auto;
   padding: 2em;
 }
 
 li {
   list-style: none;
+}
+
+.boardCard,
+.addBoard {
+  height: 190px;
+}
+
+.boards {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(auto, 350px));
+  justify-content: center;
+}
+
+.boardCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  padding: 1em;
+
+  background-color: gray;
+}
+
+.titleBoard,
+.descriptionBoardWrapper {
+  overflow: hidden;
+
+  background-color: white;
+}
+
+.titleBoard {
+  position: relative;
+
+  padding: 0.8em 5em 0.8em 0.5em;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.descriptionBoardWrapper {
+  flex: 1;
+
+  padding: 0.5em;
+}
+
+.descriptionBoard {
+  overflow: hidden;
+
+  height: 100%;
+
+  line-height: 1.15em;
+}
+
+.deleteButton,
+.editButton {
+  cursor: pointer;
+
+  position: absolute;
+
+  width: 24px;
+  height: 24px;
+
+  background-repeat: no-repeat;
+}
+
+.deleteButton {
+  top: calc(50% - 12px);
+  right: 0.8em;
+
+  background-image: url("../../../../assets/img/icons/delete.png");
+}
+
+.editButton {
+  top: calc(50% - 12px);
+  right: 2.6em;
+
+  background-image: url("../../../../assets/img/icons/edit.png");
+}
+
+.deleteButton:hover,
+.editButton:hover {
+  scale: 1.2;
 }
 
 .addBoard {
@@ -12,9 +97,6 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: 350px;
-  height: 170px;
 
   background: rgb(255 255 255 / 20%);
   border: 2px dashed #444;
