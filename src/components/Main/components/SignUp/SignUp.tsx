@@ -26,7 +26,6 @@ const SignUp: FC = () => {
   } = useForm<SignUpType>();
 
   const onSubmit = async (user: SignUpType) => {
-    console.log(user);
     dispatch(signUp(user));
   };
 
@@ -117,7 +116,7 @@ const SignUp: FC = () => {
                   ? textData.errors.required[language]
                   : textData.errors.passwordError[language]
               }
-              type={'text'}
+              type={'password'}
               label={textData.authPage.password[language]}
               placeholder={textData.authPage.passwordPlaceholder[language]}
             />

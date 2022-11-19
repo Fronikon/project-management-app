@@ -63,8 +63,6 @@
 
 @media screen and (max-width: 1385px) {
   .footerWrapper {
-    /* flex-direction: column; */
-
     height: auto;
     padding: 10px 0;
   }

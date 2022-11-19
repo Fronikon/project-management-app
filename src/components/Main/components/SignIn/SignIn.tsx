@@ -87,7 +87,7 @@ const SignIn: FC = () => {
                   ? textData.errors.required[language]
                   : textData.errors.passwordError[language]
               }
-              type={'text'}
+              type={'password'}
               label={textData.authPage.password[language]}
               placeholder={textData.authPage.passwordPlaceholder[language]}
             />
