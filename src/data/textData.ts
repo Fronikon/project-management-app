@@ -58,6 +58,44 @@ const textData = {
     },
   },
   boardsPage: {
+    createBoard: {
+      title: {
+        ru: 'Создание доски',
+        eng: 'Create board',
+      },
+      inputTitle: {
+        label: {
+          ru: 'Название',
+          eng: 'Title',
+        },
+        placeholder: {
+          ru: 'Введите название...',
+          eng: 'Enter title...',
+        },
+        requiredError: {
+          ru: 'Пожалуйста введите название.',
+          eng: 'Please enter title.',
+        },
+      },
+      inputDescription: {
+        label: {
+          ru: 'Описание',
+          eng: 'Description',
+        },
+        placeholder: {
+          ru: 'Введите описание...',
+          eng: 'Enter description...',
+        },
+      },
+      confirmButton: {
+        ru: 'Создать',
+        eng: 'Create',
+      },
+      cancelButton: {
+        ru: 'Отмена',
+        eng: 'Cancel',
+      },
+    },
     todo: {
       ru: 'К выполнению',
       eng: 'To do',
@@ -69,10 +107,6 @@ const textData = {
     newColumn: {
       ru: 'Новая колонка',
       eng: 'New column',
-    },
-    createBoard: {
-      ru: 'Создание доски',
-      eng: 'Create board',
     },
     editBoard: {
       ru: 'Редактирование доски',
@@ -164,17 +198,19 @@ const textData = {
     eng: 'Sorry, there is no such page',
   },
   general: {
-    confirmAction: {
-      ru: 'Вы уверены?',
-      eng: 'Are you sure?',
-    },
-    cancel: {
-      ru: 'Отмена',
-      eng: 'Cancel',
-    },
-    confirm: {
-      ru: 'Подтвердить',
-      eng: 'Confirm',
+    confirmModal: {
+      title: {
+        ru: 'Вы уверены?',
+        eng: 'Are you sure?',
+      },
+      cancelButton: {
+        ru: 'Нет',
+        eng: 'No',
+      },
+      confirmButton: {
+        ru: 'Да',
+        eng: 'Yes',
+      },
     },
   },
 };

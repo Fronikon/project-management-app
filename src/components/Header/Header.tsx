@@ -54,15 +54,15 @@ const Header: FC = () => {
         <div className={styles.buttons}>
           <NavLink className={styles.home} to={'/'}>
             <img src={home} alt="home" className={styles.homeImg} />
-            <p className={styles.homeText}>Home</p>
+            <p className={styles.homeText}>{textData.header.home[language]}</p>
           </NavLink>
           <NavLink className={styles.board} to={'boards'}>
             <img src={boards} alt="boards" className={styles.boardsImg} />
-            <p className={styles.boardText}>Boards</p>
+            <p className={styles.boardText}>{textData.header.boards[language]}</p>
           </NavLink>
           <button onClick={openModal} className={styles.addBoard}>
             <img src={addBoard} alt="add board" className={styles.addBoardImg} />
-            <p className={styles.addBoardText}>Add board</p>
+            <p className={styles.addBoardText}>{textData.header.addBoard[language]}</p>
           </button>
         </div>
         {renderCreateBoardModal()}

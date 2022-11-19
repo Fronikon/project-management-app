@@ -5,9 +5,10 @@ import { useForm, Controller } from 'react-hook-form';
 import ConfirmButton from '../../buttons/ConfirmButton/ConfirmButton';
 import CancelButton from '../../buttons/CancelButton/CancelButton';
 import TextInputForm from '../../customInputsForm/TextInputForm/TextInputForm';
-import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
-import { useAppDispatch } from './../../../hooks/reduxHooks';
+// import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
+import { useAppDispatch, useAppSelector } from './../../../hooks/reduxHooks';
 import { addBoardTAC } from '../../../store/reducers/boardsReducer';
+import textData from '../../../data/textData';
 
 interface PropsType {
   closeModal: () => void;
@@ -16,10 +17,12 @@ interface PropsType {
 interface FieldValuesType {
   title: string;
   description: string;
-  color: string;
+  // color: string;
 }
 
 const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
+  const language = useAppSelector((store) => store.language.value);
+
   const {
     handleSubmit,
     control,
@@ -39,24 +42,28 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
     closeModal();
   };
 
+  const createBoardText = textData.boardsPage.createBoard;
+  const inputTitleText = createBoardText.inputTitle;
+  const inputDescriptionText = createBoardText.inputDescription;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-      <h3 className={formsStyles.title}>Create board</h3>
+      <h3 className={formsStyles.title}>{createBoardText.title[language]}</h3>
 
       <div className={styles.fields}>
         <Controller
           name="title"
           control={control}
-          rules={{ required: 'Please enter title.' }}
+          rules={{ required: inputTitleText.requiredError[language] }}
           defaultValue={''}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextInputForm
               onChangeText={onChange}
               value={value}
               error={error?.message}
-              label={'Title'}
+              label={inputTitleText.label[language]}
               type={'text'}
-              placeholder={'Enter title..'}
+              placeholder={inputTitleText.placeholder[language]}
             />
           )}
         />
@@ -70,25 +77,28 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
               onChangeText={onChange}
               value={value}
               type={'text'}
-              label={'Description'}
-              placeholder={'Enter description..'}
+              label={inputDescriptionText.label[language]}
+              placeholder={inputDescriptionText.placeholder[language]}
             />
           )}
         />
 
-        <Controller
+        {/* <Controller
           name="color"
           control={control}
           defaultValue={'#EABFFF'}
           render={({ field: { onChange, value } }) => (
             <ColorInputForm onChangeColor={onChange} value={value} />
           )}
-        />
+        /> */}
       </div>
 
       <div className={formsStyles.buttons}>
-        <ConfirmButton disabled={!isDirty || !!Object.keys(errors).length} />
-        <CancelButton handleClick={closeModal} />
+        <ConfirmButton
+          name={createBoardText.confirmButton[language]}
+          disabled={!isDirty || !!Object.keys(errors).length}
+        />
+        <CancelButton name={createBoardText.cancelButton[language]} handleClick={closeModal} />
       </div>
     </form>
   );
