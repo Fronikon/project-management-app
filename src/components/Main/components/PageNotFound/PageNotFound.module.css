@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  padding: 1rem;
+  padding-top: 2rem;
+
+  font-size: max(2rem, 3vw);
+  color: #fff;
+  text-align: center;
+}
+
+.image {
+  align-items: center;
+
+  max-width: 100%;
+  height: auto;
+  padding: 1rem;
+}

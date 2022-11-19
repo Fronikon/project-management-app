@@ -155,6 +155,10 @@ const textData = {
       eng: 'Enter at least 6 characters',
     },
   },
+  pageNotFound: {
+    ru: 'К сожалению такой страницы не существует',
+    eng: 'Sorry, there is no such page',
+  },
   general: {
     confirmAction: {
       ru: 'Вы уверены?',
