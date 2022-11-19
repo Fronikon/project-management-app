@@ -26,7 +26,9 @@ const SignIn: FC = () => {
   } = useForm<SignInType>();
 
   const onSubmit = async (user: SignInType) => {
-    dispatch(signIn(user));
+    const response = await dispatch(signIn(user));
+    const tokenObject = response.payload || '';
+    localStorage.setItem('token', JSON.parse(JSON.stringify(tokenObject)).token);
   };
 
   useEffect(() => {
