@@ -1,0 +1,9 @@
+.messageWrapper {
+  margin-top: 2.5em;
+
+  text-align: center;
+}
+
+.message {
+  display: inline-block;
+}

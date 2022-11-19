@@ -121,8 +121,12 @@ const textData = {
       eng: 'Submit',
     },
     warning: {
-      ru: 'Если у вас нет аккаунта пожалуйста зарегистрируйтесь',
-      eng: "If you don't have an account please register.",
+      ru: 'Если у вас нет аккаунта пожалуйста ',
+      eng: "If you don't have an account please ",
+    },
+    warningLink: {
+      ru: 'зарегистрируйтесь',
+      eng: 'register',
     },
     registration: {
       ru: 'Регистрация',

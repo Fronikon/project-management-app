@@ -4,6 +4,7 @@ import { signIn } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
+import signInStyles from './SignIn.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
@@ -96,6 +97,12 @@ const SignIn: FC = () => {
 
       <div className={formsStyles.buttons}>
         <ConfirmButton disabled={!isDirty || !!Object.keys(errors).length} />
+      </div>
+      <div className={signInStyles.messageWrapper}>
+        <p className={signInStyles.message}>{textData.authPage.warning[language]}&thinsp;</p>
+        <a className={signInStyles.link} href="/signUp">
+          {textData.authPage.warningLink[language]}
+        </a>
       </div>
     </form>
   );
