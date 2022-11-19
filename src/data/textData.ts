@@ -133,6 +133,10 @@ const textData = {
       eng: 'Name',
     },
   },
+  pageNotFound: {
+    ru: 'К сожалению такой страницы не существует',
+    eng: 'Sorry, there is no such page',
+  },
   general: {
     confirmAction: {
       ru: 'Вы уверены?',
