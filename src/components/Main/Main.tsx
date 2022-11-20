@@ -11,8 +11,16 @@ const Main: FC = () => {
     <main className={styles.main}>
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/signIn" element={token ? <Welcome /> : <SignIn />} />
-        <Route path="/signUp" element={token ? <Welcome /> : <SignUp />} />
+        {token ? (
+          <Route path="/signIn" element={<Navigate to="/" replace />} />
+        ) : (
+          <Route path="/signIn" element={<SignIn />} />
+        )}
+        {token ? (
+          <Route path="/signUp" element={<Navigate to="/" replace />} />
+        ) : (
+          <Route path="/signUp" element={<SignUp />} />
+        )}
         <Route path="/boards" element={<Boards />} />
         <Route path="/boards/:id" element={<Board />} />
         <Route path="/404" element={<PageNotFound />} />
