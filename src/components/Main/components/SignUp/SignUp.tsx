@@ -1,5 +1,6 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import { signUp } from '../../../../api/authApi';
@@ -17,21 +18,18 @@ export interface SignUpType {
 const SignUp: FC = () => {
   const dispatch = useAppDispatch();
   const language = useAppSelector((store) => store.language.value);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
     control,
-    reset,
-    formState: { errors, isDirty, isSubmitSuccessful },
+    formState: { errors, isDirty },
   } = useForm<SignUpType>();
 
   const onSubmit = async (user: SignUpType) => {
-    dispatch(signUp(user));
+    await dispatch(signUp(user));
+    navigate('/signIn');
   };
-
-  useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>

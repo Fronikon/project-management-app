@@ -1,5 +1,6 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { signIn } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
@@ -8,7 +9,6 @@ import signInStyles from './SignIn.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { Link } from 'react-router-dom';
 
 export interface SignInType {
   login: string;
@@ -22,8 +22,7 @@ const SignIn: FC = () => {
   const {
     handleSubmit,
     control,
-    reset,
-    formState: { errors, isDirty, isSubmitSuccessful },
+    formState: { errors, isDirty },
   } = useForm<SignInType>();
 
   const onSubmit = async (user: SignInType) => {
@@ -31,10 +30,6 @@ const SignIn: FC = () => {
     const tokenObject = response.payload || '';
     localStorage.setItem('token', JSON.parse(JSON.stringify(tokenObject)).token);
   };
-
-  useEffect(() => {
-    reset();
-  }, [isSubmitSuccessful, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
