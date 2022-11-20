@@ -86,6 +86,10 @@ const textData = {
           ru: 'Введите описание...',
           eng: 'Enter description...',
         },
+        requiredError: {
+          ru: 'Пожалуйста введите описание.',
+          eng: 'Please enter description.',
+        },
       },
       confirmButton: {
         ru: 'Создать',
@@ -95,6 +99,10 @@ const textData = {
         ru: 'Отмена',
         eng: 'Cancel',
       },
+    },
+    questionConfirmingDeleteBoard: {
+      ru: 'Доска будет удалена. Вы уверены?',
+      eng: 'The board will be removed. Are you sure?',
     },
     todo: {
       ru: 'К выполнению',
@@ -199,10 +207,6 @@ const textData = {
   },
   general: {
     confirmModal: {
-      title: {
-        ru: 'Вы уверены?',
-        eng: 'Are you sure?',
-      },
       cancelButton: {
         ru: 'Нет',
         eng: 'No',

@@ -71,11 +71,13 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
         <Controller
           name="description"
           control={control}
+          rules={{ required: inputDescriptionText.requiredError[language] }}
           defaultValue={''}
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextInputForm
               onChangeText={onChange}
               value={value}
+              error={error?.message}
               type={'text'}
               label={inputDescriptionText.label[language]}
               placeholder={inputDescriptionText.placeholder[language]}

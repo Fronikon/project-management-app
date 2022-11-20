@@ -1,7 +1,8 @@
 import { BoardType, BoardTypeWithoutId } from '../types/boardsTypes';
 import { instance } from './instance';
 
-const token = '';
+const token =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njg5MzI5MjIsImV4cCI6MTY2ODk3NjEyMn0.988w2oh-yh6Lh_msXS6bN4NmTYhaO62IjjyTxVNTkqs';
 
 export const getBoardsApi = async (): Promise<BoardType[]> => {
   const res = await instance.get('boards', { headers: { Authorization: `Bearer ${token}` } });
