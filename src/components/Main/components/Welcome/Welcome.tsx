@@ -9,16 +9,29 @@ import textData from '../../../../data/textData';
 import { Link } from 'react-router-dom';
 
 const Welcome: FC = () => {
+  const token = useAppSelector((store) => store.authReducer.token);
   const language = useAppSelector((store) => store.language.value);
 
   return (
     <div className={styles.mainWrapper}>
       <div className={styles.textWrapper}>
         <p className={styles.text}>{textData.welcomePage.textWrapper[language]}</p>
-        <div className={styles.linkWrapper}>
-          <Link to="/signIn">{textData.authPage.signIn[language]}</Link>
-          <Link to="/signUp">{textData.authPage.registration[language]}</Link>
-        </div>
+        {token ? (
+          <div className={styles.linkWrapper}>
+            <Link className={styles.linkSignIn} to="/boards">
+              {textData.header.start[language]}
+            </Link>
+          </div>
+        ) : (
+          <div className={styles.linkWrapper}>
+            <Link className={styles.linkSignIn} to="/signIn">
+              {textData.authPage.signIn[language]}
+            </Link>
+            <Link className={styles.linkSignUp} to="/signUp">
+              {textData.authPage.registration[language]}
+            </Link>
+          </div>
+        )}
       </div>
       <img src={cards} alt="cards" className={styles.cards} />
       <div className={styles.teamWrapper}>
