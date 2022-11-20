@@ -6,7 +6,8 @@ import textData from '../../data/textData';
 import home from '../../assets/img/icons/home_image.jpg';
 import signIn from '../../assets/img/icons/sing_in.jpg';
 import signUp from '../../assets/img/icons/sign_up.jpg';
-import toBoards from '../../assets/img/icons/to_boards.png';
+import edit from '../../assets/img/icons/edit.png';
+import exit from '../../assets/img/icons/exit.png';
 import { NavLink } from 'react-router-dom';
 
 const Header: FC = () => {
@@ -51,18 +52,24 @@ const Header: FC = () => {
           </div>
         </div>
         {token ? (
-          <NavLink className={styles.toBoards} to="/boards" end>
-            <img src={toBoards} alt="start" className={styles.signInImage} />
-            <p className={styles.signInText}>{textData.header.start[language]}</p>
-          </NavLink>
+          <div className={styles.auth}>
+            <NavLink className={styles.signIn} to="/edit" end>
+              <img src={edit} alt="Edit profile." className={styles.signInImage} />
+              <p className={styles.signInText}>{textData.header.edit[language]}</p>
+            </NavLink>
+            <NavLink className={styles.signUp} to="/exit" end>
+              <img src={exit} alt="Exit." className={styles.signUpImage} />
+              <p className={styles.signUpText}>{textData.header.exit[language]}</p>
+            </NavLink>
+          </div>
         ) : (
           <div className={styles.auth}>
             <NavLink className={styles.signIn} to="/signIn" end>
-              <img src={signIn} alt="signIn" className={styles.signInImage} />
+              <img src={signIn} alt="Sign In." className={styles.signInImage} />
               <p className={styles.signInText}>{textData.header.signIn[language]}</p>
             </NavLink>
             <NavLink className={styles.signUp} to="/signUp" end>
-              <img src={signUp} alt="signUp" className={styles.signUpImage} />
+              <img src={signUp} alt="Sign Up." className={styles.signUpImage} />
               <p className={styles.signUpText}>{textData.header.signUp[language]}</p>
             </NavLink>
           </div>
