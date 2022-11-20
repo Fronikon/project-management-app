@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { createColumn, getAllColumns } from '../../../../api/columnApi';
+import { createColumn, deleteColumn, getAllColumns } from '../../../../api/columnApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { toggleColumn, toggleModal, toggleTask } from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
@@ -20,7 +20,13 @@ const Board: FC = () => {
           <div key={column._id} className={styles.column}>
             <div className={styles.headingWrapper}>
               <h2 className={styles.titleColumn}>{column.title}</h2>
-              <button className={styles.delete}></button>
+              <button
+                className={styles.delete}
+                onClick={() => {
+                  dispatch(deleteColumn({ id: column._id }));
+                  dispatch(getAllColumns());
+                }}
+              ></button>
             </div>
             {/* <div className={styles.tasksWrapper}>
               {column.column.map((task, taskIndex) => (

@@ -33,3 +33,12 @@ export const createColumn = createAsyncThunk<void, createColumnType>(
     );
   }
 );
+
+export const deleteColumn = createAsyncThunk<void, { id: string }>(
+  'column/deleteColumn',
+  async (arg) => {
+    await axios.delete(`${url}/${arg.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+);
