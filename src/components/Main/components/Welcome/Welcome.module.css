@@ -17,10 +17,19 @@
   position: relative;
   z-index: 100;
 
+  display: flex;
+  gap: 2.5rem;
+
   width: 1212px;
   height: 357px;
   margin: 0 0 0 317px;
   padding-top: 90px;
+}
+
+.linkWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .cards {

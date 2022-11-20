@@ -8,6 +8,7 @@ import signInStyles from './SignIn.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import { Link } from 'react-router-dom';
 
 export interface SignInType {
   login: string;
@@ -102,9 +103,9 @@ const SignIn: FC = () => {
       </div>
       <div className={signInStyles.messageWrapper}>
         <p className={signInStyles.message}>{textData.authPage.warning[language]}&thinsp;</p>
-        <a className={signInStyles.link} href="/signUp">
+        <Link className={signInStyles.link} to="/signUp">
           {textData.authPage.warningLink[language]}
-        </a>
+        </Link>
       </div>
     </form>
   );

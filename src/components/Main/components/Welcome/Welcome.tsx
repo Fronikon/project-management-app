@@ -6,6 +6,7 @@ import K from '../../../../assets/img/other/letterK.png';
 import Team from './Team/Team';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
 import textData from '../../../../data/textData';
+import { Link } from 'react-router-dom';
 
 const Welcome: FC = () => {
   const language = useAppSelector((store) => store.language.value);
@@ -14,6 +15,10 @@ const Welcome: FC = () => {
     <div className={styles.mainWrapper}>
       <div className={styles.textWrapper}>
         <p className={styles.text}>{textData.welcomePage.textWrapper[language]}</p>
+        <div className={styles.linkWrapper}>
+          <Link to="/signIn">{textData.authPage.signIn[language]}</Link>
+          <Link to="/signUp">{textData.authPage.registration[language]}</Link>
+        </div>
       </div>
       <img src={cards} alt="cards" className={styles.cards} />
       <div className={styles.teamWrapper}>
