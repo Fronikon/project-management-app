@@ -27,8 +27,7 @@
 
 .home,
 .signIn,
-.signUp,
-.toBoards {
+.signUp {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -37,16 +36,6 @@
   background-color: transparent;
 
   transition: 0.4s;
-}
-
-@keyframes glowing {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-.toBoards {
-  animation: glowing 1300ms infinite;
 }
 
 .language {
