@@ -51,7 +51,7 @@ const Header: FC = () => {
           </div>
         </div>
         {token ? (
-          <NavLink className={styles.signIn} to="/boards" end>
+          <NavLink className={styles.toBoards} to="/boards" end>
             <img src={toBoards} alt="start" className={styles.signInImage} />
             <p className={styles.signInText}>{textData.header.start[language]}</p>
           </NavLink>
