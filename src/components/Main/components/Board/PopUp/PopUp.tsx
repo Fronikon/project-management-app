@@ -1,13 +1,8 @@
 import React, { FC, useState } from 'react';
+import { createColumn, getAllColumns } from '../../../../../api/columnApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
-import {
-  addColumn,
-  addTask,
-  toggleColumn,
-  toggleModal,
-  toggleTask,
-} from '../../../../../store/reducers/boardReducer';
+import { toggleColumn, toggleModal, toggleTask } from '../../../../../store/reducers/boardReducer';
 import styles from './PopUp.module.css';
 
 const PopUp: FC = () => {
@@ -32,35 +27,37 @@ const PopUp: FC = () => {
   };
 
   const columnConfirm = () => {
-    dispatch(
-      // addColumn({
-      //   description: title,
-      //   column: [],
-      // })
-      addColumn({
-        description: title,
-        column: [
-          {
-            title: 'Nandemo',
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            color: '#7fffd4',
-          },
-          {
-            title: 'Nandemo',
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            color: '#7fffd4',
-          },
-          {
-            title: 'Nandemo',
-            description:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            color: '#7fffd4',
-          },
-        ],
-      })
-    );
+    // dispatch(
+    //   // addColumn({
+    //   //   description: title,
+    //   //   column: [],
+    //   // })
+    //   addColumn({
+    //     description: title,
+    //     column: [
+    //       {
+    //         title: 'Nandemo',
+    //         description:
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //         color: '#7fffd4',
+    //       },
+    //       {
+    //         title: 'Nandemo',
+    //         description:
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //         color: '#7fffd4',
+    //       },
+    //       {
+    //         title: 'Nandemo',
+    //         description:
+    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //         color: '#7fffd4',
+    //       },
+    //     ],
+    //   })
+    // );
+    dispatch(createColumn({ title: title, order: 1 }));
+    dispatch(getAllColumns());
     dispatch(toggleColumn());
     dispatch(toggleModal());
     setTitle('');
@@ -73,13 +70,13 @@ const PopUp: FC = () => {
   };
 
   const taskConfirm = () => {
-    dispatch(
-      addTask({
-        title: title,
-        description: description,
-        color: color,
-      })
-    );
+    // dispatch(
+    //   addTask({
+    //     title: title,
+    //     description: description,
+    //     color: color,
+    //   })
+    // );
     dispatch(toggleTask());
     dispatch(toggleModal());
     setTitle('');

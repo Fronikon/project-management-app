@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
+import { createColumn, getAllColumns } from '../../../../api/columnApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { toggleColumn, toggleModal, toggleTask } from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
@@ -8,16 +9,20 @@ const Board: FC = () => {
   const board = useAppSelector((store) => store.board.value);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    dispatch(getAllColumns());
+  }, [dispatch]);
+
   return (
     <>
       <div className={styles.wrapper}>
-        {board.map((column, columnIndex) => (
-          <div key={`${columnIndex}-${column}`} className={styles.column}>
+        {board.map((column) => (
+          <div key={column._id} className={styles.column}>
             <div className={styles.headingWrapper}>
-              <h2 className={styles.titleColumn}>{column.description}</h2>
+              <h2 className={styles.titleColumn}>{column.title}</h2>
               <button className={styles.delete}></button>
             </div>
-            <div className={styles.tasksWrapper}>
+            {/* <div className={styles.tasksWrapper}>
               {column.column.map((task, taskIndex) => (
                 <div
                   key={`${taskIndex}-${task}`}
@@ -38,7 +43,7 @@ const Board: FC = () => {
                   dispatch(toggleTask());
                 }}
               ></button>
-            </div>
+            </div> */}
           </div>
         ))}
         <button

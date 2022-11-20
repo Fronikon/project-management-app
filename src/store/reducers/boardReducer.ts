@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getAllColumns } from '../../api/columnApi';
 
 interface TaskType {
   id: number;
@@ -7,10 +8,11 @@ interface TaskType {
   color: string;
 }
 
-interface ColumnType {
-  id: number;
-  description: string;
-  column: TaskType[];
+export interface ColumnType {
+  _id: string;
+  title: string;
+  order: number;
+  boardId: string;
 }
 
 interface InitialStateType {
@@ -33,12 +35,6 @@ const boardReducer = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    addColumn(state, action) {
-      state.value.push(action.payload);
-    },
-    addTask(state, action) {
-      state.value.push(action.payload);
-    },
     toggleModal(state) {
       state.isModalOpen = !state.isModalOpen;
     },
@@ -52,9 +48,13 @@ const boardReducer = createSlice({
       state.isChangeModalOpen = !state.isChangeModalOpen;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getAllColumns.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
+      state.value = action.payload;
+    });
+  },
 });
 
 export default boardReducer.reducer;
 
-export const { addColumn, addTask, toggleModal, toggleColumn, toggleTask, toggleChange } =
-  boardReducer.actions;
+export const { toggleModal, toggleColumn, toggleTask, toggleChange } = boardReducer.actions;
