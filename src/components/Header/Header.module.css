@@ -20,6 +20,11 @@
   margin: 0 64px 0 0;
 }
 
+.auth {
+  display: flex;
+  gap: 36px;
+}
+
 .home,
 .signIn,
 .signUp {

@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { signIn } from '../../api/authApi';
 
+const initialState: { token: string } = {
+  token: localStorage.getItem('token') || '',
+};
+
 const sliceAuth = createSlice({
   name: 'auth',
-  initialState: {
-    token: '',
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(signIn.fulfilled, (state, action) => {

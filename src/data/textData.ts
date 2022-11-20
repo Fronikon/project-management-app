@@ -28,6 +28,10 @@ const textData = {
       ru: 'Изменить',
       eng: 'Edit',
     },
+    start: {
+      ru: 'К доскам',
+      eng: 'To boards',
+    },
   },
   footer: {
     Andrey: {
