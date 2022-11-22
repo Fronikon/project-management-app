@@ -5,7 +5,7 @@ import { useForm, Controller } from 'react-hook-form';
 import ConfirmButton from '../../buttons/ConfirmButton/ConfirmButton';
 import CancelButton from '../../buttons/CancelButton/CancelButton';
 import TextInputForm from '../../customInputsForm/TextInputForm/TextInputForm';
-// import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
+import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
 import { useAppDispatch, useAppSelector } from './../../../hooks/reduxHooks';
 import { addBoardTAC } from '../../../store/reducers/boardsReducer';
 import textData from '../../../data/textData';
@@ -17,7 +17,7 @@ interface PropsType {
 interface FieldValuesType {
   title: string;
   description: string;
-  // color: string;
+  color: string;
 }
 
 const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
@@ -31,10 +31,13 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValuesType): void => {
+    const { title, description, color } = data;
+
     dispatch(
       addBoardTAC({
-        title: data.title,
-        description: data.description,
+        title,
+        description,
+        color,
         owner: 'string', // owner id
         users: [],
       })
@@ -85,14 +88,14 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
           )}
         />
 
-        {/* <Controller
+        <Controller
           name="color"
           control={control}
           defaultValue={'#EABFFF'}
           render={({ field: { onChange, value } }) => (
             <ColorInputForm onChangeColor={onChange} value={value} />
           )}
-        /> */}
+        />
       </div>
 
       <div className={formsStyles.buttons}>

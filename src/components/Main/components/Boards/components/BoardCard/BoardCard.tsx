@@ -48,7 +48,7 @@ const BoardCard: FC<PropsType> = ({ board }) => {
   };
 
   return (
-    <li className={styles.boardCard}>
+    <li className={styles.boardCard} style={{ backgroundColor: board.color }}>
       <h3 className={styles.titleBoard}>
         {board.title}
         <div onClick={openDeleteModal} className={styles.deleteButton}></div>
