@@ -1,13 +1,16 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
+import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
 import { signUp } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import Modal from '../../../../componentsUtils/Modal/Modal';
+import { cleanError } from '../../../../store/slices/sliceError';
 
 export interface SignUpType {
   name: string;
@@ -19,6 +22,8 @@ const SignUp: FC = () => {
   const dispatch = useAppDispatch();
   const language = useAppSelector((store) => store.language.value);
   const navigate = useNavigate();
+  const error = useAppSelector((store) => store.errorReducer.error);
+  const [isModal, setIsModal] = useState(false);
 
   const {
     handleSubmit,
@@ -27,13 +32,22 @@ const SignUp: FC = () => {
   } = useForm<SignUpType>();
 
   const onSubmit = async (user: SignUpType) => {
-    await dispatch(signUp(user));
-    navigate('/signIn');
+    const response = await dispatch(signUp(user));
+    if (typeof response.payload !== 'string') navigate('/signIn');
   };
+
+  const closeModal = () => {
+    setIsModal(false);
+    dispatch(cleanError());
+  };
+
+  useEffect(() => {
+    if (error) setIsModal(true);
+  }, [error]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-      <h3 className={formsStyles.title}>{textData.authPage.registration[language]}</h3>
+      <h3 className={formsStyles.title}>{textData.header.signUp[language]}</h3>
 
       <div className={styles.fields}>
         <Controller
@@ -125,6 +139,14 @@ const SignUp: FC = () => {
       <div className={formsStyles.buttons}>
         <ConfirmButton disabled={!isDirty || !!Object.keys(errors).length} />
       </div>
+
+      {isModal && (
+        <Modal closeModal={closeModal}>
+          <div className={modalStyles.modalWrapper}>
+            <h2>{error}</h2>
+          </div>
+        </Modal>
+      )}
     </form>
   );
 };
