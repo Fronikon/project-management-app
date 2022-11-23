@@ -100,6 +100,16 @@ const textData = {
         eng: 'Cancel',
       },
     },
+    editBoard: {
+      title: {
+        ru: 'Редактировать доску',
+        eng: 'Edit board',
+      },
+      confirmButton: {
+        ru: 'Изменить',
+        eng: 'Edit',
+      },
+    },
     questionConfirmingDeleteBoard: {
       ru: 'Доска будет удалена. Вы уверены?',
       eng: 'The board will be removed. Are you sure?',
@@ -115,10 +125,6 @@ const textData = {
     newColumn: {
       ru: 'Новая колонка',
       eng: 'New column',
-    },
-    editBoard: {
-      ru: 'Редактирование доски',
-      eng: 'Edit Board',
     },
     title: {
       ru: 'Название',

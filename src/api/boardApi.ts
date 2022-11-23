@@ -19,6 +19,17 @@ export const addBoardApi = async (board: BoardTypeWithoutId): Promise<BoardType>
   return res.data;
 };
 
+export const editBoardApi = async (board: BoardTypeWithoutId, id: string): Promise<BoardType> => {
+  const res = await instance.put(`boards/${id}`, board, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
+  return res.data;
+};
+
 export const deleteBoardApi = async (id: string): Promise<BoardType> => {
   const res = await instance.delete(`boards/${id}`, {
     headers: {

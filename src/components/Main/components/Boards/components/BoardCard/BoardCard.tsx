@@ -6,35 +6,30 @@ import { deleteBoardTAC } from '../../../../../../store/reducers/boardsReducer';
 import { BoardType } from '../../../../../../types/boardsTypes';
 import styles from './BoardCard.module.css';
 import textData from './../../../../../../data/textData';
+import EditBoardForm from '../../../../../../componentsUtils/forms/EditBoardForm/EditBoardForm';
 
 interface PropsType {
   board: BoardType;
 }
 
 const BoardCard: FC<PropsType> = ({ board }) => {
-  const [isOpenDeleteBoardModal, setIsOpenDeleteBoardModal] = useState(false);
-  const language = useAppSelector((store) => store.language.value);
-
   const dispatch = useAppDispatch();
 
-  const deleteBoard = () => {
-    dispatch(deleteBoardTAC(board._id));
-  };
+  const [statusDeleteBoardModal, setStatusDeleteBoardModal] = useState(false);
+  const [statusEditBoardModal, setStatusEditBoardModal] = useState(false);
 
-  // const editBoard = () => {
-  //   dispatch(editBoardTAC());
-  // };
+  const language = useAppSelector((store) => store.language.value);
 
-  const closeDeleteModal = () => {
-    setIsOpenDeleteBoardModal(false);
-  };
+  const deleteBoard = () => dispatch(deleteBoardTAC(board._id));
 
-  const openDeleteModal = () => {
-    setIsOpenDeleteBoardModal(true);
-  };
+  const closeEditModal = () => setStatusEditBoardModal(false);
+  const openEditModal = () => setStatusEditBoardModal(true);
+
+  const closeDeleteModal = () => setStatusDeleteBoardModal(false);
+  const openDeleteModal = () => setStatusDeleteBoardModal(true);
 
   const renderDeleteBoardModal = () => {
-    if (isOpenDeleteBoardModal) {
+    if (statusDeleteBoardModal) {
       return (
         <Modal closeModal={closeDeleteModal}>
           <ConfirmAction
@@ -47,13 +42,24 @@ const BoardCard: FC<PropsType> = ({ board }) => {
     }
   };
 
+  const renderEditBoardModal = () => {
+    if (statusEditBoardModal) {
+      return (
+        <Modal closeModal={closeEditModal}>
+          <EditBoardForm closeModal={closeEditModal} board={board} />
+        </Modal>
+      );
+    }
+  };
+
   return (
     <li className={styles.boardCard} style={{ backgroundColor: board.color }}>
       <h3 className={styles.titleBoard}>
         {board.title}
         <div onClick={openDeleteModal} className={styles.deleteButton}></div>
         {renderDeleteBoardModal()}
-        <div onClick={() => console.log('edit')} className={styles.editButton}></div>
+        <div onClick={openEditModal} className={styles.editButton}></div>
+        {renderEditBoardModal()}
       </h3>
       <div className={styles.descriptionBoardWrapper}>
         <p className={styles.descriptionBoard}>{board.description}</p>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { addBoardApi, deleteBoardApi, getBoardsApi } from '../../api/boardApi';
 import { BoardType, BoardTypeWithoutId } from '../../types/boardsTypes';
 import { RejectResponseType } from './../../types/apiTypes';
+import { editBoardApi } from './../../api/boardApi';
 
 interface initialStateType {
   boards: BoardType[];
@@ -52,6 +53,27 @@ export const addBoardTAC = createAsyncThunk<BoardType, BoardTypeWithoutId, { rej
   }
 );
 
+export const editBoardTAC = createAsyncThunk<BoardType, BoardType, { rejectValue: string }>(
+  'boards/editBoard',
+  async (board, { rejectWithValue }) => {
+    try {
+      const { _id, ...rest } = board;
+      return await editBoardApi(rest, _id);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data.message) {
+          const errorData: RejectResponseType = error.response.data;
+          return rejectWithValue(errorData.message);
+        } else {
+          return rejectWithValue('Unknown error');
+        }
+      } else {
+        return rejectWithValue((error as Error).message);
+      }
+    }
+  }
+);
+
 export const deleteBoardTAC = createAsyncThunk<string, string, { rejectValue: string }>(
   'boards/deleteBoard',
   async (id, { rejectWithValue }) => {
@@ -78,14 +100,22 @@ const boardsSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getBoardsTAC.fulfilled, (state, action) => {
-      state.boards = action.payload;
+    builder.addCase(getBoardsTAC.fulfilled, (state, { payload }) => {
+      state.boards = payload;
     });
-    builder.addCase(addBoardTAC.fulfilled, (state, action) => {
-      state.boards.push(action.payload);
+    builder.addCase(addBoardTAC.fulfilled, (state, { payload }) => {
+      state.boards.push(payload);
     });
-    builder.addCase(deleteBoardTAC.fulfilled, (state, action) => {
-      const index = state.boards.findIndex((el) => el._id === action.payload);
+    builder.addCase(editBoardTAC.fulfilled, (state, { payload }) => {
+      state.boards = state.boards.map((item) => {
+        if (item._id === payload._id) {
+          return payload;
+        }
+        return item;
+      });
+    });
+    builder.addCase(deleteBoardTAC.fulfilled, (state, { payload }) => {
+      const index = state.boards.findIndex((el) => el._id === payload);
       if (index > -1) {
         state.boards.splice(index, 1);
       }
