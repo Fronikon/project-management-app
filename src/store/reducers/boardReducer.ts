@@ -1,11 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllColumns } from '../../api/columnApi';
+import { getColumnTasks } from '../../api/taskApi';
 
-interface TaskType {
-  id: number;
+export interface TaskType {
+  _id: string;
   title: string;
+  order: number;
+  boardId: string;
+  columnId: string;
   description: string;
   color: string;
+  userId: number;
+  users: string[];
 }
 
 export interface ColumnType {
@@ -13,6 +19,7 @@ export interface ColumnType {
   title: string;
   order: number;
   boardId: string;
+  tasks: TaskType[];
 }
 
 interface InitialStateType {
@@ -49,9 +56,19 @@ const boardReducer = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getAllColumns.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
-      state.value = action.payload;
-    });
+    builder
+      .addCase(getAllColumns.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
+        state.value = action.payload;
+      })
+      .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
+        if (action.payload.length > 0) {
+          const column = state.value.find(({ _id }) => _id === action.payload[0].columnId);
+          // column?.tasks.push(...action.payload);
+          if (column) {
+            column.tasks = [...action.payload];
+          }
+        }
+      });
   },
 });
 

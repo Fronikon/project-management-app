@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import { createColumn, deleteColumn, getAllColumns } from '../../../../api/columnApi';
+import { deleteColumn, getAllColumns } from '../../../../api/columnApi';
+import { getColumnTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { toggleColumn, toggleModal, toggleTask } from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
@@ -11,7 +12,10 @@ const Board: FC = () => {
 
   useEffect(() => {
     dispatch(getAllColumns());
-  }, [dispatch]);
+    for (let i = 0; i < board.length; i++) {
+      dispatch(getColumnTasks({ _id: board[i]._id }));
+    }
+  }, []);
 
   return (
     <>
@@ -28,13 +32,9 @@ const Board: FC = () => {
                 }}
               ></button>
             </div>
-            {/* <div className={styles.tasksWrapper}>
-              {column.column.map((task, taskIndex) => (
-                <div
-                  key={`${taskIndex}-${task}`}
-                  style={{ backgroundColor: task.color }}
-                  className={styles.task}
-                >
+            <div className={styles.tasksWrapper}>
+              {column.tasks?.map((task) => (
+                <div key={task._id} style={{ backgroundColor: task.color }} className={styles.task}>
                   <div className={styles.titleWrapper}>
                     <h3 className={styles.titleTask}>{task.title}</h3>
                     <button className={`${styles.delete} ${styles.deleteTask}`}></button>
@@ -49,7 +49,7 @@ const Board: FC = () => {
                   dispatch(toggleTask());
                 }}
               ></button>
-            </div> */}
+            </div>
           </div>
         ))}
         <button

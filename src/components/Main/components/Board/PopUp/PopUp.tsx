@@ -27,35 +27,6 @@ const PopUp: FC = () => {
   };
 
   const columnConfirm = () => {
-    // dispatch(
-    //   // addColumn({
-    //   //   description: title,
-    //   //   column: [],
-    //   // })
-    //   addColumn({
-    //     description: title,
-    //     column: [
-    //       {
-    //         title: 'Nandemo',
-    //         description:
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //         color: '#7fffd4',
-    //       },
-    //       {
-    //         title: 'Nandemo',
-    //         description:
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //         color: '#7fffd4',
-    //       },
-    //       {
-    //         title: 'Nandemo',
-    //         description:
-    //           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-    //         color: '#7fffd4',
-    //       },
-    //     ],
-    //   })
-    // );
     dispatch(createColumn({ title: title, order: 1 }));
     dispatch(getAllColumns());
     dispatch(toggleColumn());
