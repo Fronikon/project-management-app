@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { deleteColumn, getAllColumns } from '../../../../api/columnApi';
-import { getColumnTasks } from '../../../../api/taskApi';
+import { deleteTask, getColumnTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   setCurrentColumnId,
@@ -42,7 +42,15 @@ const Board: FC = () => {
                 <div key={task._id} style={{ backgroundColor: task.color }} className={styles.task}>
                   <div className={styles.titleWrapper}>
                     <h3 className={styles.titleTask}>{task.title}</h3>
-                    <button className={`${styles.delete} ${styles.deleteTask}`}></button>
+                    <button
+                      className={`${styles.delete} ${styles.deleteTask}`}
+                      onClick={() => {
+                        if (task._id !== undefined) {
+                          dispatch(deleteTask({ columnId: column._id, taskId: task._id }));
+                          dispatch(getColumnTasks({ _id: column._id }));
+                        }
+                      }}
+                    ></button>
                   </div>
                   <p className={styles.descriptionTask}>{task.description}</p>
                 </div>

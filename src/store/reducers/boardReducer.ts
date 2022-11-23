@@ -24,6 +24,7 @@ export interface ColumnType {
 
 interface InitialStateType {
   columnId: string;
+  taskId: string;
   isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
@@ -33,6 +34,7 @@ interface InitialStateType {
 
 const initialState: InitialStateType = {
   columnId: '',
+  taskId: '',
   isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,

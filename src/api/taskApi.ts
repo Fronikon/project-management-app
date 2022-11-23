@@ -31,3 +31,12 @@ export const createTask = createAsyncThunk<void, TaskType>('column/createTask', 
     }
   );
 });
+
+export const deleteTask = createAsyncThunk<void, { columnId: string; taskId: string }>(
+  'column/deleteTask',
+  async (arg) => {
+    await axios.delete(`${url}/${arg.columnId}/tasks/${arg.taskId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+);
