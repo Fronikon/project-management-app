@@ -3,7 +3,6 @@ import { getAllColumns } from '../../api/columnApi';
 import { getColumnTasks } from '../../api/taskApi';
 
 export interface TaskType {
-  _id: string;
   title: string;
   order: number;
   boardId: string;
@@ -12,6 +11,7 @@ export interface TaskType {
   color: string;
   userId: number;
   users: string[];
+  _id?: string;
 }
 
 export interface ColumnType {
@@ -23,6 +23,7 @@ export interface ColumnType {
 }
 
 interface InitialStateType {
+  columnId: string;
   isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
@@ -31,6 +32,7 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+  columnId: '',
   isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,
@@ -54,6 +56,12 @@ const boardReducer = createSlice({
     toggleChange(state) {
       state.isChangeModalOpen = !state.isChangeModalOpen;
     },
+    setCurrentColumnId(state, action) {
+      state.columnId = action.payload;
+    },
+    resetColumnId(state) {
+      state.columnId = '';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -63,7 +71,6 @@ const boardReducer = createSlice({
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
           const column = state.value.find(({ _id }) => _id === action.payload[0].columnId);
-          // column?.tasks.push(...action.payload);
           if (column) {
             column.tasks = [...action.payload];
           }
@@ -74,4 +81,11 @@ const boardReducer = createSlice({
 
 export default boardReducer.reducer;
 
-export const { toggleModal, toggleColumn, toggleTask, toggleChange } = boardReducer.actions;
+export const {
+  toggleModal,
+  toggleColumn,
+  toggleTask,
+  toggleChange,
+  setCurrentColumnId,
+  resetColumnId,
+} = boardReducer.actions;

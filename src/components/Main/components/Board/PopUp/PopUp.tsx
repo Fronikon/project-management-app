@@ -1,8 +1,14 @@
 import React, { FC, useState } from 'react';
 import { createColumn, getAllColumns } from '../../../../../api/columnApi';
+import { createTask } from '../../../../../api/taskApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
-import { toggleColumn, toggleModal, toggleTask } from '../../../../../store/reducers/boardReducer';
+import {
+  resetColumnId,
+  toggleColumn,
+  toggleModal,
+  toggleTask,
+} from '../../../../../store/reducers/boardReducer';
 import styles from './PopUp.module.css';
 
 const PopUp: FC = () => {
@@ -15,15 +21,19 @@ const PopUp: FC = () => {
   const isTaskModalOpen = useAppSelector((store) => store.board.isTaskModalOpen);
   const isChangeModalOpen = useAppSelector((store) => store.board.isChangeModalOpen);
   const language = useAppSelector((store) => store.language.value);
+  const columnId = useAppSelector((store) => store.board.columnId);
   const dispatch = useAppDispatch();
 
-  const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+  };
+
+  const descriptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDescription(e.target.value);
   };
 
   const colorHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
-    console.log(color);
   };
 
   const columnConfirm = () => {
@@ -31,25 +41,33 @@ const PopUp: FC = () => {
     dispatch(getAllColumns());
     dispatch(toggleColumn());
     dispatch(toggleModal());
+    dispatch(resetColumnId());
     setTitle('');
   };
 
   const columnCancel = () => {
     dispatch(toggleColumn());
     dispatch(toggleModal());
+    dispatch(resetColumnId());
     setTitle('');
   };
 
   const taskConfirm = () => {
-    // dispatch(
-    //   addTask({
-    //     title: title,
-    //     description: description,
-    //     color: color,
-    //   })
-    // );
+    dispatch(
+      createTask({
+        title: title,
+        order: 1,
+        boardId: '6371414f2821a7b9af9f0090',
+        columnId: columnId,
+        description: description,
+        color: color,
+        userId: 0,
+        users: [],
+      })
+    );
     dispatch(toggleTask());
     dispatch(toggleModal());
+    dispatch(resetColumnId());
     setTitle('');
     setDescription('');
     setColor('#000000');
@@ -58,6 +76,7 @@ const PopUp: FC = () => {
   const taskCancel = () => {
     dispatch(toggleTask());
     dispatch(toggleModal());
+    dispatch(resetColumnId());
     setTitle('');
     setDescription('');
     setColor('#000000');
@@ -75,7 +94,7 @@ const PopUp: FC = () => {
                 <input
                   type="text"
                   placeholder="Placeholder"
-                  onChange={inputHandler}
+                  onChange={titleHandler}
                   className={styles.input}
                 />
               </fieldset>
@@ -95,13 +114,23 @@ const PopUp: FC = () => {
               <div className={styles.modalInputsWrapper}>
                 <fieldset className={styles.fieldset}>
                   <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                  <input type="text" placeholder="Placeholder" className={styles.input} />
+                  <input
+                    type="text"
+                    placeholder="Placeholder"
+                    className={styles.input}
+                    onChange={titleHandler}
+                  />
                 </fieldset>
                 <fieldset className={styles.fieldset}>
                   <legend className={styles.legend}>
                     {textData.boardsPage.description[language]}
                   </legend>
-                  <input type="text" placeholder="Placeholder" className={styles.input} />
+                  <input
+                    type="text"
+                    placeholder="Placeholder"
+                    className={styles.input}
+                    onChange={descriptionHandler}
+                  />
                 </fieldset>
                 <div className={`${styles.colorWrapper} ${styles.input}`}>
                   <div className={styles.colorTextWrapper}>

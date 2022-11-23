@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { useAppSelector } from '../hooks/reduxHooks';
-import { ColumnType, TaskType } from '../store/reducers/boardReducer';
+import { TaskType } from '../store/reducers/boardReducer';
 
 const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
 const token = '';
@@ -21,11 +20,11 @@ export const createTask = createAsyncThunk<void, TaskType>('column/createTask', 
     `${url}/${arg.columnId}/tasks`,
     {
       title: arg.title,
-      order: 1,
+      order: arg.order,
       description: arg.description,
       color: arg.color,
       userId: arg.userId,
-      users: [],
+      users: arg.users,
     },
     {
       headers: { Authorization: `Bearer ${token}` },

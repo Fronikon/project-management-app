@@ -2,7 +2,12 @@ import React, { FC, useEffect } from 'react';
 import { deleteColumn, getAllColumns } from '../../../../api/columnApi';
 import { getColumnTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { toggleColumn, toggleModal, toggleTask } from '../../../../store/reducers/boardReducer';
+import {
+  setCurrentColumnId,
+  toggleColumn,
+  toggleModal,
+  toggleTask,
+} from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
 import PopUp from './PopUp/PopUp';
 
@@ -45,6 +50,7 @@ const Board: FC = () => {
               <button
                 className={styles.addButton}
                 onClick={() => {
+                  dispatch(setCurrentColumnId(column._id));
                   dispatch(toggleModal());
                   dispatch(toggleTask());
                 }}
