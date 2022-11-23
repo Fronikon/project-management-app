@@ -28,6 +28,10 @@ const textData = {
       ru: 'Изменить',
       eng: 'Edit',
     },
+    start: {
+      ru: 'К доскам',
+      eng: 'To boards',
+    },
   },
   footer: {
     Andrey: {
@@ -121,8 +125,12 @@ const textData = {
       eng: 'Submit',
     },
     warning: {
-      ru: 'Если у вас нет аккаунта пожалуйста зарегистрируйтесь',
-      eng: "If you don't have an account please register.",
+      ru: 'Если у вас нет аккаунта пожалуйста ',
+      eng: "If you don't have an account please ",
+    },
+    warningLink: {
+      ru: 'зарегистрируйтесь',
+      eng: 'register',
     },
     registration: {
       ru: 'Регистрация',
@@ -131,6 +139,24 @@ const textData = {
     name: {
       ru: 'Имя',
       eng: 'Name',
+    },
+    namePlaceholder: {
+      ru: 'Введите ваше имя',
+      eng: 'Enter your name',
+    },
+  },
+  errors: {
+    required: {
+      ru: 'Это поле обязательно для заполнения',
+      eng: 'This field is required',
+    },
+    loginError: {
+      ru: 'Введите не менее 3 символов',
+      eng: 'Enter at least 3 characters',
+    },
+    passwordError: {
+      ru: 'Введите не менее 6 символов',
+      eng: 'Enter at least 6 characters',
     },
   },
   pageNotFound: {
