@@ -10,22 +10,20 @@ import {
 } from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
 import PopUp from './PopUp/PopUp';
+import TasksPreview from './TasksPreview';
 
 const Board: FC = () => {
-  const board = useAppSelector((store) => store.board.value);
+  const column = useAppSelector((store) => store.board.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getAllColumns());
-    for (let i = 0; i < board.length; i++) {
-      dispatch(getColumnTasks({ _id: board[i]._id }));
-    }
-  }, []);
+  }, [dispatch, column]);
 
   return (
     <>
       <div className={styles.wrapper}>
-        {board.map((column) => (
+        {column.map((column) => (
           <div key={column._id} className={styles.column}>
             <div className={styles.headingWrapper}>
               <h2 className={styles.titleColumn}>{column.title}</h2>
@@ -38,23 +36,7 @@ const Board: FC = () => {
               ></button>
             </div>
             <div className={styles.tasksWrapper}>
-              {column.tasks?.map((task) => (
-                <div key={task._id} style={{ backgroundColor: task.color }} className={styles.task}>
-                  <div className={styles.titleWrapper}>
-                    <h3 className={styles.titleTask}>{task.title}</h3>
-                    <button
-                      className={`${styles.delete} ${styles.deleteTask}`}
-                      onClick={() => {
-                        if (task._id !== undefined) {
-                          dispatch(deleteTask({ columnId: column._id, taskId: task._id }));
-                          dispatch(getColumnTasks({ _id: column._id }));
-                        }
-                      }}
-                    ></button>
-                  </div>
-                  <p className={styles.descriptionTask}>{task.description}</p>
-                </div>
-              ))}
+              <TasksPreview _id={column._id} />
               <button
                 className={styles.addButton}
                 onClick={() => {

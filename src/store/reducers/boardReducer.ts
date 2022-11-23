@@ -19,7 +19,6 @@ export interface ColumnType {
   title: string;
   order: number;
   boardId: string;
-  tasks: TaskType[];
 }
 
 interface InitialStateType {
@@ -30,6 +29,7 @@ interface InitialStateType {
   isTaskModalOpen: boolean;
   isChangeModalOpen: boolean;
   value: ColumnType[];
+  tasks: { [index: string]: TaskType[] };
 }
 
 const initialState: InitialStateType = {
@@ -40,6 +40,7 @@ const initialState: InitialStateType = {
   isTaskModalOpen: false,
   isChangeModalOpen: false,
   value: [] as ColumnType[],
+  tasks: {},
 };
 
 const boardReducer = createSlice({
@@ -72,10 +73,7 @@ const boardReducer = createSlice({
       })
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
-          const column = state.value.find(({ _id }) => _id === action.payload[0].columnId);
-          if (column) {
-            column.tasks = [...action.payload];
-          }
+          state.tasks[action.payload[0].columnId] = action.payload;
         }
       });
   },
