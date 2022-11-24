@@ -152,6 +152,14 @@ const textData = {
       ru: 'Вход',
       eng: 'Sign in',
     },
+    confirmButtonSignUp: {
+      ru: 'Зарегистрироваться',
+      eng: 'Register',
+    },
+    confirmButtonLogIn: {
+      ru: 'Войти',
+      eng: 'Enter',
+    },
     login: {
       ru: 'Логин',
       eng: 'Login',

@@ -94,7 +94,10 @@ const SignIn: FC = () => {
       </div>
 
       <div className={formsStyles.buttons}>
-        <ConfirmButton disabled={!isDirty || !!Object.keys(errors).length} />
+        <ConfirmButton
+          name={textData.authPage.confirmButtonLogIn[language]}
+          disabled={!isDirty || !!Object.keys(errors).length}
+        />
       </div>
       <div className={signInStyles.messageWrapper}>
         <p className={signInStyles.message}>{textData.authPage.warning[language]}&thinsp;</p>
