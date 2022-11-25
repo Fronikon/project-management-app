@@ -18,7 +18,12 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
   return (
     <>
       {tasks[_id]?.map((task) => (
-        <div key={task._id} style={{ backgroundColor: task.color }} className={styles.task}>
+        <div
+          key={task._id}
+          style={{ backgroundColor: task.color }}
+          className={styles.task}
+          draggable={true}
+        >
           <div className={styles.titleWrapper}>
             <h3 className={styles.titleTask}>{task.title}</h3>
             <button

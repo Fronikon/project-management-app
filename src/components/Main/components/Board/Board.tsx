@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from 'react';
 import { deleteColumn, getAllColumns } from '../../../../api/columnApi';
-import { deleteTask, getColumnTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   setCurrentColumnId,
@@ -24,7 +23,7 @@ const Board: FC = () => {
     <>
       <div className={styles.wrapper}>
         {column.map((column) => (
-          <div key={column._id} className={styles.column}>
+          <div key={column._id} className={styles.column} draggable={true}>
             <div className={styles.headingWrapper}>
               <h2 className={styles.titleColumn}>{column.title}</h2>
               <button
