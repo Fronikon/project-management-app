@@ -17,7 +17,7 @@ const Board: FC = () => {
 
   useEffect(() => {
     dispatch(getAllColumns());
-  }, [dispatch, column]);
+  }, [dispatch]);
 
   return (
     <>

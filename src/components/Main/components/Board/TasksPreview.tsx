@@ -13,10 +13,11 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
 
   useEffect(() => {
     dispatch(getColumnTasks({ _id }));
-  }, [dispatch, _id, tasks]);
+  }, [dispatch, _id]);
 
   return (
     <>
+      <></>
       {tasks[_id]?.map((task) => (
         <div
           key={task._id}
