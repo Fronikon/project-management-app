@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import languageReducer from './reducers/languageReducer';
 import sliceAuth from './slices/sliceAuth';
-import sliceError from './slices/sliceError';
+import sliceErrorAndLoading from './slices/sliceErrorAndLoading';
 
 export const store = configureStore({
   reducer: {
     language: languageReducer,
     authReducer: sliceAuth.reducer,
-    errorReducer: sliceError.reducer,
+    errorAndLoadingReducer: sliceErrorAndLoading.reducer,
   },
 });
 
