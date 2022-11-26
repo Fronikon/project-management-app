@@ -4,15 +4,19 @@ import styles from './Boards.module.css';
 import { useAppDispatch } from './../../../../hooks/reduxHooks';
 import { getBoardsTAC } from '../../../../store/reducers/boardsReducer';
 import { BoardCard, CreateBoardButton } from './components';
+import useToken from '../../../../hooks/useToken';
 
 const Boards: FC = () => {
   const dispatch = useAppDispatch();
+  const token = useToken();
 
   const boards = useAppSelector((state) => state.boardsReducer.boards);
 
   useEffect(() => {
-    dispatch(getBoardsTAC());
-  }, [dispatch]);
+    if (token) {
+      dispatch(getBoardsTAC(token));
+    }
+  }, [dispatch, token]);
 
   return (
     <div className={styles.container}>

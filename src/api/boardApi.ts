@@ -1,14 +1,12 @@
 import { BoardType, BoardTypeWithoutId } from '../types/boardsTypes';
 import { instance } from './instance';
 
-const token = '';
-
-export const getBoardsApi = async (): Promise<BoardType[]> => {
+export const getBoardsApi = async (token: string): Promise<BoardType[]> => {
   const res = await instance.get('boards', { headers: { Authorization: `Bearer ${token}` } });
   return res.data;
 };
 
-export const addBoardApi = async (board: BoardTypeWithoutId): Promise<BoardType> => {
+export const addBoardApi = async (board: BoardTypeWithoutId, token: string): Promise<BoardType> => {
   const res = await instance.post('boards', board, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -19,7 +17,11 @@ export const addBoardApi = async (board: BoardTypeWithoutId): Promise<BoardType>
   return res.data;
 };
 
-export const editBoardApi = async (board: BoardTypeWithoutId, id: string): Promise<BoardType> => {
+export const editBoardApi = async (
+  board: BoardTypeWithoutId,
+  id: string,
+  token: string
+): Promise<BoardType> => {
   const res = await instance.put(`boards/${id}`, board, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -30,7 +32,7 @@ export const editBoardApi = async (board: BoardTypeWithoutId, id: string): Promi
   return res.data;
 };
 
-export const deleteBoardApi = async (id: string): Promise<BoardType> => {
+export const deleteBoardApi = async (id: string, token: string): Promise<BoardType> => {
   const res = await instance.delete(`boards/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,

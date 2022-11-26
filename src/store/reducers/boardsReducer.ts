@@ -13,11 +13,11 @@ const initialState: initialStateType = {
   boards: [],
 };
 
-export const getBoardsTAC = createAsyncThunk<BoardType[], void, { rejectValue: string }>(
+export const getBoardsTAC = createAsyncThunk<BoardType[], string, { rejectValue: string }>(
   'boards/getBoards',
-  async (__, { rejectWithValue }) => {
+  async (token, { rejectWithValue }) => {
     try {
-      return await getBoardsApi();
+      return await getBoardsApi(token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data.message) {
@@ -33,11 +33,16 @@ export const getBoardsTAC = createAsyncThunk<BoardType[], void, { rejectValue: s
   }
 );
 
-export const addBoardTAC = createAsyncThunk<BoardType, BoardTypeWithoutId, { rejectValue: string }>(
+interface AddBoardTACType {
+  board: BoardTypeWithoutId;
+  token: string;
+}
+
+export const addBoardTAC = createAsyncThunk<BoardType, AddBoardTACType, { rejectValue: string }>(
   'boards/addBoard',
-  async (board, { rejectWithValue }) => {
+  async ({ board, token }, { rejectWithValue }) => {
     try {
-      return await addBoardApi(board);
+      return await addBoardApi(board, token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data.message) {
@@ -53,12 +58,17 @@ export const addBoardTAC = createAsyncThunk<BoardType, BoardTypeWithoutId, { rej
   }
 );
 
-export const editBoardTAC = createAsyncThunk<BoardType, BoardType, { rejectValue: string }>(
+interface EditBoardTACType {
+  board: BoardType;
+  token: string;
+}
+
+export const editBoardTAC = createAsyncThunk<BoardType, EditBoardTACType, { rejectValue: string }>(
   'boards/editBoard',
-  async (board, { rejectWithValue }) => {
+  async ({ board, token }, { rejectWithValue }) => {
     try {
       const { _id, ...rest } = board;
-      return await editBoardApi(rest, _id);
+      return await editBoardApi(rest, _id, token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data.message) {
@@ -74,11 +84,16 @@ export const editBoardTAC = createAsyncThunk<BoardType, BoardType, { rejectValue
   }
 );
 
-export const deleteBoardTAC = createAsyncThunk<string, string, { rejectValue: string }>(
+interface DeleteBoardTACType {
+  id: string;
+  token: string;
+}
+
+export const deleteBoardTAC = createAsyncThunk<string, DeleteBoardTACType, { rejectValue: string }>(
   'boards/deleteBoard',
-  async (id, { rejectWithValue }) => {
+  async ({ id, token }, { rejectWithValue }) => {
     try {
-      const res = await deleteBoardApi(id);
+      const res = await deleteBoardApi(id, token);
       return res._id;
     } catch (error) {
       if (axios.isAxiosError(error)) {

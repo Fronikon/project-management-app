@@ -13,10 +13,11 @@ import edit from '../../assets/img/icons/edit.png';
 import exit from '../../assets/img/icons/exit.png';
 import CreateBoardForm from './../../componentsUtils/forms/CreateBoardForm/CreateBoardForm';
 import Modal from './../../componentsUtils/Modal/Modal';
+import useToken from '../../hooks/useToken';
 
 const Header: FC = () => {
   const language = useAppSelector((store) => store.language.value);
-  const token = useAppSelector((store) => store.authReducer.token);
+  const token = useToken();
   const dispatch = useAppDispatch();
 
   const switchCheck = () => {
@@ -56,14 +57,18 @@ const Header: FC = () => {
             <img src={home} alt="home" className={styles.homeImg} />
             <p className={styles.homeText}>{textData.header.home[language]}</p>
           </NavLink>
-          <NavLink className={styles.board} to={'boards'}>
-            <img src={boards} alt="boards" className={styles.boardsImg} />
-            <p className={styles.boardText}>{textData.header.boards[language]}</p>
-          </NavLink>
-          <button onClick={openModal} className={styles.addBoard}>
-            <img src={addBoard} alt="add board" className={styles.addBoardImg} />
-            <p className={styles.addBoardText}>{textData.header.addBoard[language]}</p>
-          </button>
+          {token && (
+            <>
+              <NavLink className={styles.board} to={'boards'}>
+                <img src={boards} alt="boards" className={styles.boardsImg} />
+                <p className={styles.boardText}>{textData.header.boards[language]}</p>
+              </NavLink>
+              <button onClick={openModal} className={styles.addBoard}>
+                <img src={addBoard} alt="add board" className={styles.addBoardImg} />
+                <p className={styles.addBoardText}>{textData.header.addBoard[language]}</p>
+              </button>
+            </>
+          )}
         </div>
         {renderCreateBoardModal()}
       </div>

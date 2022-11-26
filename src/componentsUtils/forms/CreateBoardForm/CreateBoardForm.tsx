@@ -9,6 +9,7 @@ import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm
 import { useAppDispatch, useAppSelector } from './../../../hooks/reduxHooks';
 import { addBoardTAC } from '../../../store/reducers/boardsReducer';
 import textData from '../../../data/textData';
+import useToken from '../../../hooks/useToken';
 
 interface PropsType {
   closeModal: () => void;
@@ -22,27 +23,29 @@ interface FieldValuesType {
 
 const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
   const language = useAppSelector((store) => store.language.value);
+  const token = useToken();
+  const dispatch = useAppDispatch();
 
   const {
     handleSubmit,
     control,
     formState: { errors, isDirty },
   } = useForm<FieldValuesType>();
-  const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValuesType): void => {
-    const { title, description, color } = data;
-
-    dispatch(
-      addBoardTAC({
+    if (token) {
+      const { title, description, color } = data;
+      const boardData = {
         title,
         description,
         color,
         owner: 'string', // owner id
         users: [],
-      })
-    );
-    closeModal();
+      };
+
+      dispatch(addBoardTAC({ board: boardData, token }));
+      closeModal();
+    }
   };
 
   const createBoardText = textData.boardsPage.createBoard;

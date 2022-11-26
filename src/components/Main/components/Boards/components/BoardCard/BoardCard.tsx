@@ -7,6 +7,7 @@ import { BoardType } from '../../../../../../types/boardsTypes';
 import styles from './BoardCard.module.css';
 import textData from './../../../../../../data/textData';
 import EditBoardForm from '../../../../../../componentsUtils/forms/EditBoardForm/EditBoardForm';
+import useToken from '../../../../../../hooks/useToken';
 
 interface PropsType {
   board: BoardType;
@@ -14,13 +15,18 @@ interface PropsType {
 
 const BoardCard: FC<PropsType> = ({ board }) => {
   const dispatch = useAppDispatch();
+  const token = useToken();
 
   const [statusDeleteBoardModal, setStatusDeleteBoardModal] = useState(false);
   const [statusEditBoardModal, setStatusEditBoardModal] = useState(false);
 
   const language = useAppSelector((store) => store.language.value);
 
-  const deleteBoard = () => dispatch(deleteBoardTAC(board._id));
+  const deleteBoard = () => {
+    if (token) {
+      dispatch(deleteBoardTAC({ id: board._id, token }));
+    }
+  };
 
   const closeEditModal = () => setStatusEditBoardModal(false);
   const openEditModal = () => setStatusEditBoardModal(true);

@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { editBoardTAC } from '../../../store/reducers/boardsReducer';
 import textData from '../../../data/textData';
 import { BoardType } from './../../../types/boardsTypes';
+import useToken from '../../../hooks/useToken';
 
 interface PropsType {
   closeModal: () => void;
@@ -24,6 +25,7 @@ interface FieldValuesType {
 
 const EditBoardForm: FC<PropsType> = ({ closeModal, board }) => {
   const language = useAppSelector((store) => store.language.value);
+  const token = useToken();
 
   const {
     handleSubmit,
@@ -33,17 +35,19 @@ const EditBoardForm: FC<PropsType> = ({ closeModal, board }) => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValuesType): void => {
-    const { title, description, color } = data;
-
-    dispatch(
-      editBoardTAC({
+    if (token) {
+      const { title, description, color } = data;
+      const boardData = {
         ...board,
         title,
         description,
         color,
-      })
-    );
-    closeModal();
+      };
+
+      dispatch(editBoardTAC({ board: boardData, token }));
+
+      closeModal();
+    }
   };
 
   const editBoardText = textData.boardsPage.editBoard;
