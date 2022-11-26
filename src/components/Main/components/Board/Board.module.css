@@ -1,8 +1,12 @@
 .wrapper {
+  margin: 50px 0 0 42px;
+}
+
+.wrapperList {
   display: flex;
   gap: 40px;
 
-  margin: 50px 0 0 42px;
+  list-style: none;
 }
 
 .column {
@@ -79,6 +83,8 @@
 
 .task {
   margin: 0 20px;
+
+  list-style: none;
 }
 
 .titleWrapper {

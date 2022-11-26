@@ -24,6 +24,7 @@ export interface ColumnType {
 interface InitialStateType {
   columnId: string;
   taskId: string;
+  columnLength: number;
   isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
@@ -35,6 +36,7 @@ interface InitialStateType {
 const initialState: InitialStateType = {
   columnId: '',
   taskId: '',
+  columnLength: 0,
   isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,
@@ -65,11 +67,22 @@ const boardReducer = createSlice({
     resetColumnId(state) {
       state.columnId = '';
     },
+    setColumns(state, action) {
+      state.value = action.payload;
+    },
+    increaseColumnCount(state) {
+      state.columnLength += 1;
+    },
+    decreaseColumnCount(state) {
+      state.columnLength -= 1;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllColumns.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
         state.value = action.payload;
+        state.value = state.value.sort((a, b) => a.order - b.order);
+        state.columnLength = state.value.length;
       })
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
@@ -88,4 +101,7 @@ export const {
   toggleChange,
   setCurrentColumnId,
   resetColumnId,
+  setColumns,
+  increaseColumnCount,
+  decreaseColumnCount,
 } = boardReducer.actions;

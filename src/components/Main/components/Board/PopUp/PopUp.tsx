@@ -4,6 +4,7 @@ import { createTask } from '../../../../../api/taskApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
+  increaseColumnCount,
   resetColumnId,
   toggleColumn,
   toggleModal,
@@ -22,6 +23,7 @@ const PopUp: FC = () => {
   const isChangeModalOpen = useAppSelector((store) => store.board.isChangeModalOpen);
   const language = useAppSelector((store) => store.language.value);
   const columnId = useAppSelector((store) => store.board.columnId);
+  const columnLength = useAppSelector((store) => store.board.columnLength);
   const dispatch = useAppDispatch();
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,12 +39,13 @@ const PopUp: FC = () => {
   };
 
   const columnConfirm = () => {
-    dispatch(createColumn({ title: title, order: 1 }));
+    dispatch(createColumn({ title: title, order: columnLength }));
     dispatch(getAllColumns());
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
     setTitle('');
+    dispatch(increaseColumnCount());
   };
 
   const columnCancel = () => {
