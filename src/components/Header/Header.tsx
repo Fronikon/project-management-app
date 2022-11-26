@@ -9,6 +9,7 @@ import signUp from '../../assets/img/icons/sign_up.jpg';
 import edit from '../../assets/img/icons/edit.png';
 import exit from '../../assets/img/icons/exit.png';
 import { NavLink } from 'react-router-dom';
+import { logOut } from '../../store/slices/sliceAuth';
 
 const Header: FC = () => {
   const language = useAppSelector((store) => store.language.value);
@@ -21,6 +22,11 @@ const Header: FC = () => {
     } else {
       dispatch(switchEng());
     }
+  };
+
+  const onClick = () => {
+    localStorage.removeItem('token');
+    dispatch(logOut());
   };
 
   return (
@@ -57,10 +63,10 @@ const Header: FC = () => {
               <img src={edit} alt="Edit profile." className={styles.signInImage} />
               <p className={styles.signInText}>{textData.header.edit[language]}</p>
             </NavLink>
-            <NavLink className={styles.signUp} to="/exit" end>
+            <div className={styles.signUp} onClick={onClick}>
               <img src={exit} alt="Exit." className={styles.signUpImage} />
               <p className={styles.signUpText}>{textData.header.exit[language]}</p>
-            </NavLink>
+            </div>
           </div>
         ) : (
           <div className={styles.auth}>
