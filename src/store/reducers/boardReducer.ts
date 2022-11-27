@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllColumns } from '../../api/columnApi';
-import { getColumnTasks, updateTasks } from '../../api/taskApi';
+import { getColumnTasks } from '../../api/taskApi';
 
 export interface TaskType {
   title: string;
