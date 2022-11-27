@@ -8,6 +8,18 @@
 
   background-color: gray;
   border: 2px solid black;
+
+  transition: transform 300ms;
+}
+
+.boardCard:hover {
+  cursor: pointer;
+
+  transform: scale(1.05);
+}
+
+.boardCard:active {
+  transform: scale(1.03);
 }
 
 .titleBoard,
