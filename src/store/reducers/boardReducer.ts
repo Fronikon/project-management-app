@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAllColumns } from '../../api/columnApi';
-import { getColumnTasks } from '../../api/taskApi';
+import { getColumnTasks, updateTasks } from '../../api/taskApi';
 
 export interface TaskType {
   title: string;
   order: number;
-  boardId: string;
   columnId: string;
   description: string;
   color: string;
   userId: number;
   users: string[];
+  boardId?: string;
   _id?: string;
 }
 
@@ -70,6 +70,9 @@ const boardReducer = createSlice({
     setColumns(state, action) {
       state.value = action.payload;
     },
+    setTasks(state, action) {
+      state.tasks[action.payload.id] = action.payload.items;
+    },
     increaseColumnCount(state) {
       state.columnLength += 1;
     },
@@ -86,7 +89,9 @@ const boardReducer = createSlice({
       })
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
-          state.tasks[action.payload[0].columnId] = action.payload;
+          state.tasks[action.payload[0].columnId] = action.payload.sort(
+            (a, b) => a.order - b.order
+          );
         }
       });
   },
@@ -104,4 +109,5 @@ export const {
   setColumns,
   increaseColumnCount,
   decreaseColumnCount,
+  setTasks,
 } = boardReducer.actions;

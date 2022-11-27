@@ -10,7 +10,7 @@ interface apiColumnType {
 
 const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njk0NDc0MDMsImV4cCI6MTY2OTQ5MDYwM30.DCaosyHFFEcYwJZu4bDaPm_pC9U1m7W0I0KfRk9yVFk';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njk1MzUzNDQsImV4cCI6MTY2OTU3ODU0NH0.Xt1dUO1_ElXo1BUbzRteMUndVeURlQL8kIrFoDvTc94';
 
 export const getAllColumns = createAsyncThunk<ColumnType[], void>(
   'column/getAllColumns',

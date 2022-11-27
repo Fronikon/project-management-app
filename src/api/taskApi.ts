@@ -4,7 +4,7 @@ import { TaskType } from '../store/reducers/boardReducer';
 
 const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njk0NDc0MDMsImV4cCI6MTY2OTQ5MDYwM30.DCaosyHFFEcYwJZu4bDaPm_pC9U1m7W0I0KfRk9yVFk';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njk1MzUzNDQsImV4cCI6MTY2OTU3ODU0NH0.Xt1dUO1_ElXo1BUbzRteMUndVeURlQL8kIrFoDvTc94';
 
 export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string }>(
   'column/getColumnTasks',
@@ -41,3 +41,22 @@ export const deleteTask = createAsyncThunk<void, { columnId: string; taskId: str
     });
   }
 );
+
+export const updateTasks = createAsyncThunk<void, TaskType>('column/updateTasks', async (arg) => {
+  await axios.put(
+    `${url}/${arg.columnId}/tasks/${arg._id}`,
+    {
+      title: arg.title,
+      order: arg.order,
+      boardId: arg.boardId,
+      columnId: arg.columnId,
+      description: arg.description,
+      color: arg.color,
+      userId: arg.userId,
+      users: arg.users,
+    },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+});
