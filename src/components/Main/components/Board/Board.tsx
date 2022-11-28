@@ -16,14 +16,15 @@ import TasksPreview from './TasksPreview';
 
 const Board: FC = () => {
   const column = useAppSelector((store) => store.board.value);
+  const tasks = useAppSelector((store) => store.board.tasks);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getAllColumns());
   }, [dispatch]);
 
-  const onDragEndHandler = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+  const onDragEndColumnHandler = (result: DropResult) => {
+    const { destination, source } = result;
 
     if (!destination) {
       return;
@@ -42,9 +43,41 @@ const Board: FC = () => {
     }
   };
 
+  const onDragEndTaskHandler = (result: DropResult) => {
+    const { destination, source } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (destination?.droppableId === source.droppableId && destination.index === source.index) {
+      return;
+    }
+
+    const start = source.droppableId;
+    const finish = destination.droppableId;
+
+    // Moving tasks in one column
+
+    if (start === finish) {
+      const task = Array.from(tasks[start]);
+      const [reorderedItem] = task.splice(source.index, 1);
+      task.splice(destination.index, 0, reorderedItem);
+      return;
+    }
+
+    // Moving tasks in different column
+
+    const startTaskIds = Array.from(tasks[start]);
+    const [reorderedItem] = startTaskIds.splice(source.index, 1);
+
+    const finishTaskIds = Array.from(tasks[finish]);
+    finishTaskIds.splice(destination.index, 0, reorderedItem);
+  };
+
   return (
     <>
-      <DragDropContext onDragEnd={onDragEndHandler}>
+      <DragDropContext onDragEnd={onDragEndColumnHandler}>
         <Droppable droppableId="column" direction="horizontal">
           {(provided) => (
             <div className={styles.wrapper} ref={provided.innerRef} {...provided.droppableProps}>
@@ -69,17 +102,28 @@ const Board: FC = () => {
                             }}
                           ></button>
                         </div>
-                        <div className={styles.tasksWrapper}>
-                          <TasksPreview _id={column._id} />
-                          <button
-                            className={styles.addButton}
-                            onClick={() => {
-                              dispatch(setCurrentColumnId(column._id));
-                              dispatch(toggleModal());
-                              dispatch(toggleTask());
-                            }}
-                          ></button>
-                        </div>
+                        <DragDropContext onDragEnd={onDragEndTaskHandler}>
+                          <Droppable droppableId={column._id}>
+                            {(provided) => (
+                              <div
+                                className={styles.tasksWrapper}
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                              >
+                                <TasksPreview _id={column._id} />
+                                <button
+                                  className={styles.addButton}
+                                  onClick={() => {
+                                    dispatch(setCurrentColumnId(column._id));
+                                    dispatch(toggleModal());
+                                    dispatch(toggleTask());
+                                  }}
+                                ></button>
+                                {provided.placeholder}
+                              </div>
+                            )}
+                          </Droppable>
+                        </DragDropContext>
                       </div>
                     </div>
                   )}
