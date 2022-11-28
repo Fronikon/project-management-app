@@ -23,27 +23,29 @@ const Board: FC = () => {
     <>
       <div className={styles.wrapper}>
         {column.map((column) => (
-          <div key={column._id} className={styles.column} draggable={true}>
-            <div className={styles.headingWrapper}>
-              <h2 className={styles.titleColumn}>{column.title}</h2>
-              <button
-                className={styles.delete}
-                onClick={() => {
-                  dispatch(deleteColumn({ id: column._id }));
-                  dispatch(getAllColumns());
-                }}
-              ></button>
-            </div>
-            <div className={styles.tasksWrapper}>
-              <TasksPreview _id={column._id} />
-              <button
-                className={styles.addButton}
-                onClick={() => {
-                  dispatch(setCurrentColumnId(column._id));
-                  dispatch(toggleModal());
-                  dispatch(toggleTask());
-                }}
-              ></button>
+          <div key={column._id}>
+            <div className={styles.column} draggable={true}>
+              <div className={styles.headingWrapper}>
+                <h2 className={styles.titleColumn}>{column.title}</h2>
+                <button
+                  className={styles.delete}
+                  onClick={() => {
+                    dispatch(deleteColumn({ id: column._id }));
+                    dispatch(getAllColumns());
+                  }}
+                ></button>
+              </div>
+              <div className={styles.tasksWrapper}>
+                <TasksPreview _id={column._id} />
+                <button
+                  className={styles.addButton}
+                  onClick={() => {
+                    dispatch(setCurrentColumnId(column._id));
+                    dispatch(toggleModal());
+                    dispatch(toggleTask());
+                  }}
+                ></button>
+              </div>
             </div>
           </div>
         ))}
