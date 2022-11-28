@@ -58,6 +58,62 @@ const textData = {
     },
   },
   boardsPage: {
+    createBoard: {
+      title: {
+        ru: 'Создание доски',
+        eng: 'Create board',
+      },
+      inputTitle: {
+        label: {
+          ru: 'Название',
+          eng: 'Title',
+        },
+        placeholder: {
+          ru: 'Введите название...',
+          eng: 'Enter title...',
+        },
+        requiredError: {
+          ru: 'Пожалуйста введите название.',
+          eng: 'Please enter title.',
+        },
+      },
+      inputDescription: {
+        label: {
+          ru: 'Описание',
+          eng: 'Description',
+        },
+        placeholder: {
+          ru: 'Введите описание...',
+          eng: 'Enter description...',
+        },
+        requiredError: {
+          ru: 'Пожалуйста введите описание.',
+          eng: 'Please enter description.',
+        },
+      },
+      confirmButton: {
+        ru: 'Создать',
+        eng: 'Create',
+      },
+      cancelButton: {
+        ru: 'Отмена',
+        eng: 'Cancel',
+      },
+    },
+    editBoard: {
+      title: {
+        ru: 'Редактировать доску',
+        eng: 'Edit board',
+      },
+      confirmButton: {
+        ru: 'Изменить',
+        eng: 'Edit',
+      },
+    },
+    questionConfirmingDeleteBoard: {
+      ru: 'Доска будет удалена. Вы уверены?',
+      eng: 'The board will be removed. Are you sure?',
+    },
     todo: {
       ru: 'К выполнению',
       eng: 'To do',
@@ -69,14 +125,6 @@ const textData = {
     newColumn: {
       ru: 'Новая колонка',
       eng: 'New column',
-    },
-    createBoard: {
-      ru: 'Создание доски',
-      eng: 'Create board',
-    },
-    editBoard: {
-      ru: 'Редактирование доски',
-      eng: 'Edit Board',
     },
     title: {
       ru: 'Название',
@@ -103,6 +151,14 @@ const textData = {
     signIn: {
       ru: 'Вход',
       eng: 'Sign in',
+    },
+    confirmButtonSignUp: {
+      ru: 'Зарегистрироваться',
+      eng: 'Register',
+    },
+    confirmButtonLogIn: {
+      ru: 'Войти',
+      eng: 'Enter',
     },
     login: {
       ru: 'Логин',
@@ -164,17 +220,15 @@ const textData = {
     eng: 'Sorry, there is no such page',
   },
   general: {
-    confirmAction: {
-      ru: 'Вы уверены?',
-      eng: 'Are you sure?',
-    },
-    cancel: {
-      ru: 'Отмена',
-      eng: 'Cancel',
-    },
-    confirm: {
-      ru: 'Подтвердить',
-      eng: 'Confirm',
+    confirmModal: {
+      cancelButton: {
+        ru: 'Нет',
+        eng: 'No',
+      },
+      confirmButton: {
+        ru: 'Да',
+        eng: 'Yes',
+      },
     },
   },
 };
