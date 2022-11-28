@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { switchEng, switchRu } from '../../store/reducers/languageReducer';
@@ -24,6 +24,19 @@ const Header: FC = () => {
   const [isModal, setIsModal] = useState(false);
   const navigate = useNavigate();
   const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    window.addEventListener('scroll', function () {
+      if (headerRef.current) {
+        if (window.pageYOffset > 0) {
+          headerRef.current.classList.add(styles.isSticky);
+        } else {
+          headerRef.current.classList.remove(styles.isSticky);
+        }
+      }
+    });
+  }, []);
 
   const switchCheck = () => {
     if (language === 'eng') {
@@ -81,7 +94,7 @@ const Header: FC = () => {
           />
         </Modal>
       )}
-      <header className={styles.headerWrapper}>
+      <header ref={headerRef} className={styles.headerWrapper}>
         <div className={styles.leftBlock}>
           <h1 className={styles.heading}>Doska</h1>
           <div className={styles.buttons}>
