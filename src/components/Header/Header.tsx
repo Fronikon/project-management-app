@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { switchEng, switchRu } from '../../store/reducers/languageReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
@@ -22,6 +22,8 @@ const Header: FC = () => {
   const token = useToken();
   const dispatch = useAppDispatch();
   const [isModal, setIsModal] = useState(false);
+  const navigate = useNavigate();
+  const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false);
 
   const switchCheck = () => {
     if (language === 'eng') {
@@ -43,13 +45,12 @@ const Header: FC = () => {
     setIsModal(false);
     localStorage.removeItem('token');
     dispatch(logOut());
+    navigate('/');
   };
 
   const cancel = () => {
     setIsModal(false);
   };
-
-  const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false);
 
   const closeModal = () => {
     setIsOpenCreateBoardModal(false);
@@ -74,7 +75,7 @@ const Header: FC = () => {
       {isModal && (
         <Modal closeModal={closeModalLogOut}>
           <ConfirmAction
-            question={textData.boardsPage.questionConfirmingDeleteBoard[language]}
+            question={textData.authPage.logOut[language]}
             confirm={confirm}
             cancel={cancel}
           />

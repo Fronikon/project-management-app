@@ -196,6 +196,10 @@ const textData = {
       ru: 'Введите ваше имя',
       eng: 'Enter your name',
     },
+    logOut: {
+      ru: 'Вы уверены, что хотите выйти?',
+      eng: 'Are you sure you want to log out?',
+    },
   },
   errors: {
     required: {
