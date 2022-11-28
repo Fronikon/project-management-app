@@ -26,6 +26,8 @@
 }
 
 .home,
+.board,
+.addBoard,
 .signIn,
 .signUp {
   cursor: pointer;
@@ -35,9 +37,22 @@
   align-items: center;
   justify-content: center;
 
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+  text-decoration: none;
+
   background-color: transparent;
 
   transition: 0.4s;
+}
+
+.addBoard {
+  border: none;
+  outline: none;
 }
 
 .language {
@@ -59,9 +74,8 @@
   color: #fff;
 }
 
-.homeText,
-.signInText,
-.signUpText {
+.buttonText,
+.languageEng {
   margin: 0;
 
   font-size: 16px;
@@ -123,8 +137,15 @@
   transition: 0.4s;
 }
 
+.buttons {
+  display: flex;
+  gap: 1em;
+}
+
 .signIn:hover,
 .signUp:hover,
+.board:hover,
+.addBoard:hover,
 .home:hover,
 .slider:hover {
   transform: scale(1.2);
@@ -132,6 +153,8 @@
 
 .signIn:active,
 .signUp:active,
+.board:active,
+.addBoard:active,
 .home:active,
 .slider:active {
   transform: scale(1);
@@ -201,10 +224,6 @@
     justify-content: center;
 
     height: auto;
-  }
-
-  .home {
-    margin-right: 0;
   }
 
   .rightBlock {

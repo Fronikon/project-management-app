@@ -140,7 +140,10 @@ const SignUp: FC = () => {
         </div>
 
         <div className={formsStyles.buttons}>
-          <ConfirmButton disabled={!isDirty || !!Object.keys(errors).length} />
+          <ConfirmButton
+            name={textData.authPage.confirmButtonSignUp[language]}
+            disabled={!isDirty || !!Object.keys(errors).length}
+          />
         </div>
 
         {isModal && (

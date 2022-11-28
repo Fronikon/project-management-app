@@ -1,18 +1,20 @@
 import React, { FC } from 'react';
-import styles from './CreateBoardForm.module.css';
+import styles from './EditBoardForm.module.css';
 import formsStyles from '../forms.module.css';
 import { useForm, Controller } from 'react-hook-form';
 import ConfirmButton from '../../buttons/ConfirmButton/ConfirmButton';
 import CancelButton from '../../buttons/CancelButton/CancelButton';
 import TextInputForm from '../../customInputsForm/TextInputForm/TextInputForm';
 import ColorInputForm from '../../customInputsForm/ColorInputForm/ColorInputForm';
-import { useAppDispatch, useAppSelector } from './../../../hooks/reduxHooks';
-import { addBoardTAC } from '../../../store/reducers/boardsReducer';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
+import { editBoardTAC } from '../../../store/reducers/boardsReducer';
 import textData from '../../../data/textData';
+import { BoardType } from './../../../types/boardsTypes';
 import useToken from '../../../hooks/useToken';
 
 interface PropsType {
   closeModal: () => void;
+  board: BoardType;
 }
 
 interface FieldValuesType {
@@ -21,47 +23,48 @@ interface FieldValuesType {
   color: string;
 }
 
-const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
+const EditBoardForm: FC<PropsType> = ({ closeModal, board }) => {
   const language = useAppSelector((store) => store.language.value);
   const token = useToken();
-  const dispatch = useAppDispatch();
 
   const {
     handleSubmit,
     control,
     formState: { errors, isDirty },
   } = useForm<FieldValuesType>();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValuesType): void => {
     if (token) {
       const { title, description, color } = data;
       const boardData = {
+        ...board,
         title,
         description,
         color,
-        owner: 'string', // owner id
-        users: [],
       };
 
-      dispatch(addBoardTAC({ board: boardData, token }));
+      dispatch(editBoardTAC({ board: boardData, token }));
+
       closeModal();
     }
   };
 
+  const editBoardText = textData.boardsPage.editBoard;
   const createBoardText = textData.boardsPage.createBoard;
   const inputTitleText = createBoardText.inputTitle;
   const inputDescriptionText = createBoardText.inputDescription;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-      <h3 className={formsStyles.title}>{createBoardText.title[language]}</h3>
+      <h3 className={formsStyles.title}>{editBoardText.title[language]}</h3>
 
       <div className={styles.fields}>
         <Controller
           name="title"
           control={control}
           rules={{ required: inputTitleText.requiredError[language] }}
-          defaultValue={''}
+          defaultValue={board.title}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextInputForm
               onChangeText={onChange}
@@ -78,7 +81,7 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
           name="description"
           control={control}
           rules={{ required: inputDescriptionText.requiredError[language] }}
-          defaultValue={''}
+          defaultValue={board.description}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextInputForm
               onChangeText={onChange}
@@ -94,7 +97,7 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
         <Controller
           name="color"
           control={control}
-          defaultValue={'#EABFFF'}
+          defaultValue={board.color || '#EABFFF'}
           render={({ field: { onChange, value } }) => (
             <ColorInputForm onChangeColor={onChange} value={value} />
           )}
@@ -103,7 +106,7 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
 
       <div className={formsStyles.buttons}>
         <ConfirmButton
-          name={createBoardText.confirmButton[language]}
+          name={editBoardText.confirmButton[language]}
           disabled={!isDirty || !!Object.keys(errors).length}
         />
         <CancelButton name={createBoardText.cancelButton[language]} handleClick={closeModal} />
@@ -112,4 +115,4 @@ const CreateBoardForm: FC<PropsType> = ({ closeModal }) => {
   );
 };
 
-export default CreateBoardForm;
+export default EditBoardForm;

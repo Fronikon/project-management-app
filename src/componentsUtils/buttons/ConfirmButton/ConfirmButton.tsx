@@ -1,21 +1,18 @@
 import React, { FC } from 'react';
 import styles from './ConfirmButton.module.css';
 import buttonsStyles from '../buttons.module.css';
-import textData from '../../../data/textData';
-import { useAppSelector } from '../../../hooks/reduxHooks';
 
 interface PropsType {
   disabled?: boolean;
+  name: string;
 }
 
-const ConfirmButton: FC<PropsType> = ({ disabled }) => {
-  const language = useAppSelector((store) => store.language.value);
-
+const ConfirmButton: FC<PropsType> = ({ disabled, name }) => {
   return (
     <input
       className={`${buttonsStyles.button} ${styles.button}`}
       type="submit"
-      value={textData.general.confirm[language]}
+      value={name}
       disabled={disabled}
     />
   );
