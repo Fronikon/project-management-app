@@ -17,7 +17,6 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
 
   return (
     <>
-      <></>
       {tasks[_id]?.map((task) => (
         <div
           key={task._id}
