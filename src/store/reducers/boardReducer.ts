@@ -5,13 +5,13 @@ import { getColumnTasks } from '../../api/taskApi';
 export interface TaskType {
   title: string;
   order: number;
-  boardId: string;
   columnId: string;
   description: string;
   color: string;
   userId: number;
   users: string[];
   _id?: string;
+  boardId?: string;
 }
 
 export interface ColumnType {
@@ -73,6 +73,9 @@ const boardReducer = createSlice({
     setTasks(state, action) {
       state.tasks[action.payload.id] = action.payload.items;
     },
+    zeroingTasks(state, action) {
+      state.tasks[action.payload] = [];
+    },
     increaseColumnCount(state) {
       state.columnLength += 1;
     },
@@ -89,7 +92,9 @@ const boardReducer = createSlice({
       })
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
-          state.tasks[action.payload[0].columnId] = action.payload;
+          state.tasks[action.payload[0].columnId] = action.payload.sort(
+            (a, b) => a.order - b.order
+          );
         }
       });
   },
