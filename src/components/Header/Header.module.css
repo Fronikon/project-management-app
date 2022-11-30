@@ -1,10 +1,22 @@
 .headerWrapper {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
   display: flex;
   justify-content: space-between;
 
+  width: 100%;
   height: 80px;
 
   background-color: #000;
+
+  transition: background-color 500ms;
+}
+
+.isSticky {
+  background-color: rgb(0 0 0 / 69.8%);
 }
 
 .leftBlock,
@@ -91,7 +103,7 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
-  color: #444;
+  color: rgb(155 155 155);
 }
 
 .activeLanguage {
