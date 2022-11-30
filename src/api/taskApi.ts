@@ -3,8 +3,7 @@ import axios from 'axios';
 import { TaskType } from '../store/reducers/boardReducer';
 
 const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njk3MjYwMTMsImV4cCI6MTY2OTc2OTIxM30.IuQJ0Hhj9pUlRRgeQana2zNLSksV2HyCz9y6FQjgmnE';
+const token = '';
 
 export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string }>(
   'column/getColumnTasks',

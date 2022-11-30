@@ -17,13 +17,13 @@ const PopUp: FC = () => {
   const [description, setDescription] = useState('');
   const [color, setColor] = useState('#000000');
 
-  const isModalOpen = useAppSelector((store) => store.board.isModalOpen);
-  const isColumnModalOpen = useAppSelector((store) => store.board.isColumnModalOpen);
-  const isTaskModalOpen = useAppSelector((store) => store.board.isTaskModalOpen);
-  const isChangeModalOpen = useAppSelector((store) => store.board.isChangeModalOpen);
+  const isModalOpen = useAppSelector((store) => store.boardReducer.isModalOpen);
+  const isColumnModalOpen = useAppSelector((store) => store.boardReducer.isColumnModalOpen);
+  const isTaskModalOpen = useAppSelector((store) => store.boardReducer.isTaskModalOpen);
+  const isChangeModalOpen = useAppSelector((store) => store.boardReducer.isChangeModalOpen);
   const language = useAppSelector((store) => store.language.value);
-  const columnId = useAppSelector((store) => store.board.columnId);
-  const columnLength = useAppSelector((store) => store.board.columnLength);
+  const columnId = useAppSelector((store) => store.boardReducer.columnId);
+  const columnLength = useAppSelector((store) => store.boardReducer.columnLength);
   const dispatch = useAppDispatch();
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,10 +103,10 @@ const PopUp: FC = () => {
               </fieldset>
               <div className={styles.btnsWrapper}>
                 <button onClick={columnConfirm} className={styles.confirm}>
-                  {textData.general.confirm[language]}
+                  {textData.general.confirmModal.confirmButton[language]}
                 </button>
                 <button className={styles.cancel} onClick={columnCancel}>
-                  {textData.general.cancel[language]}
+                  {textData.general.confirmModal.cancelButton[language]}
                 </button>
               </div>
             </div>
@@ -144,10 +144,10 @@ const PopUp: FC = () => {
               </div>
               <div className={styles.btnsWrapper}>
                 <button className={styles.confirm} onClick={taskConfirm}>
-                  {textData.general.confirm[language]}
+                  {textData.general.confirmModal.confirmButton[language]}
                 </button>
                 <button className={styles.cancel} onClick={taskCancel}>
-                  {textData.general.cancel[language]}
+                  {textData.general.confirmModal.cancelButton[language]}
                 </button>
               </div>
             </div>
@@ -174,8 +174,12 @@ const PopUp: FC = () => {
                 </div>
               </div>
               <div className={styles.btnsWrapper}>
-                <button className={styles.confirm}>{textData.general.confirm[language]}</button>
-                <button className={styles.cancel}>{textData.general.cancel[language]}</button>
+                <button className={styles.confirm}>
+                  {textData.general.confirmModal.confirmButton[language]}
+                </button>
+                <button className={styles.cancel}>
+                  {textData.general.confirmModal.cancelButton[language]}
+                </button>
               </div>
             </div>
           )}

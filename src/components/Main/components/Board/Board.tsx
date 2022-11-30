@@ -14,8 +14,8 @@ import Column from './Column';
 import PopUp from './PopUp/PopUp';
 
 const Board: FC = () => {
-  const column = useAppSelector((store) => store.board.value);
-  const tasks = useAppSelector((store) => store.board.tasks);
+  const column = useAppSelector((store) => store.boardReducer.value);
+  const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const dispatch = useAppDispatch();
 
   const onDragEndColumnHandler = (result: DropResult) => {

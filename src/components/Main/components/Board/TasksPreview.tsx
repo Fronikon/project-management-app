@@ -9,7 +9,7 @@ interface TypeProps {
 }
 
 const TasksPreview: FC<TypeProps> = ({ _id }) => {
-  const tasks = useAppSelector((store) => store.board.tasks);
+  const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

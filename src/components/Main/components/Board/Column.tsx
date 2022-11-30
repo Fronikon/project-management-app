@@ -12,7 +12,7 @@ import styles from './Board.module.css';
 import TasksPreview from './TasksPreview';
 
 const Column: FC = () => {
-  const column = useAppSelector((store) => store.board.value);
+  const column = useAppSelector((store) => store.boardReducer.value);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
