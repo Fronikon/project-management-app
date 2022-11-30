@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './Main.module.css';
-import { Boards, Board, PageNotFound, SignIn, SignUp, Welcome } from './components/index';
+import { Boards, Board, PageNotFound, SignIn, SignUp, Welcome, Edit } from './components/index';
 import { useAppSelector } from '../../hooks/reduxHooks';
 import PrivateRoute from '../../componentsUtils/PrivateRoute/PrivateRoute';
 
@@ -19,6 +19,7 @@ const Main: FC = () => {
         <Route element={<PrivateRoute isAllowed={!!token} />}>
           <Route path="/boards" element={<Boards />} />
           <Route path="/boards/:id" element={<Board />} />
+          <Route path="/edit" element={<Edit />} />
         </Route>
         <Route path="/404" element={<PageNotFound />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
