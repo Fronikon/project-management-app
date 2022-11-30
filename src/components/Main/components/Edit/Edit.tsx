@@ -11,7 +11,6 @@ import { parseJwt } from '../../../../data/parseJWT';
 import { deleteUserById, getUser, putUser } from '../../../../api/userApi';
 import CancelButton from '../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/DeleteButton';
-import SignUp from '../SignUp/SignUp';
 import { logOut } from '../../../../store/slices/sliceAuth';
 
 export interface SignUpType {

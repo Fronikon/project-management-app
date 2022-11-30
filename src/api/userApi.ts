@@ -50,7 +50,6 @@ export const putUser = createAsyncThunk<
   UserPutRequestType,
   { state: RootState; rejectValue: string }
 >('users/userId', async ({ userId, token, user }, thunkAPI) => {
-  console.log('userId, token: ', userId, token);
   const language = thunkAPI.getState().language.value;
   try {
     const response = await instance.put(`users/${userId}`, user, {
