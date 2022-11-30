@@ -15,7 +15,7 @@
 
 .textWrapper {
   position: relative;
-  z-index: 100;
+  z-index: 20;
 
   display: flex;
   gap: 2.5rem;
@@ -71,7 +71,7 @@
 
 .cards {
   position: relative;
-  z-index: 100;
+  z-index: 20;
 
   display: block;
 
