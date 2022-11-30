@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import styles from './Board.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { deleteTask, getColumnTasks } from '../../../../api/taskApi';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, DraggingStyle, NotDraggingStyle } from 'react-beautiful-dnd';
 
 interface TypeProps {
   _id: string;
