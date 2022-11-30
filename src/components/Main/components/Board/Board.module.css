@@ -1,9 +1,12 @@
 .wrapper {
+  scrollbar-color: #6969dd #e0e0e0;
+  scrollbar-width: thin;
+
   overflow-x: scroll;
   display: flex;
   gap: 40px;
 
-  margin: 50px 0 0 42px;
+  margin: 50px 42px 0;
 }
 
 .column {
@@ -75,12 +78,30 @@
 }
 
 .tasksWrapper {
+  scrollbar-color: #6969dd #e0e0e0;
+  scrollbar-width: thin;
+
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 20px;
 
   max-height: 480px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2b2b2b;
+  border-radius: 100px;
 }
 
 .task {
