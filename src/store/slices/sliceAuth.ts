@@ -8,7 +8,11 @@ const initialState: { token: string } = {
 const sliceAuth = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logOut(state) {
+      state.token = '';
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(signIn.fulfilled, (state, action) => {
       const temp = Object.values(action.payload);
@@ -18,3 +22,5 @@ const sliceAuth = createSlice({
 });
 
 export default sliceAuth;
+
+export const { logOut } = sliceAuth.actions;

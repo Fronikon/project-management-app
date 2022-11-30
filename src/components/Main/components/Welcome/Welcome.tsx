@@ -25,10 +25,10 @@ const Welcome: FC = () => {
         ) : (
           <div className={styles.linkWrapper}>
             <Link className={styles.linkSignIn} to="/signIn">
-              {textData.authPage.signIn[language]}
+              {textData.header.signIn[language]}
             </Link>
             <Link className={styles.linkSignUp} to="/signUp">
-              {textData.authPage.registration[language]}
+              {textData.header.signUp[language]}
             </Link>
           </div>
         )}

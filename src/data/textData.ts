@@ -188,10 +188,6 @@ const textData = {
       ru: 'зарегистрируйтесь',
       eng: 'register',
     },
-    registration: {
-      ru: 'Регистрация',
-      eng: 'Registration',
-    },
     name: {
       ru: 'Имя',
       eng: 'Name',
@@ -199,6 +195,10 @@ const textData = {
     namePlaceholder: {
       ru: 'Введите ваше имя',
       eng: 'Enter your name',
+    },
+    logOut: {
+      ru: 'Вы уверены, что хотите выйти?',
+      eng: 'Are you sure you want to log out?',
     },
   },
   errors: {
@@ -218,6 +218,20 @@ const textData = {
   pageNotFound: {
     ru: 'К сожалению такой страницы не существует',
     eng: 'Sorry, there is no such page',
+  },
+  serverErrors: {
+    loginAlready: {
+      ru: 'Пользователь с таким логином уже зарегистрирован',
+      eng: 'A user with this login is already registered',
+    },
+    wrongLoginOrPassword: {
+      ru: 'Неверный логин или пароль',
+      eng: 'Wrong login or password',
+    },
+    otherError: {
+      ru: 'Что-то пошло не так, попробуйте позже',
+      eng: 'Something went wrong, try again later',
+    },
   },
   general: {
     confirmModal: {
