@@ -21,7 +21,6 @@ const Boards: FC = () => {
 
   return (
     <>
-      {' '}
       <div className={styles.container}>
         <ul className={styles.boards}>
           <CreateBoardButton />
