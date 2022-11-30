@@ -4,14 +4,15 @@ import buttonsStyles from '../buttons.module.css';
 
 interface PropsType {
   handleClick: () => void;
+  name: string;
 }
 
-const CancelButton: FC<PropsType> = ({ handleClick }) => {
+const CancelButton: FC<PropsType> = ({ handleClick, name }) => {
   return (
     <input
       className={`${buttonsStyles.button} ${styles.button}`}
       type="button"
-      value="Cancel"
+      value={name}
       onClick={handleClick}
     />
   );

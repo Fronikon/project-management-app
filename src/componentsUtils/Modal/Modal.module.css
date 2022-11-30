@@ -1,5 +1,6 @@
 .modal {
   position: fixed;
+  z-index: 100;
   top: 0;
   left: 0;
 
@@ -13,4 +14,25 @@
   padding: calc(2% + 1em);
 
   background-color: #0006;
+}
+
+.modalWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24rem;
+  height: 5rem;
+  margin: auto;
+
+  text-align: center;
+
+  background-color: #ffbdae;
+}
+
+@media screen and (max-width: 440px) {
+  .modalWrapper {
+    width: 16rem;
+    height: 8rem;
+  }
 }

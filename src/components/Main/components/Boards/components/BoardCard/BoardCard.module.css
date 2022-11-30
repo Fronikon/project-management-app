@@ -1,0 +1,86 @@
+.boardCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  height: 190px;
+  padding: 1em;
+
+  background-color: gray;
+  border: 2px solid black;
+
+  transition: transform 300ms;
+}
+
+.boardCard:hover {
+  cursor: pointer;
+
+  transform: scale(1.05);
+}
+
+.boardCard:active {
+  transform: scale(1.03);
+}
+
+.titleBoard,
+.descriptionBoardWrapper {
+  overflow: hidden;
+
+  background-color: white;
+  border: 2px solid black;
+}
+
+.titleBoard {
+  position: relative;
+
+  padding: 0.8em 5em 0.8em 0.5em;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.descriptionBoardWrapper {
+  flex: 1;
+
+  padding: 0.5em;
+}
+
+.descriptionBoard {
+  overflow: hidden;
+
+  height: 100%;
+
+  line-height: 1.15em;
+}
+
+.deleteButton,
+.editButton {
+  cursor: pointer;
+
+  position: absolute;
+
+  width: 24px;
+  height: 24px;
+
+  background-repeat: no-repeat;
+}
+
+.deleteButton {
+  top: calc(50% - 12px);
+  right: 0.8em;
+
+  background-image: url("../../../../../../assets/img/icons/delete-card.png");
+}
+
+.editButton {
+  top: calc(50% - 12px);
+  right: 2.6em;
+
+  background-image: url("../../../../../../assets/img/icons/edit-card.png");
+}
+
+.deleteButton:hover,
+.editButton:hover {
+  scale: 1.2;
+}

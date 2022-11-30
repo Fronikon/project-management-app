@@ -28,6 +28,10 @@ const textData = {
       ru: 'Изменить',
       eng: 'Edit',
     },
+    start: {
+      ru: 'К доскам',
+      eng: 'To boards',
+    },
   },
   footer: {
     Andrey: {
@@ -54,6 +58,62 @@ const textData = {
     },
   },
   boardsPage: {
+    createBoard: {
+      title: {
+        ru: 'Создание доски',
+        eng: 'Create board',
+      },
+      inputTitle: {
+        label: {
+          ru: 'Название',
+          eng: 'Title',
+        },
+        placeholder: {
+          ru: 'Введите название...',
+          eng: 'Enter title...',
+        },
+        requiredError: {
+          ru: 'Пожалуйста введите название.',
+          eng: 'Please enter title.',
+        },
+      },
+      inputDescription: {
+        label: {
+          ru: 'Описание',
+          eng: 'Description',
+        },
+        placeholder: {
+          ru: 'Введите описание...',
+          eng: 'Enter description...',
+        },
+        requiredError: {
+          ru: 'Пожалуйста введите описание.',
+          eng: 'Please enter description.',
+        },
+      },
+      confirmButton: {
+        ru: 'Создать',
+        eng: 'Create',
+      },
+      cancelButton: {
+        ru: 'Отмена',
+        eng: 'Cancel',
+      },
+    },
+    editBoard: {
+      title: {
+        ru: 'Редактировать доску',
+        eng: 'Edit board',
+      },
+      confirmButton: {
+        ru: 'Изменить',
+        eng: 'Edit',
+      },
+    },
+    questionConfirmingDeleteBoard: {
+      ru: 'Доска будет удалена. Вы уверены?',
+      eng: 'The board will be removed. Are you sure?',
+    },
     todo: {
       ru: 'К выполнению',
       eng: 'To do',
@@ -65,14 +125,6 @@ const textData = {
     newColumn: {
       ru: 'Новая колонка',
       eng: 'New column',
-    },
-    createBoard: {
-      ru: 'Создание доски',
-      eng: 'Create board',
-    },
-    editBoard: {
-      ru: 'Редактирование доски',
-      eng: 'Edit Board',
     },
     title: {
       ru: 'Название',
@@ -104,6 +156,14 @@ const textData = {
       ru: 'Вход',
       eng: 'Sign in',
     },
+    confirmButtonSignUp: {
+      ru: 'Зарегистрироваться',
+      eng: 'Register',
+    },
+    confirmButtonLogIn: {
+      ru: 'Войти',
+      eng: 'Enter',
+    },
     login: {
       ru: 'Логин',
       eng: 'Login',
@@ -125,30 +185,68 @@ const textData = {
       eng: 'Submit',
     },
     warning: {
-      ru: 'Если у вас нет аккаунта пожалуйста зарегистрируйтесь',
-      eng: "If you don't have an account please register.",
+      ru: 'Если у вас нет аккаунта пожалуйста ',
+      eng: "If you don't have an account please ",
     },
-    registration: {
-      ru: 'Регистрация',
-      eng: 'Registration',
+    warningLink: {
+      ru: 'зарегистрируйтесь',
+      eng: 'register',
     },
     name: {
       ru: 'Имя',
       eng: 'Name',
     },
+    namePlaceholder: {
+      ru: 'Введите ваше имя',
+      eng: 'Enter your name',
+    },
+    logOut: {
+      ru: 'Вы уверены, что хотите выйти?',
+      eng: 'Are you sure you want to log out?',
+    },
+  },
+  errors: {
+    required: {
+      ru: 'Это поле обязательно для заполнения',
+      eng: 'This field is required',
+    },
+    loginError: {
+      ru: 'Введите не менее 3 символов',
+      eng: 'Enter at least 3 characters',
+    },
+    passwordError: {
+      ru: 'Введите не менее 6 символов',
+      eng: 'Enter at least 6 characters',
+    },
+  },
+  pageNotFound: {
+    ru: 'К сожалению такой страницы не существует',
+    eng: 'Sorry, there is no such page',
+  },
+  serverErrors: {
+    loginAlready: {
+      ru: 'Пользователь с таким логином уже зарегистрирован',
+      eng: 'A user with this login is already registered',
+    },
+    wrongLoginOrPassword: {
+      ru: 'Неверный логин или пароль',
+      eng: 'Wrong login or password',
+    },
+    otherError: {
+      ru: 'Что-то пошло не так, попробуйте позже',
+      eng: 'Something went wrong, try again later',
+    },
   },
   general: {
-    confirmAction: {
-      ru: 'Вы уверены?',
-      eng: 'Are you sure?',
-    },
-    cancel: {
-      ru: 'Отмена',
-      eng: 'Cancel',
-    },
-    confirm: {
-      ru: 'Подтвердить',
-      eng: 'Confirm',
+    confirmModal: {
+      cancelButton: {
+        ru: 'Нет',
+        eng: 'No',
+      },
+      confirmButton: {
+        ru: 'Да',
+        eng: 'Yes',
+      },
     },
   },
 };

@@ -20,16 +20,39 @@
   margin: 0 64px 0 0;
 }
 
+.auth {
+  display: flex;
+  gap: 36px;
+}
+
 .home,
+.board,
+.addBoard,
 .signIn,
 .signUp {
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+  text-decoration: none;
+
   background-color: transparent;
+
+  transition: 0.4s;
+}
+
+.addBoard {
   border: none;
+  outline: none;
 }
 
 .language {
@@ -51,9 +74,8 @@
   color: #fff;
 }
 
-.homeText,
-.signInText,
-.signUpText {
+.buttonText,
+.languageEng {
   margin: 0;
 
   font-size: 16px;
@@ -72,7 +94,7 @@
   color: #444;
 }
 
-.active {
+.activeLanguage {
   color: #fff;
 }
 
@@ -80,22 +102,6 @@
   gap: 14px;
 
   margin-top: 12px;
-}
-
-.signIn:hover,
-.signUp:hover,
-.home:hover {
-  cursor: pointer;
-
-  transition: 0.3s ease-in-out;
-
-  scale: 1.2;
-}
-
-.signIn:active,
-.signUp:active,
-.home:active {
-  scale: 1;
 }
 
 /* Toggle switch */
@@ -129,6 +135,29 @@
   border: 2px solid #fff;
 
   transition: 0.4s;
+}
+
+.buttons {
+  display: flex;
+  gap: 1em;
+}
+
+.signIn:hover,
+.signUp:hover,
+.board:hover,
+.addBoard:hover,
+.home:hover,
+.slider:hover {
+  transform: scale(1.2);
+}
+
+.signIn:active,
+.signUp:active,
+.board:active,
+.addBoard:active,
+.home:active,
+.slider:active {
+  transform: scale(1);
 }
 
 .slider::before {
@@ -167,7 +196,20 @@
 
 @media screen and (max-width: 1440px) {
   .heading {
-    display: none;
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+
+    white-space: nowrap;
+
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    border: 0;
   }
 
   .leftBlock {
@@ -184,10 +226,6 @@
     height: auto;
   }
 
-  .home {
-    margin-right: 0;
-  }
-
   .rightBlock {
     flex-wrap: wrap;
     justify-content: center;
@@ -196,7 +234,7 @@
   }
 }
 
-@media screen and (max-width: 472px) {
+@media screen and (max-width: 520px) {
   .leftBlock {
     justify-content: center;
 
