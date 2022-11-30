@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { NavLink } from 'react-router-dom';
 import { updateColumn } from '../../../../api/columnApi';
 import { updateTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
@@ -134,6 +135,11 @@ const Board: FC = () => {
                   dispatch(toggleColumn());
                 }}
               ></button>
+              <NavLink
+                className={styles.back}
+                to={'/boards'}
+                style={{ borderBottom: '2px dashed black' }}
+              ></NavLink>
               {provided.placeholder}
             </div>
           )}

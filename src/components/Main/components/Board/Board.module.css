@@ -138,3 +138,26 @@
 
   mix-blend-mode: difference;
 }
+
+.back {
+  min-width: 76px;
+  max-width: 76px;
+  min-height: 76px;
+  max-height: 76px;
+  margin: 0 20px 20px;
+
+  background: rgb(255 255 255 / 40%);
+  background-image: url("../../../../assets/img/icons/Rectangle_back.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  border: 2px dashed black;
+}
+
+.back:hover {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  scale: 1.1;
+}

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import useToken from '../hooks/useToken';
 import { TaskType } from '../store/reducers/boardReducer';
 
 const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
