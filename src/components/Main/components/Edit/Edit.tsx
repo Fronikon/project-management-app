@@ -7,11 +7,12 @@ import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/Con
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { parseJwt } from '../../../../data/parseJWT';
 import { deleteUserById, getUser, putUser } from '../../../../api/userApi';
 import CancelButton from '../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/DeleteButton';
 import { logOut } from '../../../../store/slices/sliceAuth';
+import Modal from '../../../../componentsUtils/Modal/Modal';
+import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
 
 export interface SignUpType {
   name: string;
@@ -24,7 +25,8 @@ const Edit: FC = () => {
   const navigate = useNavigate();
   const language = useAppSelector((store) => store.language.value);
   const token = useAppSelector((store) => store.authReducer.token);
-  const userId = parseJwt(token).id;
+  const userId = useAppSelector((store) => store.authReducer.userId);
+  const [isModal, setIsModal] = useState(false);
   const [user, setUser] = useState({ _id: '', name: '', login: '' });
 
   const {
@@ -42,11 +44,23 @@ const Edit: FC = () => {
     navigate(-1);
   };
 
-  const deleteUser = async () => {
+  const deleteUser = () => {
+    setIsModal(true);
+  };
+
+  const closeModalDeleteUser = () => {
+    setIsModal(false);
+  };
+
+  const confirmModal = async () => {
+    setIsModal(false);
     await deleteUserById({ userId, token });
-    localStorage.removeItem('token');
     dispatch(logOut());
     navigate('/');
+  };
+
+  const cancelModal = () => {
+    setIsModal(false);
   };
 
   useEffect(() => {
@@ -57,111 +71,123 @@ const Edit: FC = () => {
   }, [token, userId]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-      <h3 className={formsStyles.title}>{textData.header.edit[language]}</h3>
+    <>
+      {isModal && (
+        <Modal closeModal={closeModalDeleteUser}>
+          <ConfirmAction
+            question={textData.authPage.deleteUser[language]}
+            confirm={confirmModal}
+            cancel={cancelModal}
+          />
+        </Modal>
+      )}
 
-      <div className={styles.fields}>
-        <Controller
-          name="name"
-          control={control}
-          rules={{
-            required: '1',
-            minLength: {
-              value: 3,
-              message: '2',
-            },
-          }}
-          defaultValue={''}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextInputForm
-              onChangeText={onChange}
-              value={value || user.name}
-              error={
-                !error?.message
-                  ? ''
-                  : error?.message === '1'
-                  ? textData.errors.required[language]
-                  : textData.errors.loginError[language]
-              }
-              label={textData.authPage.name[language]}
-              type={'text'}
-              placeholder={textData.authPage.namePlaceholder[language]}
-            />
-          )}
-        />
+      <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
+        <h3 className={formsStyles.title}>{textData.header.edit[language]}</h3>
 
-        <Controller
-          name="login"
-          control={control}
-          rules={{
-            required: '1',
-            minLength: {
-              value: 3,
-              message: '2',
-            },
-          }}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextInputForm
-              onChangeText={onChange}
-              value={value || user.login}
-              error={
-                !error?.message
-                  ? ''
-                  : error?.message === '1'
-                  ? textData.errors.required[language]
-                  : textData.errors.loginError[language]
-              }
-              type={'text'}
-              label={textData.authPage.login[language]}
-              placeholder={textData.authPage.loginPlaceholder[language]}
-            />
-          )}
-        />
+        <div className={styles.fields}>
+          <Controller
+            name="name"
+            control={control}
+            rules={{
+              required: '1',
+              minLength: {
+                value: 3,
+                message: '2',
+              },
+            }}
+            defaultValue={''}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextInputForm
+                onChangeText={onChange}
+                value={value || user.name}
+                error={
+                  !error?.message
+                    ? ''
+                    : error?.message === '1'
+                    ? textData.errors.required[language]
+                    : textData.errors.loginError[language]
+                }
+                label={textData.authPage.name[language]}
+                type={'text'}
+                placeholder={textData.authPage.namePlaceholder[language]}
+              />
+            )}
+          />
 
-        <Controller
-          name="password"
-          control={control}
-          rules={{
-            required: '1',
-            minLength: {
-              value: 6,
-              message: '2',
-            },
-          }}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextInputForm
-              onChangeText={onChange}
-              value={value || ''}
-              error={
-                !error?.message
-                  ? ''
-                  : error?.message === '1'
-                  ? textData.errors.required[language]
-                  : textData.errors.passwordError[language]
-              }
-              type={'password'}
-              label={textData.authPage.password[language]}
-              placeholder={textData.authPage.passwordPlaceholder[language]}
-            />
-          )}
-        />
-      </div>
+          <Controller
+            name="login"
+            control={control}
+            rules={{
+              required: '1',
+              minLength: {
+                value: 3,
+                message: '2',
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextInputForm
+                onChangeText={onChange}
+                value={value || user.login}
+                error={
+                  !error?.message
+                    ? ''
+                    : error?.message === '1'
+                    ? textData.errors.required[language]
+                    : textData.errors.loginError[language]
+                }
+                type={'text'}
+                label={textData.authPage.login[language]}
+                placeholder={textData.authPage.loginPlaceholder[language]}
+              />
+            )}
+          />
 
-      <div className={formsStyles.buttons}>
-        <ConfirmButton
-          name={textData.boardsPage.editBoard.confirmButton[language]}
-          disabled={!isDirty || !!Object.keys(errors).length}
-        />
-        <CancelButton
-          name={textData.boardsPage.createBoard.cancelButton[language]}
-          handleClick={cancel}
-        />
-        <DeleteButton
-          name={textData.boardsPage.createBoard.deleteButton[language]}
-          handleClick={deleteUser}
-        />
-      </div>
-    </form>
+          <Controller
+            name="password"
+            control={control}
+            rules={{
+              required: '1',
+              minLength: {
+                value: 6,
+                message: '2',
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <TextInputForm
+                onChangeText={onChange}
+                value={value || ''}
+                error={
+                  !error?.message
+                    ? ''
+                    : error?.message === '1'
+                    ? textData.errors.required[language]
+                    : textData.errors.passwordError[language]
+                }
+                type={'password'}
+                label={textData.authPage.password[language]}
+                placeholder={textData.authPage.passwordPlaceholder[language]}
+              />
+            )}
+          />
+        </div>
+
+        <div className={formsStyles.buttons}>
+          <ConfirmButton
+            name={textData.boardsPage.editBoard.confirmButton[language]}
+            disabled={!isDirty || !!Object.keys(errors).length}
+          />
+          <CancelButton
+            name={textData.boardsPage.createBoard.cancelButton[language]}
+            handleClick={cancel}
+          />
+          <DeleteButton
+            name={textData.boardsPage.createBoard.deleteButton[language]}
+            handleClick={deleteUser}
+          />
+        </div>
+      </form>
+    </>
   );
 };
 

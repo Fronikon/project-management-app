@@ -208,6 +208,10 @@ const textData = {
       ru: 'Вы уверены, что хотите выйти?',
       eng: 'Are you sure you want to log out?',
     },
+    deleteUser: {
+      ru: 'Вы уверены, что хотите удалитьвсе данные пользователя?',
+      eng: 'Are you sure you want to delete all user data?',
+    },
   },
   errors: {
     required: {
