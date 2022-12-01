@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ColumnType } from '../store/reducers/boardReducer';
+import { ColumnType, TaskType } from '../store/reducers/boardReducer';
 
 interface apiColumnType {
   title: string;
@@ -20,28 +20,30 @@ export const getAllColumns = createAsyncThunk<ColumnType[], void>(
   }
 );
 
-export const createColumn = createAsyncThunk<void, apiColumnType>(
+export const createColumn = createAsyncThunk<ColumnType, apiColumnType>(
   'column/createColumn',
   async (arg) => {
-    await axios.post(
+    const response = await axios.post(
       url,
       {
         title: arg.title,
-        order: 1,
+        order: arg.order,
       },
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
+    return response.data;
   }
 );
 
-export const deleteColumn = createAsyncThunk<void, { id: string }>(
+export const deleteColumn = createAsyncThunk<ColumnType, { id: string }>(
   'column/deleteColumn',
   async (arg) => {
-    await axios.delete(`${url}/${arg.id}`, {
+    const response = await axios.delete(`${url}/${arg.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return response.data;
   }
 );
 

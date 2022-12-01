@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { createColumn, getAllColumns } from '../../../../../api/columnApi';
-import { createTask } from '../../../../../api/taskApi';
+import { createTask, parsedToken } from '../../../../../api/taskApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
@@ -40,7 +40,6 @@ const PopUp: FC = () => {
 
   const columnConfirm = () => {
     dispatch(createColumn({ title: title, order: columnLength }));
-    dispatch(getAllColumns());
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
@@ -64,8 +63,8 @@ const PopUp: FC = () => {
         columnId: columnId,
         description: description,
         color: color,
-        userId: 0,
-        users: [],
+        userId: parsedToken.id,
+        users: [parsedToken.id],
       })
     );
     dispatch(toggleTask());

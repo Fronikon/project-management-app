@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import useToken from '../hooks/useToken';
+import { parseJwt } from '../data/parseJWT';
 import { TaskType } from '../store/reducers/boardReducer';
 
 const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNmE5MjQyOWIzZjMzNDgwZDJhYjgwMyIsImxvZ2luIjoiSU1hc2siLCJpYXQiOjE2Njk4MjI1OTQsImV4cCI6MTY2OTg2NTc5NH0.PO1MuA85gxaONwbiLuTccXLxxos7EfiPnLFX9Fo2oyM';
+const token = localStorage.getItem('token');
+export const parsedToken = parseJwt(token as string);
 
 export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string }>(
   'column/getColumnTasks',
@@ -17,29 +17,31 @@ export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string }>(
   }
 );
 
-export const createTask = createAsyncThunk<void, TaskType>('column/createTask', async (arg) => {
-  await axios.post(
+export const createTask = createAsyncThunk<TaskType, TaskType>('column/createTask', async (arg) => {
+  const response = await axios.post(
     `${url}/${arg.columnId}/tasks`,
     {
       title: arg.title,
       order: arg.order,
       description: arg.description,
       color: arg.color,
-      userId: arg.userId,
-      users: arg.users,
+      userId: parsedToken.id,
+      users: [parsedToken.id],
     },
     {
       headers: { Authorization: `Bearer ${token}` },
     }
   );
+  return response.data;
 });
 
-export const deleteTask = createAsyncThunk<void, { columnId: string; taskId: string }>(
+export const deleteTask = createAsyncThunk<TaskType, { columnId: string; taskId: string }>(
   'column/deleteTask',
   async (arg) => {
-    await axios.delete(`${url}/${arg.columnId}/tasks/${arg.taskId}`, {
+    const respone = await axios.delete(`${url}/${arg.columnId}/tasks/${arg.taskId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return respone.data;
   }
 );
 

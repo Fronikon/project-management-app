@@ -36,9 +36,8 @@ const Column: FC = () => {
                   <button
                     className={styles.delete}
                     onClick={() => {
-                      dispatch(deleteColumn({ id: column._id }));
                       dispatch(decreaseColumnCount());
-                      dispatch(getAllColumns());
+                      dispatch(deleteColumn({ id: column._id }));
                     }}
                   ></button>
                 </div>
