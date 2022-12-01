@@ -13,6 +13,9 @@ import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/Delet
 import { logOut } from '../../../../store/slices/sliceAuth';
 import Modal from '../../../../componentsUtils/Modal/Modal';
 import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
+import useToken from '../../../../hooks/useToken';
+import useUserId from '../../../../hooks/useUserId';
+import Loader from '../../../../componentsUtils/Loader/Loader';
 
 export interface SignUpType {
   name: string;
@@ -20,14 +23,21 @@ export interface SignUpType {
   password: string;
 }
 
+interface UserResponseType {
+  login: string;
+  name: string;
+  _id: string;
+}
+
 const Edit: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const language = useAppSelector((store) => store.language.value);
-  const token = useAppSelector((store) => store.authReducer.token);
-  const userId = useAppSelector((store) => store.authReducer.userId);
+  const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
+  const token = useToken();
+  const userId = useUserId();
   const [isModal, setIsModal] = useState(false);
-  const [user, setUser] = useState({ _id: '', name: '', login: '' });
+  const [user, setUser] = useState({ login: '', name: '', _id: '' });
 
   const {
     handleSubmit,
@@ -35,7 +45,7 @@ const Edit: FC = () => {
     formState: { errors, isDirty },
   } = useForm<SignUpType>();
 
-  const onSubmit = async (user: SignUpType) => {
+  const confirm = async (user: SignUpType) => {
     const response = await dispatch(putUser({ userId, token, user }));
     if (typeof response.payload !== 'string') navigate(-1);
   };
@@ -54,7 +64,7 @@ const Edit: FC = () => {
 
   const confirmModal = async () => {
     setIsModal(false);
-    await deleteUserById({ userId, token });
+    await dispatch(deleteUserById({ userId, token }));
     dispatch(logOut());
     navigate('/');
   };
@@ -65,10 +75,10 @@ const Edit: FC = () => {
 
   useEffect(() => {
     (async () => {
-      const temp = await getUser({ userId, token });
+      const temp = (await dispatch(getUser({ userId, token }))).payload as UserResponseType;
       setUser(temp);
     })();
-  }, [token, userId]);
+  }, [dispatch, token, userId]);
 
   return (
     <>
@@ -82,7 +92,7 @@ const Edit: FC = () => {
         </Modal>
       )}
 
-      <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
+      <form onSubmit={handleSubmit(confirm)} className={formsStyles.form}>
         <h3 className={formsStyles.title}>{textData.header.edit[language]}</h3>
 
         <div className={styles.fields}>
@@ -187,6 +197,7 @@ const Edit: FC = () => {
           />
         </div>
       </form>
+      {isLoading && <Loader />}
     </>
   );
 };

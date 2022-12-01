@@ -1,5 +1,5 @@
 import { signUp, signIn } from '../api/authApi';
-import { putUser } from '../api/userApi';
+import { deleteUserById, getUser, putUser } from '../api/userApi';
 import {
   addBoardTAC,
   deleteBoardTAC,
@@ -10,6 +10,8 @@ import {
 export const requestArray = [
   signIn,
   signUp,
+  getUser,
+  deleteUserById,
   putUser,
   getBoardsTAC,
   addBoardTAC,
