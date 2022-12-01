@@ -25,7 +25,7 @@ const SignUp: FC = () => {
   const navigate = useNavigate();
   const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
-  const [isModal, setIsModal] = useState(false);
+  const [isModalError, setIsModalError] = useState(false);
 
   const {
     handleSubmit,
@@ -38,13 +38,13 @@ const SignUp: FC = () => {
     if (typeof response.payload !== 'string') navigate('/signIn');
   };
 
-  const closeModal = () => {
-    setIsModal(false);
+  const closeModalError = () => {
+    setIsModalError(false);
     dispatch(cleanError());
   };
 
   useEffect(() => {
-    if (error) setIsModal(true);
+    if (error) setIsModalError(true);
   }, [error]);
 
   return (
@@ -146,8 +146,8 @@ const SignUp: FC = () => {
           />
         </div>
 
-        {isModal && (
-          <Modal closeModal={closeModal}>
+        {isModalError && (
+          <Modal closeModal={closeModalError}>
             <div className={modalStyles.modalWrapper}>
               <h2>{error}</h2>
             </div>

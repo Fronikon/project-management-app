@@ -12,10 +12,12 @@ import CancelButton from '../../../../componentsUtils/buttons/CancelButton/Cance
 import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/DeleteButton';
 import { logOut } from '../../../../store/slices/sliceAuth';
 import Modal from '../../../../componentsUtils/Modal/Modal';
+import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
 import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
 import useToken from '../../../../hooks/useToken';
 import useUserId from '../../../../hooks/useUserId';
 import Loader from '../../../../componentsUtils/Loader/Loader';
+import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
 
 export interface SignUpType {
   name: string;
@@ -36,12 +38,15 @@ const Edit: FC = () => {
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
   const token = useToken();
   const userId = useUserId();
+  const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const [isModal, setIsModal] = useState(false);
+  const [isModalError, setIsModalError] = useState(false);
   const [user, setUser] = useState({ login: '', name: '', _id: '' });
 
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors, isDirty },
   } = useForm<SignUpType>();
 
@@ -62,6 +67,11 @@ const Edit: FC = () => {
     setIsModal(false);
   };
 
+  const closeModalError = () => {
+    setIsModalError(false);
+    dispatch(cleanError());
+  };
+
   const confirmModal = async () => {
     setIsModal(false);
     await dispatch(deleteUserById({ userId, token }));
@@ -74,11 +84,16 @@ const Edit: FC = () => {
   };
 
   useEffect(() => {
+    if (error) setIsModalError(true);
+  }, [error]);
+
+  useEffect(() => {
     (async () => {
       const temp = (await dispatch(getUser({ userId, token }))).payload as UserResponseType;
       setUser(temp);
+      reset({ name: temp.name, login: temp.login });
     })();
-  }, [dispatch, token, userId]);
+  }, [dispatch, reset, token, userId]);
 
   return (
     <>
@@ -196,6 +211,14 @@ const Edit: FC = () => {
             handleClick={deleteUser}
           />
         </div>
+
+        {isModalError && (
+          <Modal closeModal={closeModalError}>
+            <div className={modalStyles.modalWrapper}>
+              <h2>{error}</h2>
+            </div>
+          </Modal>
+        )}
       </form>
       {isLoading && <Loader />}
     </>
