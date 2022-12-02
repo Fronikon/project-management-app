@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createColumn } from '../../../../../api/columnApi';
-import { createTask, parsedToken } from '../../../../../api/taskApi';
+import { createTask } from '../../../../../api/taskApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
@@ -29,6 +29,7 @@ const PopUp: FC = () => {
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const userId = localStorage.getItem('userId');
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -66,8 +67,8 @@ const PopUp: FC = () => {
         columnId: columnId,
         description: description,
         color: color,
-        userId: parsedToken.id,
-        users: [parsedToken.id],
+        userId: userId as string,
+        users: [userId as string],
         boardId: id as string,
       })
     );

@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { parseJwt } from '../data/parseJWT';
 import { ColumnType } from '../store/reducers/boardReducer';
 
 interface apiColumnType {
@@ -11,12 +10,11 @@ interface apiColumnType {
 }
 
 const url = 'https://pma-backend.onrender.com/boards';
-const token = localStorage.getItem('token');
-export const parsedToken = parseJwt(token as string);
 
 export const getAllColumns = createAsyncThunk<ColumnType[], { boardId: string }>(
   'column/getAllColumns',
   async (arg) => {
+    const token = localStorage.getItem('token');
     const response = await axios.get(`${url}/${arg.boardId}/columns`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -27,6 +25,7 @@ export const getAllColumns = createAsyncThunk<ColumnType[], { boardId: string }>
 export const createColumn = createAsyncThunk<ColumnType, apiColumnType>(
   'column/createColumn',
   async (arg) => {
+    const token = localStorage.getItem('token');
     const response = await axios.post(
       `${url}/${arg.boardId}/columns`,
       {
@@ -44,6 +43,7 @@ export const createColumn = createAsyncThunk<ColumnType, apiColumnType>(
 export const deleteColumn = createAsyncThunk<ColumnType, { id: string; boardId: string }>(
   'column/deleteColumn',
   async (arg) => {
+    const token = localStorage.getItem('token');
     const response = await axios.delete(`${url}/${arg.boardId}/columns/${arg.id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -54,6 +54,7 @@ export const deleteColumn = createAsyncThunk<ColumnType, { id: string; boardId: 
 export const updateColumn = createAsyncThunk<void, apiColumnType>(
   'column/updateColumn',
   async (arg) => {
+    const token = localStorage.getItem('token');
     await axios.put(
       `${url}/${arg.boardId}/columns/${arg.id}`,
       {
