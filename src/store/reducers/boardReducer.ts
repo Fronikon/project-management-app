@@ -101,7 +101,6 @@ const boardReducer = createSlice({
           state.tasks[state.columns[i]._id] = [];
           state.tasksLength[action.payload[i]._id] = 0;
         }
-        console.log(state.columns);
       })
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
@@ -109,13 +108,13 @@ const boardReducer = createSlice({
             (a, b) => a.order - b.order
           );
           state.tasksLength[action.payload[0].columnId] = action.payload.length;
-          console.log(state.tasks[action.payload[0].columnId]);
           return;
         }
       })
       .addCase(createColumn.fulfilled, (state, action: PayloadAction<ColumnType>) => {
         state.columns.push(action.payload);
-        console.log(state.columns);
+        state.tasks[action.payload._id] = [];
+        state.tasksLength[action.payload._id] = 0;
       })
       .addCase(createTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
         state.tasks[action.payload.columnId].push(action.payload);

@@ -60,6 +60,7 @@ const PopUp: FC = () => {
   };
 
   const taskConfirm = () => {
+    console.log(tasksLength);
     dispatch(
       createTask({
         title: title,
