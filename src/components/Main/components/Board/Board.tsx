@@ -115,36 +115,6 @@ const Board: FC = () => {
       updateSpecialTasksOrder(startTaskIds, start);
 
       updateSpecialTasksOrder(finishTaskIds, finish);
-
-      // for (let i = 0; i < startTaskIds.length; i++) {
-      //   dispatch(
-      //     updateTasks({
-      //       title: startTaskIds[i].title,
-      //       order: i,
-      //       description: startTaskIds[i].description,
-      //       color: startTaskIds[i].color,
-      //       columnId: start,
-      //       userId: startTaskIds[i].userId,
-      //       users: startTaskIds[i].users,
-      //       _id: startTaskIds[i]._id,
-      //     })
-      //   );
-      // }
-
-      // for (let i = 0; i < finishTaskIds.length; i++) {
-      //   dispatch(
-      //     updateTasks({
-      //       title: finishTaskIds[i].title,
-      //       order: i,
-      //       description: finishTaskIds[i].description,
-      //       color: finishTaskIds[i].color,
-      //       columnId: finish,
-      //       userId: finishTaskIds[i].userId,
-      //       users: finishTaskIds[i].users,
-      //       _id: finishTaskIds[i]._id,
-      //     })
-      //   );
-      // }
     }
   };
 
