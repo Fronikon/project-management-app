@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { SignInType } from '../components/Main/components/SignIn/SignIn';
 import { SignUpType } from '../components/Main/components/SignUp/SignUp';
-import { parseJWT } from '../data/parseJWT';
+import { parseJwt } from '../data/parseJWT';
 import textData from '../data/textData';
 import { RootState } from '../store/store';
 import { instance } from './instance';
@@ -16,7 +16,7 @@ export const signIn = createAsyncThunk<
   try {
     const response = await instance.post('auth/signin', user);
     localStorage.setItem('token', response.data.token);
-    localStorage.setItem('userId', parseJWT(response.data.token).id);
+    localStorage.setItem('userId', parseJwt(response.data.token).id);
     return await response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {

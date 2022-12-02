@@ -1,0 +1,185 @@
+.wrapper {
+  scrollbar-color: #6969dd #e0e0e0;
+  scrollbar-width: thin;
+
+  overflow-x: scroll;
+  display: flex;
+  gap: 40px;
+
+  margin: 50px 42px 0;
+  padding-bottom: 30px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  background: rgb(255 255 255 / 40%);
+  border: 2px dashed black;
+}
+
+.headingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 20px 20px 0;
+}
+
+.titleColumn {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  color: #fff;
+}
+
+.delete {
+  width: 24px;
+  height: 24px;
+
+  background-color: transparent;
+  background-image: url("../../../../assets/img/icons/delete-card.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+}
+
+.delete:hover {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  scale: 1.2;
+}
+
+.addButton {
+  min-width: 384px;
+  max-width: 384px;
+  min-height: 76px;
+  max-height: 76px;
+  margin: 0 20px 20px;
+
+  background: rgb(255 255 255 / 40%);
+  background-image: url("../../../../assets/img/icons/plus.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  border: 2px dashed black;
+}
+
+.addButton:hover {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  scale: 1.1;
+}
+
+.tasksWrapper {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  max-height: 480px;
+  margin: 0 20px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2b2b2b;
+  border-radius: 100px;
+}
+
+.task {
+  margin: 0 20px;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 20px;
+
+  background-color: #fff;
+}
+
+.titleTask {
+  width: 85%;
+  padding: 20px 0 20px 40px;
+}
+
+.deleteTask {
+  width: 15%;
+}
+
+.edit {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+
+  background-color: transparent;
+  background-image: url("../../../../assets/img/icons/edit-card.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: contain;
+  border: none;
+}
+
+.edit:hover {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  scale: 1.2;
+}
+
+.descriptionTask {
+  width: 320px;
+  margin: 0 20px 20px;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #fff;
+  letter-spacing: -0.011em;
+
+  mix-blend-mode: difference;
+}
+
+.back {
+  min-width: 76px;
+  max-width: 76px;
+  min-height: 76px;
+  max-height: 76px;
+  margin: 0 20px 20px;
+
+  background: rgb(255 255 255 / 40%);
+  background-image: url("../../../../assets/img/icons/Rectangle_back.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  border: 2px dashed black;
+}
+
+.back:hover {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  scale: 1.1;
+}

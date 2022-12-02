@@ -150,6 +150,10 @@ const textData = {
       ru: 'Новое задание',
       eng: 'New task',
     },
+    changeTask: {
+      ru: 'Изменить задание',
+      eng: 'Change task',
+    },
   },
   authPage: {
     signIn: {
