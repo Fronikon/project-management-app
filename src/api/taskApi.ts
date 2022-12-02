@@ -3,14 +3,14 @@ import axios from 'axios';
 import { parseJwt } from '../data/parseJWT';
 import { TaskType } from '../store/reducers/boardReducer';
 
-const url = 'https://pma-backend.onrender.com/boards/6371414f2821a7b9af9f0090/columns';
+const url = 'https://pma-backend.onrender.com/boards';
 const token = localStorage.getItem('token');
 export const parsedToken = parseJwt(token as string);
 
-export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string }>(
+export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string; boardId: string }>(
   'column/getColumnTasks',
   async (arg) => {
-    const response = await axios.get(`${url}/${arg._id}/tasks`, {
+    const response = await axios.get(`${url}/${arg.boardId}/columns/${arg._id}/tasks`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return await response.data;
@@ -19,7 +19,7 @@ export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string }>(
 
 export const createTask = createAsyncThunk<TaskType, TaskType>('column/createTask', async (arg) => {
   const response = await axios.post(
-    `${url}/${arg.columnId}/tasks`,
+    `${url}/${arg.boardId}/columns/${arg.columnId}/tasks`,
     {
       title: arg.title,
       order: arg.order,
@@ -29,25 +29,32 @@ export const createTask = createAsyncThunk<TaskType, TaskType>('column/createTas
       users: [parsedToken.id],
     },
     {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
     }
   );
   return response.data;
 });
 
-export const deleteTask = createAsyncThunk<TaskType, { columnId: string; taskId: string }>(
-  'column/deleteTask',
-  async (arg) => {
-    const respone = await axios.delete(`${url}/${arg.columnId}/tasks/${arg.taskId}`, {
+export const deleteTask = createAsyncThunk<
+  TaskType,
+  { columnId: string; taskId: string; boardId: string }
+>('column/deleteTask', async (arg) => {
+  const respone = await axios.delete(
+    `${url}/${arg.boardId}/columns/${arg.columnId}/tasks/${arg.taskId}`,
+    {
       headers: { Authorization: `Bearer ${token}` },
-    });
-    return respone.data;
-  }
-);
+    }
+  );
+  return respone.data;
+});
 
 export const updateTasks = createAsyncThunk<void, TaskType>('column/updateTasks', async (arg) => {
   await axios.put(
-    `${url}/${arg.columnId}/tasks/${arg._id}`,
+    `${url}/${arg.boardId}/columns/${arg.columnId}/tasks/${arg._id}`,
     {
       title: arg.title,
       order: arg.order,

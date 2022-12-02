@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
-import { createColumn, getAllColumns } from '../../../../../api/columnApi';
+import { useParams } from 'react-router-dom';
+import { createColumn } from '../../../../../api/columnApi';
 import { createTask, parsedToken } from '../../../../../api/taskApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
   increaseColumnCount,
+  increaseTasksCount,
   resetColumnId,
   toggleColumn,
   toggleModal,
@@ -24,7 +26,9 @@ const PopUp: FC = () => {
   const language = useAppSelector((store) => store.language.value);
   const columnId = useAppSelector((store) => store.boardReducer.columnId);
   const columnLength = useAppSelector((store) => store.boardReducer.columnLength);
+  const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
   const dispatch = useAppDispatch();
+  const { id } = useParams();
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -39,7 +43,7 @@ const PopUp: FC = () => {
   };
 
   const columnConfirm = () => {
-    dispatch(createColumn({ title: title, order: columnLength }));
+    dispatch(createColumn({ title: title, order: columnLength, boardId: id as string }));
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
@@ -58,13 +62,13 @@ const PopUp: FC = () => {
     dispatch(
       createTask({
         title: title,
-        order: 1,
-        boardId: '6371414f2821a7b9af9f0090',
+        order: tasksLength[columnId],
         columnId: columnId,
         description: description,
         color: color,
         userId: parsedToken.id,
         users: [parsedToken.id],
+        boardId: id as string,
       })
     );
     dispatch(toggleTask());
@@ -73,6 +77,7 @@ const PopUp: FC = () => {
     setTitle('');
     setDescription('');
     setColor('#000000');
+    dispatch(increaseTasksCount(columnId));
   };
 
   const taskCancel = () => {

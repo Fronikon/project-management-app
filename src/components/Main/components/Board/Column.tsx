@@ -1,5 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useParams } from 'react-router-dom';
 import { deleteColumn, getAllColumns } from '../../../../api/columnApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
@@ -12,12 +13,13 @@ import styles from './Board.module.css';
 import TasksPreview from './TasksPreview';
 
 const Column: FC = () => {
-  const column = useAppSelector((store) => store.boardReducer.value);
+  const column = useAppSelector((store) => store.boardReducer.columns);
+  const { id } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllColumns());
-  }, [dispatch]);
+    dispatch(getAllColumns({ boardId: id as string }));
+  }, [dispatch, id]);
 
   return (
     <>
@@ -37,7 +39,7 @@ const Column: FC = () => {
                     className={styles.delete}
                     onClick={() => {
                       dispatch(decreaseColumnCount());
-                      dispatch(deleteColumn({ id: column._id }));
+                      dispatch(deleteColumn({ id: column._id, boardId: id as string }));
                     }}
                   ></button>
                 </div>

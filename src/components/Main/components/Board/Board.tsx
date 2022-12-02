@@ -1,12 +1,13 @@
 import React, { FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { updateColumn } from '../../../../api/columnApi';
 import { updateTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   setColumns,
   setTasks,
+  TaskType,
   toggleColumn,
   toggleModal,
 } from '../../../../store/reducers/boardReducer';
@@ -15,9 +16,28 @@ import Column from './Column';
 import PopUp from './PopUp/PopUp';
 
 const Board: FC = () => {
-  const column = useAppSelector((store) => store.boardReducer.value);
+  const column = useAppSelector((store) => store.boardReducer.columns);
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const dispatch = useAppDispatch();
+  const { id } = useParams();
+
+  const updateSpecialTasksOrder = (tasks: TaskType[], columnId: string) => {
+    for (let i = 0; i < tasks.length; i++) {
+      dispatch(
+        updateTasks({
+          title: tasks[i].title,
+          order: i,
+          description: tasks[i].description,
+          color: tasks[i].color,
+          columnId: columnId,
+          userId: tasks[i].userId,
+          users: tasks[i].users,
+          boardId: id as string,
+          _id: tasks[i]._id,
+        })
+      );
+    }
+  };
 
   const onDragEndColumnHandler = (result: DropResult) => {
     const { destination, source } = result;
@@ -38,7 +58,9 @@ const Board: FC = () => {
       col.splice(destination.index, 0, reorderedItem);
       dispatch(setColumns(col));
       for (let i = 0; i < column.length; i++) {
-        dispatch(updateColumn({ title: col[i].title, order: i, id: col[i]._id }));
+        dispatch(
+          updateColumn({ title: col[i].title, order: i, boardId: id as string, id: col[i]._id })
+        );
       }
 
       // Moving tasks
@@ -63,6 +85,7 @@ const Board: FC = () => {
               columnId: start,
               userId: task[i].userId,
               users: task[i].users,
+              boardId: id as string,
               _id: task[i]._id,
             })
           );
@@ -89,35 +112,39 @@ const Board: FC = () => {
       dispatch(setTasks({ items: startTaskIds, id: start }));
       dispatch(setTasks({ items: finishTaskIds, id: finish }));
 
-      for (let i = 0; i < startTaskIds.length; i++) {
-        dispatch(
-          updateTasks({
-            title: startTaskIds[i].title,
-            order: i,
-            description: startTaskIds[i].description,
-            color: startTaskIds[i].color,
-            columnId: start,
-            userId: startTaskIds[i].userId,
-            users: startTaskIds[i].users,
-            _id: startTaskIds[i]._id,
-          })
-        );
-      }
+      updateSpecialTasksOrder(startTaskIds, start);
 
-      for (let i = 0; i < finishTaskIds.length; i++) {
-        dispatch(
-          updateTasks({
-            title: finishTaskIds[i].title,
-            order: i,
-            description: finishTaskIds[i].description,
-            color: finishTaskIds[i].color,
-            columnId: finish,
-            userId: finishTaskIds[i].userId,
-            users: finishTaskIds[i].users,
-            _id: finishTaskIds[i]._id,
-          })
-        );
-      }
+      updateSpecialTasksOrder(finishTaskIds, finish);
+
+      // for (let i = 0; i < startTaskIds.length; i++) {
+      //   dispatch(
+      //     updateTasks({
+      //       title: startTaskIds[i].title,
+      //       order: i,
+      //       description: startTaskIds[i].description,
+      //       color: startTaskIds[i].color,
+      //       columnId: start,
+      //       userId: startTaskIds[i].userId,
+      //       users: startTaskIds[i].users,
+      //       _id: startTaskIds[i]._id,
+      //     })
+      //   );
+      // }
+
+      // for (let i = 0; i < finishTaskIds.length; i++) {
+      //   dispatch(
+      //     updateTasks({
+      //       title: finishTaskIds[i].title,
+      //       order: i,
+      //       description: finishTaskIds[i].description,
+      //       color: finishTaskIds[i].color,
+      //       columnId: finish,
+      //       userId: finishTaskIds[i].userId,
+      //       users: finishTaskIds[i].users,
+      //       _id: finishTaskIds[i]._id,
+      //     })
+      //   );
+      // }
     }
   };
 

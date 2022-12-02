@@ -126,6 +126,28 @@
   width: 15%;
 }
 
+.edit {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+
+  background-color: transparent;
+  background-image: url("../../../../assets/img/icons/edit_task.png");
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: contain;
+  border: none;
+}
+
+.edit:hover {
+  cursor: pointer;
+
+  transition: 0.5s;
+
+  scale: 1.2;
+}
+
 .descriptionTask {
   width: 320px;
   margin: 0 20px 20px;

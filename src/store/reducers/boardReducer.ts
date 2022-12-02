@@ -10,8 +10,8 @@ export interface TaskType {
   color: string;
   userId: string;
   users: string[];
+  boardId: string;
   _id?: string;
-  boardId?: string;
 }
 
 export interface ColumnType {
@@ -25,11 +25,12 @@ interface InitialStateType {
   columnId: string;
   taskId: string;
   columnLength: number;
+  tasksLength: { [index: string]: number };
   isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
   isChangeModalOpen: boolean;
-  value: ColumnType[];
+  columns: ColumnType[];
   tasks: { [index: string]: TaskType[] };
 }
 
@@ -37,11 +38,12 @@ const initialState: InitialStateType = {
   columnId: '',
   taskId: '',
   columnLength: 0,
+  tasksLength: {},
   isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,
   isChangeModalOpen: false,
-  value: [] as ColumnType[],
+  columns: [] as ColumnType[],
   tasks: {},
 };
 
@@ -68,7 +70,7 @@ const boardReducer = createSlice({
       state.columnId = '';
     },
     setColumns(state, action) {
-      state.value = action.payload;
+      state.columns = action.payload;
     },
     setTasks(state, action) {
       state.tasks[action.payload.id] = action.payload.items;
@@ -82,41 +84,54 @@ const boardReducer = createSlice({
     decreaseColumnCount(state) {
       state.columnLength -= 1;
     },
+    increaseTasksCount(state, action) {
+      state.tasksLength[action.payload] += 1;
+    },
+    decreaseTasksCount(state, action) {
+      state.tasksLength[action.payload] -= 1;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getAllColumns.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
-        state.value = action.payload;
-        state.value = state.value.sort((a, b) => a.order - b.order);
-        state.columnLength = state.value.length;
-        for (let i = 0; i < state.value.length; i++) {
-          state.tasks[state.value[i]._id] = [];
+        state.columns = action.payload;
+        state.columns = state.columns.sort((a, b) => a.order - b.order);
+        state.columnLength = state.columns.length;
+        for (let i = 0; i < state.columns.length; i++) {
+          state.tasks[state.columns[i]._id] = [];
+          state.tasksLength[action.payload[i]._id] = 0;
         }
+        console.log(state.columns);
       })
       .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
           state.tasks[action.payload[0].columnId] = action.payload.sort(
             (a, b) => a.order - b.order
           );
+          state.tasksLength[action.payload[0].columnId] = action.payload.length;
+          console.log(state.tasks[action.payload[0].columnId]);
           return;
         }
       })
       .addCase(createColumn.fulfilled, (state, action: PayloadAction<ColumnType>) => {
-        state.value.push(action.payload);
-        console.log(state.value);
+        state.columns.push(action.payload);
+        console.log(state.columns);
       })
       .addCase(createTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
         state.tasks[action.payload.columnId].push(action.payload);
       })
       .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<ColumnType>) => {
-        const index = state.value.map((x) => x._id).indexOf(action.payload._id);
-        state.value.splice(index, 1);
+        const index = state.columns.map((x) => x._id).indexOf(action.payload._id);
+        state.columns.splice(index, 1);
       })
       .addCase(deleteTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
         const index = state.tasks[action.payload.columnId]
           .map((x) => x._id)
           .indexOf(action.payload._id);
         state.tasks[action.payload.columnId].splice(index, 1);
+        for (let i = 0; i < state.tasksLength[action.payload.columnId]; i++) {
+          state.tasks[action.payload.columnId][i].order = i;
+        }
       });
   },
 });
@@ -134,4 +149,6 @@ export const {
   setTasks,
   increaseColumnCount,
   decreaseColumnCount,
+  increaseTasksCount,
+  decreaseTasksCount,
 } = boardReducer.actions;
