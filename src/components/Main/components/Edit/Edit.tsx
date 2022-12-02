@@ -3,15 +3,21 @@ import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
-import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
-import { signUp } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import { deleteUserById, getUser, putUser } from '../../../../api/userApi';
+import CancelButton from '../../../../componentsUtils/buttons/CancelButton/CancelButton';
+import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/DeleteButton';
+import { logOut } from '../../../../store/slices/sliceAuth';
 import Modal from '../../../../componentsUtils/Modal/Modal';
-import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
+import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
+import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
+import useToken from '../../../../hooks/useToken';
+import useUserId from '../../../../hooks/useUserId';
 import Loader from '../../../../componentsUtils/Loader/Loader';
+import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
 
 export interface SignUpType {
   name: string;
@@ -19,23 +25,46 @@ export interface SignUpType {
   password: string;
 }
 
-const SignUp: FC = () => {
+interface UserResponseType {
+  login: string;
+  name: string;
+  _id: string;
+}
+
+const Edit: FC = () => {
   const dispatch = useAppDispatch();
-  const language = useAppSelector((store) => store.language.value);
   const navigate = useNavigate();
-  const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
+  const language = useAppSelector((store) => store.language.value);
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
+  const token = useToken();
+  const userId = useUserId();
+  const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
+  const [isModal, setIsModal] = useState(false);
   const [isModalError, setIsModalError] = useState(false);
+  const [user, setUser] = useState({ login: '', name: '', _id: '' });
 
   const {
     handleSubmit,
     control,
+    reset,
     formState: { errors, isDirty },
   } = useForm<SignUpType>();
 
-  const onSubmit = async (user: SignUpType) => {
-    const response = await dispatch(signUp(user));
-    if (typeof response.payload !== 'string') navigate('/signIn');
+  const confirm = async (user: SignUpType) => {
+    const response = await dispatch(putUser({ userId, token, user }));
+    if (typeof response.payload !== 'string') navigate(-1);
+  };
+
+  const cancel = () => {
+    navigate(-1);
+  };
+
+  const deleteUser = () => {
+    setIsModal(true);
+  };
+
+  const closeModalDeleteUser = () => {
+    setIsModal(false);
   };
 
   const closeModalError = () => {
@@ -43,14 +72,43 @@ const SignUp: FC = () => {
     dispatch(cleanError());
   };
 
+  const confirmModal = async () => {
+    setIsModal(false);
+    await dispatch(deleteUserById({ userId, token }));
+    dispatch(logOut());
+    navigate('/');
+  };
+
+  const cancelModal = () => {
+    setIsModal(false);
+  };
+
   useEffect(() => {
     if (error) setIsModalError(true);
   }, [error]);
 
+  useEffect(() => {
+    (async () => {
+      const temp = (await dispatch(getUser({ userId, token }))).payload as UserResponseType;
+      setUser(temp);
+      reset({ name: temp.name, login: temp.login });
+    })();
+  }, [dispatch, reset, token, userId]);
+
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className={formsStyles.form}>
-        <h3 className={formsStyles.title}>{textData.header.signUp[language]}</h3>
+      {isModal && (
+        <Modal closeModal={closeModalDeleteUser}>
+          <ConfirmAction
+            question={textData.authPage.deleteUser[language]}
+            confirm={confirmModal}
+            cancel={cancelModal}
+          />
+        </Modal>
+      )}
+
+      <form onSubmit={handleSubmit(confirm)} className={formsStyles.form}>
+        <h3 className={formsStyles.title}>{textData.header.edit[language]}</h3>
 
         <div className={styles.fields}>
           <Controller
@@ -67,7 +125,7 @@ const SignUp: FC = () => {
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextInputForm
                 onChangeText={onChange}
-                value={value || ''}
+                value={value || user.name}
                 error={
                   !error?.message
                     ? ''
@@ -95,7 +153,7 @@ const SignUp: FC = () => {
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextInputForm
                 onChangeText={onChange}
-                value={value || ''}
+                value={value || user.login}
                 error={
                   !error?.message
                     ? ''
@@ -141,8 +199,16 @@ const SignUp: FC = () => {
 
         <div className={formsStyles.buttons}>
           <ConfirmButton
-            name={textData.authPage.confirmButtonSignUp[language]}
+            name={textData.boardsPage.editBoard.confirmButton[language]}
             disabled={!isDirty || !!Object.keys(errors).length}
+          />
+          <CancelButton
+            name={textData.boardsPage.createBoard.cancelButton[language]}
+            handleClick={cancel}
+          />
+          <DeleteButton
+            name={textData.boardsPage.createBoard.deleteButton[language]}
+            handleClick={deleteUser}
           />
         </div>
 
@@ -159,4 +225,4 @@ const SignUp: FC = () => {
   );
 };
 
-export default SignUp;
+export default Edit;

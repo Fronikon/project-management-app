@@ -1,8 +1,11 @@
-import Boards from './Boards/Boards';
-import PageNotFound from './PageNotFound/PageNotFound';
-import SignIn from './SignIn/SignIn';
-import SignUp from './SignUp/SignUp';
-import Welcome from './Welcome/Welcome';
-import Board from './Board/Board';
+import { lazy } from 'react';
 
-export { Boards, Board, PageNotFound, SignIn, SignUp, Welcome };
+const Boards = lazy(() => import('./Boards/Boards'));
+const PageNotFound = lazy(() => import('./PageNotFound/PageNotFound'));
+const SignIn = lazy(() => import('./SignIn/SignIn'));
+const SignUp = lazy(() => import('./SignUp/SignUp'));
+const Welcome = lazy(() => import('./Welcome/Welcome'));
+const Board = lazy(() => import('./Board/Board'));
+const Edit = lazy(() => import('./Edit/Edit'));
+
+export { Boards, Board, Edit, PageNotFound, SignIn, SignUp, Welcome };

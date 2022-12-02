@@ -24,7 +24,7 @@ const SignIn: FC = () => {
   const language = useAppSelector((store) => store.language.value);
   const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
-  const [isModal, setIsModal] = useState(false);
+  const [isModalError, setIsModalError] = useState(false);
 
   const {
     handleSubmit,
@@ -36,13 +36,13 @@ const SignIn: FC = () => {
     await dispatch(signIn(user));
   };
 
-  const closeModal = () => {
-    setIsModal(false);
+  const closeModalError = () => {
+    setIsModalError(false);
     dispatch(cleanError());
   };
 
   useEffect(() => {
-    if (error) setIsModal(true);
+    if (error) setIsModalError(true);
   }, [error]);
 
   return (
@@ -121,8 +121,8 @@ const SignIn: FC = () => {
           </Link>
         </div>
 
-        {isModal && (
-          <Modal closeModal={closeModal}>
+        {isModalError && (
+          <Modal closeModal={closeModalError}>
             <div className={modalStyles.modalWrapper}>
               <h2>{error}</h2>
             </div>
