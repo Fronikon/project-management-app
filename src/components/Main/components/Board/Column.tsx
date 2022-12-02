@@ -51,6 +51,7 @@ const Column: FC = () => {
                       {...provided.droppableProps}
                     >
                       <TasksPreview _id={column._id} />
+                      {provided.placeholder}
                       <button
                         className={styles.addButton}
                         onClick={() => {
@@ -59,7 +60,6 @@ const Column: FC = () => {
                           dispatch(toggleTask());
                         }}
                       ></button>
-                      {provided.placeholder}
                     </div>
                   )}
                 </Droppable>
