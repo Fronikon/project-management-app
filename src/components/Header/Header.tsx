@@ -56,7 +56,6 @@ const Header: FC = () => {
 
   const confirm = () => {
     setIsModal(false);
-    localStorage.removeItem('token');
     dispatch(logOut());
     navigate('/');
   };

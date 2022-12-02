@@ -99,6 +99,10 @@ const textData = {
         ru: 'Отмена',
         eng: 'Cancel',
       },
+      deleteButton: {
+        ru: 'Удалить пользователя',
+        eng: 'Delete user',
+      },
     },
     editBoard: {
       title: {
@@ -188,6 +192,10 @@ const textData = {
       ru: 'зарегистрируйтесь',
       eng: 'register',
     },
+    registration: {
+      ru: 'Регистрация',
+      eng: 'Registration',
+    },
     name: {
       ru: 'Имя',
       eng: 'Name',
@@ -199,6 +207,10 @@ const textData = {
     logOut: {
       ru: 'Вы уверены, что хотите выйти?',
       eng: 'Are you sure you want to log out?',
+    },
+    deleteUser: {
+      ru: 'Вы уверены, что хотите удалить все данные пользователя?',
+      eng: 'Are you sure you want to delete all user data?',
     },
   },
   errors: {
@@ -227,6 +239,14 @@ const textData = {
     wrongLoginOrPassword: {
       ru: 'Неверный логин или пароль',
       eng: 'Wrong login or password',
+    },
+    userNotFound: {
+      ru: 'Пользователь не найден!',
+      eng: 'User was not founded!',
+    },
+    loginAlreadyExist: {
+      ru: 'Логин уже существует',
+      eng: 'Login already exist',
     },
     otherError: {
       ru: 'Что-то пошло не так, попробуйте позже',
