@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { signIn } from '../../api/authApi';
-import { parseJWT } from '../../data/parseJWT';
+import { parseJwt } from '../../data/parseJWT';
 
 const initialState: { token: string; userId: string } = {
   token: localStorage.getItem('token') || '',
@@ -22,7 +22,7 @@ const sliceAuth = createSlice({
     builder.addCase(signIn.fulfilled, (state, action) => {
       const temp = Object.values(action.payload);
       state.token = temp[0];
-      state.userId = parseJWT(temp[0]).id;
+      state.userId = parseJwt(temp[0]).id;
     });
   },
 });
