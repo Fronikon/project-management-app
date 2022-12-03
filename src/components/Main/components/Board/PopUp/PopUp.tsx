@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, FormEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { createColumn } from '../../../../../api/columnApi';
+import { createColumn, updateColumn } from '../../../../../api/columnApi';
 import { createTask, updateTasks } from '../../../../../api/taskApi';
 import CancelButton from '../../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import ConfirmButton from '../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
@@ -13,18 +13,24 @@ import {
   increaseTasksCount,
   resetColumnId,
   resetTaskId,
+  setColor,
+  setDescription,
+  setOrder,
+  setTitle,
   toggleColumn,
+  toggleColumnChange,
   toggleModal,
   toggleTask,
   toggleTaskChange,
+  updateSpecialColumn,
   updateSpecialTask,
 } from '../../../../../store/reducers/boardReducer';
 import styles from './PopUp.module.css';
 
 const PopUp: FC = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [color, setColor] = useState('#000000');
+  // const [title, setTitle] = useState('');
+  // const [description, setDescription] = useState('');
+  // const [color, setColor] = useState('#000000');
 
   const isModalOpen = useAppSelector((store) => store.boardReducer.isModalOpen);
   const isColumnModalOpen = useAppSelector((store) => store.boardReducer.isColumnModalOpen);
@@ -38,20 +44,24 @@ const PopUp: FC = () => {
   const taskId = useAppSelector((store) => store.boardReducer.taskId);
   const columnLength = useAppSelector((store) => store.boardReducer.columnLength);
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
+  const title = useAppSelector((store) => store.boardReducer.title);
+  const color = useAppSelector((store) => store.boardReducer.color);
+  const description = useAppSelector((store) => store.boardReducer.description);
+  const order = useAppSelector((store) => store.boardReducer.order);
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const userId = localStorage.getItem('userId');
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    dispatch(setTitle(e.target.value));
   };
 
   const descriptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
+    dispatch(setDescription(e.target.value));
   };
 
   const colorHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColor(e.target.value);
+    dispatch(setColor(e.target.value));
   };
 
   const columnConfirm = () => {
@@ -59,7 +69,8 @@ const PopUp: FC = () => {
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
-    setTitle('');
+    dispatch(setTitle(''));
+    dispatch(setOrder(0));
     dispatch(increaseColumnCount());
   };
 
@@ -67,7 +78,8 @@ const PopUp: FC = () => {
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
-    setTitle('');
+    dispatch(setTitle(''));
+    dispatch(setOrder(0));
   };
 
   const taskConfirm = () => {
@@ -86,9 +98,10 @@ const PopUp: FC = () => {
     dispatch(toggleTask());
     dispatch(toggleModal());
     dispatch(resetColumnId());
-    setTitle('');
-    setDescription('');
-    setColor('#000000');
+    dispatch(setTitle(''));
+    dispatch(setDescription(''));
+    dispatch(setColor('#000000'));
+    dispatch(setOrder(0));
     dispatch(increaseTasksCount(columnId));
   };
 
@@ -96,23 +109,41 @@ const PopUp: FC = () => {
     dispatch(toggleTask());
     dispatch(toggleModal());
     dispatch(resetColumnId());
-    setTitle('');
-    setDescription('');
-    setColor('#000000');
+    dispatch(setTitle(''));
+    dispatch(setDescription(''));
+    dispatch(setColor('#000000'));
+    dispatch(setOrder(0));
   };
 
   const columnChangeConfirm = () => {
-    console.log('a');
+    const updatedColumn = {
+      title: title,
+      order: order,
+      boardId: id as string,
+      _id: columnId,
+    };
+
+    dispatch(toggleColumnChange());
+    dispatch(toggleModal());
+    dispatch(updateColumn(updatedColumn));
+    dispatch(updateSpecialColumn(updatedColumn));
+    dispatch(resetColumnId());
+    dispatch(setTitle(''));
+    dispatch(setOrder(0));
   };
 
   const columnChangeCancel = () => {
-    console.log('b');
+    dispatch(toggleColumnChange());
+    dispatch(toggleModal());
+    dispatch(resetColumnId());
+    dispatch(setTitle(''));
+    dispatch(setOrder(0));
   };
 
   const taskChangeConfirm = () => {
     const updatedTask = {
       title: title,
-      order: tasksLength[columnId],
+      order: order,
       columnId: columnId,
       description: description,
       color: color,
@@ -128,9 +159,10 @@ const PopUp: FC = () => {
     dispatch(toggleModal());
     dispatch(resetColumnId());
     dispatch(resetTaskId());
-    setTitle('');
-    setDescription('');
-    setColor('#000000');
+    dispatch(setTitle(''));
+    dispatch(setDescription(''));
+    dispatch(setColor('#000000'));
+    dispatch(setOrder(0));
   };
 
   const taskChangeCancel = () => {
@@ -138,9 +170,10 @@ const PopUp: FC = () => {
     dispatch(toggleModal());
     dispatch(resetColumnId());
     dispatch(resetTaskId());
-    setTitle('');
-    setDescription('');
-    setColor('#000000');
+    dispatch(setTitle(''));
+    dispatch(setDescription(''));
+    dispatch(setColor('#000000'));
+    dispatch(setOrder(0));
   };
 
   return (
@@ -202,7 +235,7 @@ const PopUp: FC = () => {
             </form>
           )}
           {isChangeColumnModalOpen && (
-            <form className={styles.newChangeModal}>
+            <form className={styles.newChangeModal} onSubmit={columnChangeConfirm}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
                 <TextInputForm
@@ -216,7 +249,7 @@ const PopUp: FC = () => {
               <div className={styles.btnsWrapper}>
                 <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
                 <CancelButton
-                  handleClick={taskCancel}
+                  handleClick={columnChangeCancel}
                   name={textData.general.confirmModal.cancelButton[language]}
                 />
               </div>

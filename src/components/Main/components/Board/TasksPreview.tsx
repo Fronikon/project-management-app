@@ -5,7 +5,11 @@ import { deleteTask, getColumnTasks, updateTasks } from '../../../../api/taskApi
 import { Draggable } from 'react-beautiful-dnd';
 import {
   decreaseTasksCount,
+  setColor,
   setCurrentTaskId,
+  setDescription,
+  setOrder,
+  setTitle,
   TaskType,
   toggleModal,
   toggleTaskChange,
@@ -15,12 +19,10 @@ import { useParams } from 'react-router-dom';
 interface TypeProps {
   _id: string;
 }
-// textData.boardsPage.createBoard.deleteButton[language]
+
 const TasksPreview: FC<TypeProps> = ({ _id }) => {
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
-  const taskId = useAppSelector((store) => store.boardReducer.taskId);
-  const columnId = useAppSelector((store) => store.boardReducer.columnId);
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
@@ -72,6 +74,10 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                       dispatch(
                         setCurrentTaskId({ taskId: task._id as string, columnId: task.columnId })
                       );
+                      dispatch(setTitle(task.title));
+                      dispatch(setDescription(task.description));
+                      dispatch(setColor(task.color));
+                      dispatch(setOrder(task.order));
                       dispatch(toggleModal());
                       dispatch(toggleTaskChange());
                     }}

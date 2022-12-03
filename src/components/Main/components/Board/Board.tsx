@@ -59,7 +59,7 @@ const Board: FC = () => {
       dispatch(setColumns(col));
       for (let i = 0; i < column.length; i++) {
         dispatch(
-          updateColumn({ title: col[i].title, order: i, boardId: id as string, id: col[i]._id })
+          updateColumn({ title: col[i].title, order: i, boardId: id as string, _id: col[i]._id })
         );
       }
 

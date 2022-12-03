@@ -28,6 +28,10 @@ export interface taskChangeType {
 }
 
 interface InitialStateType {
+  title: string;
+  description: string;
+  color: string;
+  order: number;
   columnId: string;
   taskId: string;
   columnLength: number;
@@ -42,6 +46,10 @@ interface InitialStateType {
 }
 
 const initialState: InitialStateType = {
+  title: '',
+  description: '',
+  color: '#000000',
+  order: 0,
   columnId: '',
   taskId: '',
   columnLength: 0,
@@ -99,6 +107,10 @@ const boardReducer = createSlice({
         .indexOf(action.payload._id);
       state.tasks[action.payload.columnId].splice(index, 1, action.payload);
     },
+    updateSpecialColumn(state, action: PayloadAction<ColumnType>) {
+      const index = state.columns.map((x) => x._id).indexOf(action.payload._id);
+      state.columns.splice(index, 1, action.payload);
+    },
     zeroingTasks(state, action) {
       state.tasks[action.payload] = [];
     },
@@ -113,6 +125,18 @@ const boardReducer = createSlice({
     },
     decreaseTasksCount(state, action) {
       state.tasksLength[action.payload] -= 1;
+    },
+    setTitle(state, action) {
+      state.title = action.payload;
+    },
+    setDescription(state, action) {
+      state.description = action.payload;
+    },
+    setColor(state, action) {
+      state.color = action.payload;
+    },
+    setOrder(state, action) {
+      state.order = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -178,4 +202,9 @@ export const {
   increaseTasksCount,
   decreaseTasksCount,
   updateSpecialTask,
+  updateSpecialColumn,
+  setTitle,
+  setDescription,
+  setColor,
+  setOrder,
 } = boardReducer.actions;
