@@ -35,6 +35,7 @@ const Column: FC = () => {
               <div className={styles.column}>
                 <div className={styles.headingWrapper}>
                   <h2 className={styles.titleColumn}>{column.title}</h2>
+                  <button className={styles.edit}></button>
                   <button
                     className={styles.delete}
                     onClick={() => {

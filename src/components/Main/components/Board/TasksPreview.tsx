@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 interface TypeProps {
   _id: string;
 }
-
+// textData.boardsPage.createBoard.deleteButton[language]
 const TasksPreview: FC<TypeProps> = ({ _id }) => {
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);

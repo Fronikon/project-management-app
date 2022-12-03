@@ -2,6 +2,10 @@ import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createColumn } from '../../../../../api/columnApi';
 import { createTask } from '../../../../../api/taskApi';
+import CancelButton from '../../../../../componentsUtils/buttons/CancelButton/CancelButton';
+import ConfirmButton from '../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
+import ColorInputForm from '../../../../../componentsUtils/customInputsForm/ColorInputForm/ColorInputForm';
+import TextInputForm from '../../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
@@ -95,98 +99,85 @@ const PopUp: FC = () => {
       {isModalOpen && (
         <div className={styles.popup}>
           {isColumnModalOpen && (
-            <div className={styles.newColumnModal}>
+            <form className={styles.newColumnModal} onSubmit={columnConfirm}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.newColumn[language]}</h2>
-              <fieldset className={styles.fieldset}>
-                <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                <input
-                  type="text"
-                  placeholder="Placeholder"
-                  onChange={titleHandler}
-                  className={styles.input}
-                />
-              </fieldset>
+              <TextInputForm
+                onChangeText={titleHandler}
+                value={title}
+                label={textData.boardsPage.title[language]}
+                placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                type={'text'}
+              />
               <div className={styles.btnsWrapper}>
-                <button onClick={columnConfirm} className={styles.confirm}>
-                  {textData.general.confirmModal.confirmButton[language]}
-                </button>
-                <button className={styles.cancel} onClick={columnCancel}>
-                  {textData.general.confirmModal.cancelButton[language]}
-                </button>
+                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <CancelButton
+                  handleClick={columnCancel}
+                  name={textData.general.confirmModal.cancelButton[language]}
+                />
               </div>
-            </div>
+            </form>
           )}
           {isTaskModalOpen && (
-            <div className={styles.newTaskModal}>
+            <form className={styles.newTaskModal} onSubmit={taskConfirm}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.newTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                  <input
-                    type="text"
-                    placeholder="Placeholder"
-                    className={styles.input}
-                    onChange={titleHandler}
-                  />
-                </fieldset>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>
-                    {textData.boardsPage.description[language]}
-                  </legend>
-                  <input
-                    type="text"
-                    placeholder="Placeholder"
-                    className={styles.input}
-                    onChange={descriptionHandler}
-                  />
-                </fieldset>
-                <div className={`${styles.colorWrapper} ${styles.input}`}>
-                  <div className={styles.colorTextWrapper}>
-                    <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
-                  </div>
-                  <input type="color" className={styles.color} onChange={colorHandler} />
-                </div>
+                <TextInputForm
+                  onChangeText={titleHandler}
+                  value={title}
+                  label={textData.boardsPage.title[language]}
+                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                  type={'text'}
+                />
+                <TextInputForm
+                  onChangeText={descriptionHandler}
+                  value={description}
+                  label={textData.boardsPage.description[language]}
+                  placeholder={
+                    textData.boardsPage.createBoard.inputDescription.placeholder[language]
+                  }
+                  type={'text'}
+                />
+                <ColorInputForm onChangeColor={colorHandler} value={color} />
               </div>
               <div className={styles.btnsWrapper}>
-                <button className={styles.confirm} onClick={taskConfirm}>
-                  {textData.general.confirmModal.confirmButton[language]}
-                </button>
-                <button className={styles.cancel} onClick={taskCancel}>
-                  {textData.general.confirmModal.cancelButton[language]}
-                </button>
+                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <CancelButton
+                  handleClick={taskCancel}
+                  name={textData.general.confirmModal.cancelButton[language]}
+                />
               </div>
-            </div>
+            </form>
           )}
           {isChangeModalOpen && (
-            <div className={styles.newChangeModal}>
+            <form className={styles.newChangeModal}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                  <input type="text" placeholder="Placeholder" className={styles.input} />
-                </fieldset>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>
-                    {textData.boardsPage.description[language]}
-                  </legend>
-                  <input type="text" placeholder="Placeholder" className={styles.input} />
-                </fieldset>
-                <div className={`${styles.colorWrapper} ${styles.input}`}>
-                  <div className={styles.colorTextWrapper}>
-                    <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
-                  </div>
-                  <input type="color" className={styles.color} />
-                </div>
+                <TextInputForm
+                  onChangeText={titleHandler}
+                  value={title}
+                  label={textData.boardsPage.title[language]}
+                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                  type={'text'}
+                />
+                <TextInputForm
+                  onChangeText={descriptionHandler}
+                  value={description}
+                  label={textData.boardsPage.description[language]}
+                  placeholder={
+                    textData.boardsPage.createBoard.inputDescription.placeholder[language]
+                  }
+                  type={'text'}
+                />
+                <ColorInputForm onChangeColor={colorHandler} value={color} />
               </div>
               <div className={styles.btnsWrapper}>
-                <button className={styles.confirm}>
-                  {textData.general.confirmModal.confirmButton[language]}
-                </button>
-                <button className={styles.cancel}>
-                  {textData.general.confirmModal.cancelButton[language]}
-                </button>
+                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <CancelButton
+                  handleClick={taskCancel}
+                  name={textData.general.confirmModal.cancelButton[language]}
+                />
               </div>
-            </div>
+            </form>
           )}
         </div>
       )}
