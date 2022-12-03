@@ -1,72 +1,52 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { TaskType } from '../store/reducers/boardReducer';
+import { instance } from './instance';
 
-const url = 'https://pma-backend.onrender.com/boards';
+const getColumnTasks = async (boardId: string, columnId: string, token: string) => {
+  const response = await instance.get(`boards/${boardId}/columns/${columnId}/tasks`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response;
+};
+const createTask = async (taskData: TaskType, token: string) => {
+  const { boardId, columnId, title, order, userId, description, color } = taskData;
+  const body = {
+    title,
+    order,
+    description,
+    color,
+    userId,
+    users: [userId],
+  };
 
-export const getColumnTasks = createAsyncThunk<TaskType[], { _id: string; boardId: string }>(
-  'column/getColumnTasks',
-  async (arg) => {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(`${url}/${arg.boardId}/columns/${arg._id}/tasks`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return await response.data;
-  }
-);
-
-export const createTask = createAsyncThunk<TaskType, TaskType>('column/createTask', async (arg) => {
-  const token = localStorage.getItem('token');
-  const response = await axios.post(
-    `${url}/${arg.boardId}/columns/${arg.columnId}/tasks`,
-    {
-      title: arg.title,
-      order: arg.order,
-      description: arg.description,
-      color: arg.color,
-      userId: arg.userId,
-      users: [arg.userId],
+  const response = await instance.post(`boards/${boardId}/columns/${columnId}/tasks`, body, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      accept: 'application/json',
+      'Content-Type': 'application/json',
     },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }
-  );
-  return response.data;
-});
+  });
+  return response;
+};
+const deleteTask = async (boardId: string, columnId: string, taskId: string, token: string) => {
+  const respone = await instance.delete(`boards/${boardId}/columns/${columnId}/tasks/${taskId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return respone;
+};
+const updateTask = async (taskData: TaskType, token: string) => {
+  const { boardId, color, columnId, description, order, title, userId, users, _id } = taskData;
+  const body = { title, order, description, color, columnId, userId, users };
 
-export const deleteTask = createAsyncThunk<
-  TaskType,
-  { columnId: string; taskId: string; boardId: string }
->('column/deleteTask', async (arg) => {
-  const token = localStorage.getItem('token');
-  const respone = await axios.delete(
-    `${url}/${arg.boardId}/columns/${arg.columnId}/tasks/${arg.taskId}`,
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
-  return respone.data;
-});
+  await instance.put(`boards/${boardId}/columns/${columnId}/tasks/${_id}`, body, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
 
-export const updateTasks = createAsyncThunk<void, TaskType>('column/updateTasks', async (arg) => {
-  const token = localStorage.getItem('token');
-  await axios.put(
-    `${url}/${arg.boardId}/columns/${arg.columnId}/tasks/${arg._id}`,
-    {
-      title: arg.title,
-      order: arg.order,
-      description: arg.description,
-      color: arg.color,
-      columnId: arg.columnId,
-      userId: arg.userId,
-      users: arg.users,
-    },
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
-  );
-});
+const TaskService = {
+  getColumnTasks,
+  createTask,
+  deleteTask,
+  updateTask,
+};
+
+export default TaskService;

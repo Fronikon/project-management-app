@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { createColumn } from '../../../../../api/columnApi';
-import { createTask } from '../../../../../api/taskApi';
+import TokenService from '../../../../../api/tokenApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
+import useToken from '../../../../../hooks/useToken';
 import {
+  createColumnTAC,
+  createTaskTAC,
   increaseColumnCount,
   increaseTasksCount,
   resetColumnId,
@@ -29,7 +31,8 @@ const PopUp: FC = () => {
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const userId = localStorage.getItem('userId');
+  const userId = TokenService.getUser();
+  const token = useToken();
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -44,7 +47,8 @@ const PopUp: FC = () => {
   };
 
   const columnConfirm = () => {
-    dispatch(createColumn({ title: title, order: columnLength, boardId: id as string }));
+    const columnData = { title: title, order: columnLength };
+    dispatch(createColumnTAC({ boardId: id as string, columnData, token }));
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
@@ -60,19 +64,18 @@ const PopUp: FC = () => {
   };
 
   const taskConfirm = () => {
-    console.log(tasksLength);
-    dispatch(
-      createTask({
-        title: title,
-        order: tasksLength[columnId],
-        columnId: columnId,
-        description: description,
-        color: color,
-        userId: userId as string,
-        users: [userId as string],
-        boardId: id as string,
-      })
-    );
+    const taskData = {
+      title: title,
+      order: tasksLength[columnId],
+      columnId: columnId,
+      description: description,
+      color: color,
+      userId: userId as string,
+      users: [userId as string],
+      boardId: id as string,
+    };
+
+    dispatch(createTaskTAC({ taskData, token }));
     dispatch(toggleTask());
     dispatch(toggleModal());
     dispatch(resetColumnId());

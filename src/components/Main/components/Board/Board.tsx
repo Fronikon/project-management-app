@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { NavLink, useParams } from 'react-router-dom';
-import { updateColumn } from '../../../../api/columnApi';
-import { updateTasks } from '../../../../api/taskApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
+import useToken from '../../../../hooks/useToken';
 import {
   setColumns,
   setTasks,
   TaskType,
   toggleColumn,
   toggleModal,
+  updateColumnTAC,
+  updateTaskTAC,
 } from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
 import Column from './Column';
@@ -20,22 +21,23 @@ const Board: FC = () => {
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const token = useToken();
 
   const updateSpecialTasksOrder = (tasks: TaskType[], columnId: string) => {
     for (let i = 0; i < tasks.length; i++) {
-      dispatch(
-        updateTasks({
-          title: tasks[i].title,
-          order: i,
-          description: tasks[i].description,
-          color: tasks[i].color,
-          columnId: columnId,
-          userId: tasks[i].userId,
-          users: tasks[i].users,
-          boardId: id as string,
-          _id: tasks[i]._id,
-        })
-      );
+      const taskData = {
+        title: tasks[i].title,
+        order: i,
+        description: tasks[i].description,
+        color: tasks[i].color,
+        columnId: columnId,
+        userId: tasks[i].userId,
+        users: tasks[i].users,
+        boardId: id as string,
+        _id: tasks[i]._id,
+      };
+
+      dispatch(updateTaskTAC({ taskData, token }));
     }
   };
 
@@ -58,9 +60,11 @@ const Board: FC = () => {
       col.splice(destination.index, 0, reorderedItem);
       dispatch(setColumns(col));
       for (let i = 0; i < column.length; i++) {
-        dispatch(
-          updateColumn({ title: col[i].title, order: i, boardId: id as string, id: col[i]._id })
-        );
+        const columnData = {
+          title: col[i].title,
+          order: i,
+        };
+        dispatch(updateColumnTAC({ columnData, boardId: id as string, id: col[i]._id, token }));
       }
 
       // Moving tasks
@@ -76,19 +80,19 @@ const Board: FC = () => {
         task.splice(destination.index, 0, reorderedItem);
         dispatch(setTasks({ items: task, id: start }));
         for (let i = 0; i < task.length; i++) {
-          dispatch(
-            updateTasks({
-              title: task[i].title,
-              order: i,
-              description: task[i].description,
-              color: task[i].color,
-              columnId: start,
-              userId: task[i].userId,
-              users: task[i].users,
-              boardId: id as string,
-              _id: task[i]._id,
-            })
-          );
+          const taskData = {
+            title: task[i].title,
+            order: i,
+            description: task[i].description,
+            color: task[i].color,
+            columnId: start,
+            userId: task[i].userId,
+            users: task[i].users,
+            boardId: id as string,
+            _id: task[i]._id,
+          };
+
+          dispatch(updateTaskTAC({ taskData, token }));
         }
         return;
       }

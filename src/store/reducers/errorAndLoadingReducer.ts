@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { requestArray } from '../../data/requestData';
 
-const initialState: { error: string; isLoading: boolean } = {
+interface InitialStateType {
+  error: string;
+  isLoading: boolean;
+}
+
+const initialState: InitialStateType = {
   error: '',
   isLoading: false,
 };
@@ -31,6 +36,5 @@ const sliceErrorAndLoading = createSlice({
   },
 });
 
-export default sliceErrorAndLoading;
-
 export const { cleanError } = sliceErrorAndLoading.actions;
+export default sliceErrorAndLoading.reducer;

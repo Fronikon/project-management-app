@@ -3,7 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.css';
 import { switchEng, switchRu } from '../../store/reducers/languageReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { logOut } from '../../store/reducers/authReducer';
 import textData from '../../data/textData';
+
 import home from '../../assets/img/icons/home_image.png';
 import boards from '../../assets/img/icons/boards-logo.png';
 import addBoard from '../../assets/img/icons/add-board-logo.png';
@@ -11,7 +13,7 @@ import signIn from '../../assets/img/icons/sing_in.png';
 import signUp from '../../assets/img/icons/sign_up.png';
 import edit from '../../assets/img/icons/edit.png';
 import exit from '../../assets/img/icons/exit.png';
-import { logOut } from '../../store/slices/sliceAuth';
+
 import Modal from '../../componentsUtils/Modal/Modal';
 import ConfirmAction from '../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
 import CreateBoardForm from './../../componentsUtils/forms/CreateBoardForm/CreateBoardForm';

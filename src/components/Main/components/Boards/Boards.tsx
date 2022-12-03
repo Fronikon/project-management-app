@@ -8,7 +8,7 @@ import useToken from '../../../../hooks/useToken';
 import Loader from '../../../../componentsUtils/Loader/Loader';
 import Modal from '../../../../componentsUtils/Modal/Modal';
 import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
-import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
+import { cleanError } from '../../../../store/reducers/errorAndLoadingReducer';
 
 const Boards: FC = () => {
   const dispatch = useAppDispatch();

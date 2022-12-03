@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { signIn } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
@@ -11,8 +10,9 @@ import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import Modal from '../../../../componentsUtils/Modal/Modal';
-import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
+import { cleanError } from '../../../../store/reducers/errorAndLoadingReducer';
 import Loader from '../../../../componentsUtils/Loader/Loader';
+import { signInTAC } from '../../../../store/reducers/authReducer';
 
 export interface SignInType {
   login: string;
@@ -33,7 +33,7 @@ const SignIn: FC = () => {
   } = useForm<SignInType>();
 
   const onSubmit = async (user: SignInType) => {
-    await dispatch(signIn(user));
+    await dispatch(signInTAC(user));
   };
 
   const closeModalError = () => {
