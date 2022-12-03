@@ -6,7 +6,6 @@ import {
   toggleTask,
   toggleTaskChange,
 } from '../../../../../store/reducers/boardReducer';
-import styles from './PopUp.module.css';
 import Modal from '../../../../../componentsUtils/Modal/Modal';
 import CreateColumn from './Modals/createColumn';
 import CreateTask from './Modals/createTask';
