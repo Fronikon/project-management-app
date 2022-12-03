@@ -99,7 +99,11 @@ const EditBoardForm: FC<PropsType> = ({ closeModal, board }) => {
           control={control}
           defaultValue={board.color || '#EABFFF'}
           render={({ field: { onChange, value } }) => (
-            <ColorInputForm onChangeColor={onChange} value={value} />
+            <ColorInputForm
+              onChangeColor={onChange}
+              value={value}
+              label={textData.boardsPage.title[language]}
+            />
           )}
         />
       </div>

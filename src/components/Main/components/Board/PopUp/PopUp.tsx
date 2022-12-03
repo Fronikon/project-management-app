@@ -137,7 +137,11 @@ const PopUp: FC = () => {
                   }
                   type={'text'}
                 />
-                <ColorInputForm onChangeColor={colorHandler} value={color} />
+                <ColorInputForm
+                  onChangeColor={colorHandler}
+                  value={color}
+                  label={textData.boardsPage.taskColor[language]}
+                />
               </div>
               <div className={styles.btnsWrapper}>
                 <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
@@ -168,7 +172,11 @@ const PopUp: FC = () => {
                   }
                   type={'text'}
                 />
-                <ColorInputForm onChangeColor={colorHandler} value={color} />
+                <ColorInputForm
+                  onChangeColor={colorHandler}
+                  value={color}
+                  label={textData.boardsPage.taskColor[language]}
+                />
               </div>
               <div className={styles.btnsWrapper}>
                 <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
