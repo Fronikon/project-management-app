@@ -10,5 +10,4 @@ const signUp = async (userData: SignUpType) => {
 };
 
 const AuthService = { signIn, signUp };
-
 export default AuthService;

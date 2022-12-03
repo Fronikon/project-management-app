@@ -4,7 +4,7 @@ import AuthService from '../../api/authApi';
 import TokenService from '../../api/tokenApi';
 import { SignInType } from '../../components/Main/components/SignIn/SignIn';
 import { SignUpType } from '../../components/Main/components/SignUp/SignUp';
-import { parseJwt } from '../../data/parseJWT';
+import { parseJwt } from '../../utils/parseJWT';
 import textData from '../../data/textData';
 import { RootState } from '../store';
 

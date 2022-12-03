@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { addBoardApi, deleteBoardApi, getBoardsApi } from '../../api/boardApi';
+import BoardService from '../../api/boardApi';
 import { BoardType, BoardTypeWithoutId } from '../../types/boardsTypes';
 import { RejectResponseType } from './../../types/apiTypes';
-import { editBoardApi } from './../../api/boardApi';
 
 interface initialStateType {
   boards: BoardType[];
@@ -17,7 +16,7 @@ export const getBoardsTAC = createAsyncThunk<BoardType[], string, { rejectValue:
   'boards/getBoards',
   async (token, { rejectWithValue }) => {
     try {
-      return await getBoardsApi(token);
+      return await BoardService.getBoards(token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data.message) {
@@ -42,7 +41,7 @@ export const addBoardTAC = createAsyncThunk<BoardType, AddBoardTACType, { reject
   'boards/addBoard',
   async ({ board, token }, { rejectWithValue }) => {
     try {
-      return await addBoardApi(board, token);
+      return await BoardService.addBoard(board, token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data.message) {
@@ -68,7 +67,7 @@ export const editBoardTAC = createAsyncThunk<BoardType, EditBoardTACType, { reje
   async ({ board, token }, { rejectWithValue }) => {
     try {
       const { _id, ...rest } = board;
-      return await editBoardApi(rest, _id, token);
+      return await BoardService.editBoard(rest, _id, token);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.data.message) {
@@ -93,7 +92,7 @@ export const deleteBoardTAC = createAsyncThunk<string, DeleteBoardTACType, { rej
   'boards/deleteBoard',
   async ({ id, token }, { rejectWithValue }) => {
     try {
-      const res = await deleteBoardApi(id, token);
+      const res = await BoardService.deleteBoard(id, token);
       return res._id;
     } catch (error) {
       if (axios.isAxiosError(error)) {
