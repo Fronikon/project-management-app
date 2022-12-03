@@ -3,7 +3,13 @@ import styles from './Board.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { deleteTask, getColumnTasks, updateTasks } from '../../../../api/taskApi';
 import { Draggable } from 'react-beautiful-dnd';
-import { decreaseTasksCount, TaskType } from '../../../../store/reducers/boardReducer';
+import {
+  decreaseTasksCount,
+  setCurrentTaskId,
+  TaskType,
+  toggleModal,
+  toggleTaskChange,
+} from '../../../../store/reducers/boardReducer';
 import { useParams } from 'react-router-dom';
 
 interface TypeProps {
@@ -13,6 +19,8 @@ interface TypeProps {
 const TasksPreview: FC<TypeProps> = ({ _id }) => {
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
+  const taskId = useAppSelector((store) => store.boardReducer.taskId);
+  const columnId = useAppSelector((store) => store.boardReducer.columnId);
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
@@ -58,7 +66,16 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
               >
                 <div className={styles.titleWrapper}>
                   <h3 className={styles.titleTask}>{task.title}</h3>
-                  <button className={styles.edit}></button>
+                  <button
+                    className={styles.edit}
+                    onClick={() => {
+                      dispatch(
+                        setCurrentTaskId({ taskId: task._id as string, columnId: task.columnId })
+                      );
+                      dispatch(toggleModal());
+                      dispatch(toggleTaskChange());
+                    }}
+                  ></button>
                   <button
                     className={`${styles.delete} ${styles.deleteTask}`}
                     onClick={() => {

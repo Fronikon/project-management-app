@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createColumn } from '../../../../../api/columnApi';
-import { createTask } from '../../../../../api/taskApi';
+import { createTask, updateTasks } from '../../../../../api/taskApi';
 import CancelButton from '../../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import ConfirmButton from '../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import ColorInputForm from '../../../../../componentsUtils/customInputsForm/ColorInputForm/ColorInputForm';
@@ -12,9 +12,12 @@ import {
   increaseColumnCount,
   increaseTasksCount,
   resetColumnId,
+  resetTaskId,
   toggleColumn,
   toggleModal,
   toggleTask,
+  toggleTaskChange,
+  updateSpecialTask,
 } from '../../../../../store/reducers/boardReducer';
 import styles from './PopUp.module.css';
 
@@ -26,9 +29,13 @@ const PopUp: FC = () => {
   const isModalOpen = useAppSelector((store) => store.boardReducer.isModalOpen);
   const isColumnModalOpen = useAppSelector((store) => store.boardReducer.isColumnModalOpen);
   const isTaskModalOpen = useAppSelector((store) => store.boardReducer.isTaskModalOpen);
-  const isChangeModalOpen = useAppSelector((store) => store.boardReducer.isChangeModalOpen);
+  const isChangeColumnModalOpen = useAppSelector(
+    (store) => store.boardReducer.isChangeColumnModalOpen
+  );
+  const isChangeTaskModalOpen = useAppSelector((store) => store.boardReducer.isChangeTaskModalOpen);
   const language = useAppSelector((store) => store.language.value);
   const columnId = useAppSelector((store) => store.boardReducer.columnId);
+  const taskId = useAppSelector((store) => store.boardReducer.taskId);
   const columnLength = useAppSelector((store) => store.boardReducer.columnLength);
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
   const dispatch = useAppDispatch();
@@ -94,6 +101,48 @@ const PopUp: FC = () => {
     setColor('#000000');
   };
 
+  const columnChangeConfirm = () => {
+    console.log('a');
+  };
+
+  const columnChangeCancel = () => {
+    console.log('b');
+  };
+
+  const taskChangeConfirm = () => {
+    const updatedTask = {
+      title: title,
+      order: tasksLength[columnId],
+      columnId: columnId,
+      description: description,
+      color: color,
+      userId: userId as string,
+      users: [userId as string],
+      boardId: id as string,
+      _id: taskId,
+    };
+
+    dispatch(updateTasks(updatedTask));
+    dispatch(updateSpecialTask(updatedTask));
+    dispatch(toggleTaskChange());
+    dispatch(toggleModal());
+    dispatch(resetColumnId());
+    dispatch(resetTaskId());
+    setTitle('');
+    setDescription('');
+    setColor('#000000');
+  };
+
+  const taskChangeCancel = () => {
+    dispatch(toggleTaskChange());
+    dispatch(toggleModal());
+    dispatch(resetColumnId());
+    dispatch(resetTaskId());
+    setTitle('');
+    setDescription('');
+    setColor('#000000');
+  };
+
   return (
     <>
       {isModalOpen && (
@@ -152,8 +201,29 @@ const PopUp: FC = () => {
               </div>
             </form>
           )}
-          {isChangeModalOpen && (
+          {isChangeColumnModalOpen && (
             <form className={styles.newChangeModal}>
+              <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
+              <div className={styles.modalInputsWrapper}>
+                <TextInputForm
+                  onChangeText={titleHandler}
+                  value={title}
+                  label={textData.boardsPage.title[language]}
+                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                  type={'text'}
+                />
+              </div>
+              <div className={styles.btnsWrapper}>
+                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <CancelButton
+                  handleClick={taskCancel}
+                  name={textData.general.confirmModal.cancelButton[language]}
+                />
+              </div>
+            </form>
+          )}
+          {isChangeTaskModalOpen && (
+            <form className={styles.newChangeModal} onSubmit={taskChangeConfirm}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
                 <TextInputForm
@@ -181,7 +251,7 @@ const PopUp: FC = () => {
               <div className={styles.btnsWrapper}>
                 <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
                 <CancelButton
-                  handleClick={taskCancel}
+                  handleClick={taskChangeCancel}
                   name={textData.general.confirmModal.cancelButton[language]}
                 />
               </div>

@@ -21,6 +21,12 @@ export interface ColumnType {
   boardId: string;
 }
 
+export interface taskChangeType {
+  taskId: string;
+  columnId: string;
+  value?: TaskType;
+}
+
 interface InitialStateType {
   columnId: string;
   taskId: string;
@@ -29,7 +35,8 @@ interface InitialStateType {
   isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
-  isChangeModalOpen: boolean;
+  isChangeColumnModalOpen: boolean;
+  isChangeTaskModalOpen: boolean;
   columns: ColumnType[];
   tasks: { [index: string]: TaskType[] };
 }
@@ -42,7 +49,8 @@ const initialState: InitialStateType = {
   isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,
-  isChangeModalOpen: false,
+  isChangeColumnModalOpen: false,
+  isChangeTaskModalOpen: false,
   columns: [] as ColumnType[],
   tasks: {},
 };
@@ -60,8 +68,11 @@ const boardReducer = createSlice({
     toggleTask(state) {
       state.isTaskModalOpen = !state.isTaskModalOpen;
     },
-    toggleChange(state) {
-      state.isChangeModalOpen = !state.isChangeModalOpen;
+    toggleColumnChange(state) {
+      state.isChangeColumnModalOpen = !state.isChangeColumnModalOpen;
+    },
+    toggleTaskChange(state) {
+      state.isChangeTaskModalOpen = !state.isChangeTaskModalOpen;
     },
     setCurrentColumnId(state, action) {
       state.columnId = action.payload;
@@ -69,11 +80,24 @@ const boardReducer = createSlice({
     resetColumnId(state) {
       state.columnId = '';
     },
+    setCurrentTaskId(state, action: PayloadAction<taskChangeType>) {
+      state.taskId = action.payload.taskId;
+      state.columnId = action.payload.columnId;
+    },
+    resetTaskId(state) {
+      state.taskId = '';
+    },
     setColumns(state, action) {
       state.columns = action.payload;
     },
     setTasks(state, action) {
       state.tasks[action.payload.id] = action.payload.items;
+    },
+    updateSpecialTask(state, action: PayloadAction<TaskType>) {
+      const index = state.tasks[action.payload.columnId]
+        .map((x) => x._id)
+        .indexOf(action.payload._id);
+      state.tasks[action.payload.columnId].splice(index, 1, action.payload);
     },
     zeroingTasks(state, action) {
       state.tasks[action.payload] = [];
@@ -141,13 +165,17 @@ export const {
   toggleModal,
   toggleColumn,
   toggleTask,
-  toggleChange,
+  toggleColumnChange,
+  toggleTaskChange,
   setCurrentColumnId,
+  setCurrentTaskId,
   resetColumnId,
+  resetTaskId,
   setColumns,
   setTasks,
   increaseColumnCount,
   decreaseColumnCount,
   increaseTasksCount,
   decreaseTasksCount,
+  updateSpecialTask,
 } = boardReducer.actions;

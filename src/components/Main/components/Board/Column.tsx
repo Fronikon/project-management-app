@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   decreaseColumnCount,
   setCurrentColumnId,
+  toggleColumnChange,
   toggleModal,
   toggleTask,
 } from '../../../../store/reducers/boardReducer';
@@ -35,7 +36,14 @@ const Column: FC = () => {
               <div className={styles.column}>
                 <div className={styles.headingWrapper}>
                   <h2 className={styles.titleColumn}>{column.title}</h2>
-                  <button className={styles.edit}></button>
+                  <button
+                    className={styles.edit}
+                    onClick={() => {
+                      dispatch(setCurrentColumnId(column._id));
+                      dispatch(toggleModal());
+                      dispatch(toggleColumnChange());
+                    }}
+                  ></button>
                   <button
                     className={styles.delete}
                     onClick={() => {
