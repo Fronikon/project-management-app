@@ -1,4 +1,5 @@
-import React, { FC, FormEvent, useState } from 'react';
+import React, { FC, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { createColumn, updateColumn } from '../../../../../api/columnApi';
 import { createTask, updateTasks } from '../../../../../api/taskApi';
@@ -6,6 +7,7 @@ import CancelButton from '../../../../../componentsUtils/buttons/CancelButton/Ca
 import ConfirmButton from '../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import ColorInputForm from '../../../../../componentsUtils/customInputsForm/ColorInputForm/ColorInputForm';
 import TextInputForm from '../../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
+import CreateBoardForm from '../../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
@@ -26,12 +28,14 @@ import {
   updateSpecialTask,
 } from '../../../../../store/reducers/boardReducer';
 import styles from './PopUp.module.css';
+import Modal from '../../../../../componentsUtils/Modal/Modal';
+
+export interface PopUpType {
+  title: string;
+  description: string;
+}
 
 const PopUp: FC = () => {
-  // const [title, setTitle] = useState('');
-  // const [description, setDescription] = useState('');
-  // const [color, setColor] = useState('#000000');
-
   const isModalOpen = useAppSelector((store) => store.boardReducer.isModalOpen);
   const isColumnModalOpen = useAppSelector((store) => store.boardReducer.isColumnModalOpen);
   const isTaskModalOpen = useAppSelector((store) => store.boardReducer.isTaskModalOpen);
@@ -52,20 +56,24 @@ const PopUp: FC = () => {
   const { id } = useParams();
   const userId = localStorage.getItem('userId');
 
-  const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setTitle(e.target.value));
-  };
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isDirty },
+  } = useForm<PopUpType>();
 
-  const descriptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setDescription(e.target.value));
+  const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false);
+
+  const closeModal = () => {
+    setIsOpenCreateBoardModal(false);
   };
 
   const colorHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setColor(e.target.value));
   };
 
-  const columnConfirm = () => {
-    dispatch(createColumn({ title: title, order: columnLength, boardId: id as string }));
+  const columnConfirm = (data: PopUpType) => {
+    dispatch(createColumn({ title: data.title, order: columnLength, boardId: id as string }));
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
@@ -82,13 +90,13 @@ const PopUp: FC = () => {
     dispatch(setOrder(0));
   };
 
-  const taskConfirm = () => {
+  const taskConfirm = (data: PopUpType) => {
     dispatch(
       createTask({
-        title: title,
+        title: data.title,
         order: tasksLength[columnId],
         columnId: columnId,
-        description: description,
+        description: data.description,
         color: color,
         userId: userId as string,
         users: [userId as string],
@@ -115,9 +123,9 @@ const PopUp: FC = () => {
     dispatch(setOrder(0));
   };
 
-  const columnChangeConfirm = () => {
+  const columnChangeConfirm = (data: PopUpType) => {
     const updatedColumn = {
-      title: title,
+      title: data.title,
       order: order,
       boardId: id as string,
       _id: columnId,
@@ -140,12 +148,12 @@ const PopUp: FC = () => {
     dispatch(setOrder(0));
   };
 
-  const taskChangeConfirm = () => {
+  const taskChangeConfirm = (data: PopUpType) => {
     const updatedTask = {
-      title: title,
+      title: data.title,
       order: order,
       columnId: columnId,
-      description: description,
+      description: data.description,
       color: color,
       userId: userId as string,
       users: [userId as string],
@@ -180,18 +188,61 @@ const PopUp: FC = () => {
     <>
       {isModalOpen && (
         <div className={styles.popup}>
+          <form className={styles.newColumnModal} onSubmit={handleSubmit(columnConfirm)}>
+            <h2 className={styles.modalHeading}>{textData.boardsPage.newColumn[language]}</h2>
+            <Controller
+              name="title"
+              control={control}
+              rules={{
+                required: '1',
+              }}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <TextInputForm
+                  onChangeText={onChange}
+                  value={value}
+                  error={!error?.message ? '' : textData.errors.required[language]}
+                  type={'text'}
+                  label={textData.boardsPage.title[language]}
+                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                />
+              )}
+            />
+            <div className={styles.btnsWrapper}>
+              <ConfirmButton
+                disabled={!isDirty || !!Object.keys(errors).length}
+                name={textData.general.confirmModal.confirmButton[language]}
+              />
+              <CancelButton
+                handleClick={columnCancel}
+                name={textData.general.confirmModal.cancelButton[language]}
+              />
+            </div>
+          </form>
           {isColumnModalOpen && (
-            <form className={styles.newColumnModal} onSubmit={columnConfirm}>
+            <form className={styles.newColumnModal} onSubmit={handleSubmit(columnConfirm)}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.newColumn[language]}</h2>
-              <TextInputForm
-                onChangeText={titleHandler}
-                value={title}
-                label={textData.boardsPage.title[language]}
-                placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
-                type={'text'}
+              <Controller
+                name="title"
+                control={control}
+                rules={{
+                  required: '1',
+                }}
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                  <TextInputForm
+                    onChangeText={onChange}
+                    value={value}
+                    error={!error?.message ? '' : textData.errors.required[language]}
+                    type={'text'}
+                    label={textData.boardsPage.title[language]}
+                    placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                  />
+                )}
               />
               <div className={styles.btnsWrapper}>
-                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <ConfirmButton
+                  disabled={!isDirty || !!Object.keys(errors).length}
+                  name={textData.general.confirmModal.confirmButton[language]}
+                />
                 <CancelButton
                   handleClick={columnCancel}
                   name={textData.general.confirmModal.cancelButton[language]}
@@ -200,24 +251,44 @@ const PopUp: FC = () => {
             </form>
           )}
           {isTaskModalOpen && (
-            <form className={styles.newTaskModal} onSubmit={taskConfirm}>
+            <form className={styles.newTaskModal} onSubmit={handleSubmit(taskConfirm)}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.newTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <TextInputForm
-                  onChangeText={titleHandler}
-                  value={title}
-                  label={textData.boardsPage.title[language]}
-                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
-                  type={'text'}
+                <Controller
+                  name="title"
+                  control={control}
+                  rules={{
+                    required: '1',
+                  }}
+                  render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <TextInputForm
+                      onChangeText={onChange}
+                      value={value}
+                      error={!error?.message ? '' : textData.errors.required[language]}
+                      type={'text'}
+                      label={textData.boardsPage.title[language]}
+                      placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                    />
+                  )}
                 />
-                <TextInputForm
-                  onChangeText={descriptionHandler}
-                  value={description}
-                  label={textData.boardsPage.description[language]}
-                  placeholder={
-                    textData.boardsPage.createBoard.inputDescription.placeholder[language]
-                  }
-                  type={'text'}
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={{
+                    required: '1',
+                  }}
+                  render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <TextInputForm
+                      onChangeText={onChange}
+                      value={value}
+                      error={!error?.message ? '' : textData.errors.required[language]}
+                      type={'text'}
+                      label={textData.boardsPage.description[language]}
+                      placeholder={
+                        textData.boardsPage.createBoard.inputDescription.placeholder[language]
+                      }
+                    />
+                  )}
                 />
                 <ColorInputForm
                   onChangeColor={colorHandler}
@@ -226,7 +297,10 @@ const PopUp: FC = () => {
                 />
               </div>
               <div className={styles.btnsWrapper}>
-                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <ConfirmButton
+                  disabled={!isDirty || !!Object.keys(errors).length}
+                  name={textData.general.confirmModal.confirmButton[language]}
+                />
                 <CancelButton
                   handleClick={taskCancel}
                   name={textData.general.confirmModal.cancelButton[language]}
@@ -235,19 +309,33 @@ const PopUp: FC = () => {
             </form>
           )}
           {isChangeColumnModalOpen && (
-            <form className={styles.newChangeModal} onSubmit={columnChangeConfirm}>
+            <form className={styles.newChangeModal} onSubmit={handleSubmit(columnChangeConfirm)}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <TextInputForm
-                  onChangeText={titleHandler}
-                  value={title}
-                  label={textData.boardsPage.title[language]}
-                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
-                  type={'text'}
+                <Controller
+                  name="title"
+                  control={control}
+                  rules={{
+                    required: '1',
+                  }}
+                  defaultValue={title}
+                  render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <TextInputForm
+                      onChangeText={onChange}
+                      value={value}
+                      error={!error?.message ? '' : textData.errors.required[language]}
+                      type={'text'}
+                      label={textData.boardsPage.title[language]}
+                      placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                    />
+                  )}
                 />
               </div>
               <div className={styles.btnsWrapper}>
-                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <ConfirmButton
+                  disabled={!isDirty || !!Object.keys(errors).length}
+                  name={textData.general.confirmModal.confirmButton[language]}
+                />
                 <CancelButton
                   handleClick={columnChangeCancel}
                   name={textData.general.confirmModal.cancelButton[language]}
@@ -256,24 +344,46 @@ const PopUp: FC = () => {
             </form>
           )}
           {isChangeTaskModalOpen && (
-            <form className={styles.newChangeModal} onSubmit={taskChangeConfirm}>
+            <form className={styles.newChangeModal} onSubmit={handleSubmit(taskChangeConfirm)}>
               <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
               <div className={styles.modalInputsWrapper}>
-                <TextInputForm
-                  onChangeText={titleHandler}
-                  value={title}
-                  label={textData.boardsPage.title[language]}
-                  placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
-                  type={'text'}
+                <Controller
+                  name="title"
+                  control={control}
+                  rules={{
+                    required: '1',
+                  }}
+                  defaultValue={title}
+                  render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <TextInputForm
+                      onChangeText={onChange}
+                      value={value}
+                      error={!error?.message ? '' : textData.errors.required[language]}
+                      type={'text'}
+                      label={textData.boardsPage.title[language]}
+                      placeholder={textData.boardsPage.createBoard.inputTitle.placeholder[language]}
+                    />
+                  )}
                 />
-                <TextInputForm
-                  onChangeText={descriptionHandler}
-                  value={description}
-                  label={textData.boardsPage.description[language]}
-                  placeholder={
-                    textData.boardsPage.createBoard.inputDescription.placeholder[language]
-                  }
-                  type={'text'}
+                <Controller
+                  name="description"
+                  control={control}
+                  rules={{
+                    required: '1',
+                  }}
+                  defaultValue={description}
+                  render={({ field: { onChange, value }, fieldState: { error } }) => (
+                    <TextInputForm
+                      onChangeText={onChange}
+                      value={value}
+                      error={!error?.message ? '' : textData.errors.required[language]}
+                      type={'text'}
+                      label={textData.boardsPage.description[language]}
+                      placeholder={
+                        textData.boardsPage.createBoard.inputDescription.placeholder[language]
+                      }
+                    />
+                  )}
                 />
                 <ColorInputForm
                   onChangeColor={colorHandler}
@@ -282,7 +392,10 @@ const PopUp: FC = () => {
                 />
               </div>
               <div className={styles.btnsWrapper}>
-                <ConfirmButton name={textData.general.confirmModal.confirmButton[language]} />
+                <ConfirmButton
+                  disabled={!isDirty || !!Object.keys(errors).length}
+                  name={textData.general.confirmModal.confirmButton[language]}
+                />
                 <CancelButton
                   handleClick={taskChangeCancel}
                   name={textData.general.confirmModal.cancelButton[language]}
