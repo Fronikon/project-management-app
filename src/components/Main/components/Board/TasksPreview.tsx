@@ -84,13 +84,12 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                   ></button>
                   <button
                     className={`${styles.delete} ${styles.deleteTask}`}
-                    onClick={() => {
+                    onClick={async () => {
                       if (task._id !== undefined) {
                         dispatch(decreaseTasksCount(_id));
                         dispatch(
                           deleteTask({ columnId: _id, taskId: task._id, boardId: id as string })
-                        );
-                        updateSpecialTasksOrder(tasks[_id], _id);
+                        ).finally(() => updateSpecialTasksOrder(tasks[_id], _id));
                       }
                     }}
                   ></button>

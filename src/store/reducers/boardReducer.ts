@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { createColumn, deleteColumn, getAllColumns } from '../../api/columnApi';
 import { createTask, deleteTask, getColumnTasks } from '../../api/taskApi';
 
@@ -156,6 +156,7 @@ const boardReducer = createSlice({
             (a, b) => a.order - b.order
           );
           state.tasksLength[action.payload[0].columnId] = action.payload.length;
+          console.log(state.tasks[action.payload[0].columnId]);
           return;
         }
       })
@@ -175,7 +176,9 @@ const boardReducer = createSlice({
         const index = state.tasks[action.payload.columnId]
           .map((x) => x._id)
           .indexOf(action.payload._id);
+        console.log(current(state.tasks[action.payload.columnId]));
         state.tasks[action.payload.columnId].splice(index, 1);
+        console.log(current(state.tasks[action.payload.columnId]));
         for (let i = 0; i < state.tasksLength[action.payload.columnId]; i++) {
           state.tasks[action.payload.columnId][i].order = i;
         }
