@@ -3,7 +3,17 @@ import styles from './Board.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { deleteTask, getColumnTasks, updateTasks } from '../../../../api/taskApi';
 import { Draggable } from 'react-beautiful-dnd';
-import { decreaseTasksCount, TaskType } from '../../../../store/reducers/boardReducer';
+import {
+  decreaseTasksCount,
+  setColor,
+  setCurrentTaskId,
+  setDescription,
+  setOrder,
+  setTitle,
+  TaskType,
+  toggleModal,
+  toggleTaskChange,
+} from '../../../../store/reducers/boardReducer';
 import { useParams } from 'react-router-dom';
 
 interface TypeProps {
@@ -58,16 +68,28 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
               >
                 <div className={styles.titleWrapper}>
                   <h3 className={styles.titleTask}>{task.title}</h3>
-                  <button className={styles.edit}></button>
+                  <button
+                    className={styles.edit}
+                    onClick={() => {
+                      dispatch(
+                        setCurrentTaskId({ taskId: task._id as string, columnId: task.columnId })
+                      );
+                      dispatch(setTitle(task.title));
+                      dispatch(setDescription(task.description));
+                      dispatch(setColor(task.color));
+                      dispatch(setOrder(task.order));
+                      dispatch(toggleModal());
+                      dispatch(toggleTaskChange());
+                    }}
+                  ></button>
                   <button
                     className={`${styles.delete} ${styles.deleteTask}`}
-                    onClick={() => {
+                    onClick={async () => {
                       if (task._id !== undefined) {
                         dispatch(decreaseTasksCount(_id));
                         dispatch(
                           deleteTask({ columnId: _id, taskId: task._id, boardId: id as string })
-                        );
-                        updateSpecialTasksOrder(tasks[_id], _id);
+                        ).finally(() => updateSpecialTasksOrder(tasks[_id], _id));
                       }
                     }}
                   ></button>

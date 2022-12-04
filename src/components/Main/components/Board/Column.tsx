@@ -6,6 +6,9 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   decreaseColumnCount,
   setCurrentColumnId,
+  setOrder,
+  setTitle,
+  toggleColumnChange,
   toggleModal,
   toggleTask,
 } from '../../../../store/reducers/boardReducer';
@@ -36,6 +39,16 @@ const Column: FC = () => {
                 <div className={styles.headingWrapper}>
                   <h2 className={styles.titleColumn}>{column.title}</h2>
                   <button
+                    className={styles.edit}
+                    onClick={() => {
+                      dispatch(setCurrentColumnId(column._id));
+                      dispatch(setTitle(column.title));
+                      dispatch(setOrder(column.order));
+                      dispatch(toggleModal());
+                      dispatch(toggleColumnChange());
+                    }}
+                  ></button>
+                  <button
                     className={styles.delete}
                     onClick={() => {
                       dispatch(decreaseColumnCount());
@@ -51,6 +64,7 @@ const Column: FC = () => {
                       {...provided.droppableProps}
                     >
                       <TasksPreview _id={column._id} />
+                      {provided.placeholder}
                       <button
                         className={styles.addButton}
                         onClick={() => {
@@ -59,7 +73,6 @@ const Column: FC = () => {
                           dispatch(toggleTask());
                         }}
                       ></button>
-                      {provided.placeholder}
                     </div>
                   )}
                 </Droppable>
