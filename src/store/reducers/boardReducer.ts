@@ -176,9 +176,7 @@ const boardReducer = createSlice({
         const index = state.tasks[action.payload.columnId]
           .map((x) => x._id)
           .indexOf(action.payload._id);
-        console.log(current(state.tasks[action.payload.columnId]));
         state.tasks[action.payload.columnId].splice(index, 1);
-        console.log(current(state.tasks[action.payload.columnId]));
         for (let i = 0; i < state.tasksLength[action.payload.columnId]; i++) {
           state.tasks[action.payload.columnId][i].order = i;
         }
