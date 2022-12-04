@@ -1,9 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { AxiosError } from 'axios';
 import { UserPostRequestType, UserPutRequestType, UserResponseType } from '../../types/userTypes';
 import UserService from '../../api/userApi';
-import textData from '../../data/textData';
 import { RootState } from '../store';
+import { getErrorMessage } from '../../utils/getErrorMessage';
 
 interface UserThunkApiType {
   state: RootState;
@@ -12,32 +12,18 @@ interface UserThunkApiType {
 
 interface UserGetArgsType {
   userId: string;
-  token: string;
 }
 
 export const getUserTAC = createAsyncThunk<UserResponseType, UserGetArgsType, UserThunkApiType>(
   'users/getUser',
-  async ({ userId, token }, { rejectWithValue, getState }) => {
-    const language = getState().language.value;
-
+  async ({ userId }, { rejectWithValue, getState }) => {
     try {
-      const response = await UserService.getUser(userId, token);
+      const response = await UserService.getUser(userId);
       return response.data;
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const serverErrors = textData.serverErrors;
-        const { userNotFound, otherError } = serverErrors;
-
-        if (axios.isAxiosError(error)) {
-          const status = error.response?.status;
-
-          if (status === 404) {
-            return rejectWithValue(userNotFound[language]);
-          }
-        }
-
-        return rejectWithValue(otherError[language]);
-      }
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
     }
   }
 );
@@ -46,44 +32,29 @@ export const deleteUserTAC = createAsyncThunk<
   UserResponseType,
   UserPostRequestType,
   UserThunkApiType
->('users/deleteUserById', async ({ userId, token }, { getState, rejectWithValue }) => {
-  const language = getState().language.value;
+>('users/deleteUserById', async ({ userId }, { getState, rejectWithValue }) => {
   try {
-    const response = await UserService.deleteUser(userId, token);
+    const response = await UserService.deleteUser(userId);
     return response.data;
   } catch (error) {
-    return rejectWithValue(textData.serverErrors.otherError[language]);
+    return rejectWithValue(getErrorMessage(error as Error | AxiosError, getState().language.value));
   }
 });
 
 interface UserChangeArgsType {
   userId: string;
   user: UserPutRequestType;
-  token: string;
 }
 
 export const changeUserTAC = createAsyncThunk<
   UserResponseType,
   UserChangeArgsType,
   UserThunkApiType
->('users/putUser', async ({ userId, token, user }, { rejectWithValue, getState }) => {
-  const language = getState().language.value;
-
+>('users/putUser', async ({ userId, user }, { rejectWithValue, getState }) => {
   try {
-    const response = await UserService.changeUser(userId, user, token);
+    const response = await UserService.changeUser(userId, user);
     return response.data;
   } catch (error) {
-    const serverErrors = textData.serverErrors;
-    const { loginAlready, otherError } = serverErrors;
-
-    if (axios.isAxiosError(error)) {
-      const status = error.response?.status;
-
-      if (status === 409) {
-        return rejectWithValue(loginAlready[language]);
-      }
-    }
-
-    return rejectWithValue(otherError[language]);
+    return rejectWithValue(getErrorMessage(error as Error | AxiosError, getState().language.value));
   }
 });

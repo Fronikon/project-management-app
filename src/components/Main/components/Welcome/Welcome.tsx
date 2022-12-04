@@ -7,9 +7,10 @@ import Team from './Team/Team';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
 import textData from '../../../../data/textData';
 import { Link } from 'react-router-dom';
+import useToken from '../../../../hooks/useToken';
 
 const Welcome: FC = () => {
-  const token = useAppSelector((store) => store.authReducer.token);
+  const token = useToken();
   const language = useAppSelector((store) => store.language.value);
 
   return (

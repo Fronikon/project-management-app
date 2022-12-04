@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { AxiosError } from 'axios';
 import AuthService from '../../api/authApi';
 import TokenService from '../../api/tokenApi';
 import { SignInType } from '../../components/Main/components/SignIn/SignIn';
 import { SignUpType } from '../../components/Main/components/SignUp/SignUp';
 import { parseJwt } from '../../utils/parseJWT';
-import textData from '../../data/textData';
 import { RootState } from '../store';
+import { getErrorMessage } from '../../utils/getErrorMessage';
 
 export interface SignInThunkApiType {
   state: RootState;
@@ -16,7 +16,6 @@ export interface SignInThunkApiType {
 export const signInTAC = createAsyncThunk<string, SignInType, SignInThunkApiType>(
   'auth/signin',
   async (user, { getState, rejectWithValue }) => {
-    const language = getState().language.value;
     try {
       const response = await AuthService.signIn(user);
       const { data } = response;
@@ -27,18 +26,9 @@ export const signInTAC = createAsyncThunk<string, SignInType, SignInThunkApiType
 
       return data;
     } catch (error) {
-      const serverErrors = textData.serverErrors;
-      const { wrongLoginOrPassword, otherError } = serverErrors;
-
-      if (axios.isAxiosError(error)) {
-        const status = error.response?.status;
-
-        if (status === 401) {
-          return rejectWithValue(wrongLoginOrPassword[language]);
-        }
-      }
-
-      return rejectWithValue(otherError[language]);
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
     }
   }
 );
@@ -57,23 +47,13 @@ interface SignUpArgsType {
 export const signUpTAC = createAsyncThunk<SignUpResponseType, SignUpType, SignUpArgsType>(
   'auth/signup',
   async (user, { getState, rejectWithValue }) => {
-    const language = getState().language.value;
     try {
       const response = await AuthService.signUp(user);
       return response.data;
     } catch (error) {
-      const serverErrors = textData.serverErrors;
-      const { loginAlready, otherError } = serverErrors;
-
-      if (axios.isAxiosError(error)) {
-        const status = error.response?.status;
-
-        if (status === 409) {
-          return rejectWithValue(loginAlready[language]);
-        }
-      }
-
-      return rejectWithValue(otherError[language]);
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
     }
   }
 );

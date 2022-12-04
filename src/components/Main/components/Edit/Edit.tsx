@@ -12,7 +12,6 @@ import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/Delet
 import Modal from '../../../../componentsUtils/Modal/Modal';
 import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
 import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
-import useToken from '../../../../hooks/useToken';
 import useUserId from '../../../../hooks/useUserId';
 import Loader from '../../../../componentsUtils/Loader/Loader';
 import { cleanError } from '../../../../store/reducers/errorAndLoadingReducer';
@@ -36,7 +35,6 @@ const Edit: FC = () => {
   const navigate = useNavigate();
   const language = useAppSelector((store) => store.language.value);
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
-  const token = useToken();
   const userId = useUserId();
   const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const [isModal, setIsModal] = useState(false);
@@ -51,7 +49,7 @@ const Edit: FC = () => {
   } = useForm<SignUpType>();
 
   const confirm = async (user: SignUpType) => {
-    const response = await dispatch(changeUserTAC({ user, userId, token }));
+    const response = await dispatch(changeUserTAC({ user, userId }));
     if (typeof response.payload !== 'string') navigate(-1);
   };
 
@@ -74,7 +72,7 @@ const Edit: FC = () => {
 
   const confirmModal = async () => {
     setIsModal(false);
-    await dispatch(deleteUserTAC({ userId, token }));
+    await dispatch(deleteUserTAC({ userId }));
     dispatch(logOut());
     navigate('/');
   };
@@ -89,11 +87,11 @@ const Edit: FC = () => {
 
   useEffect(() => {
     (async () => {
-      const temp = (await dispatch(getUserTAC({ userId, token }))).payload as UserResponseType;
+      const temp = (await dispatch(getUserTAC({ userId }))).payload as UserResponseType;
       setUser(temp);
       reset({ name: temp.name, login: temp.login });
     })();
-  }, [dispatch, reset, token, userId]);
+  }, [dispatch, reset, userId]);
 
   return (
     <>

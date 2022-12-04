@@ -2,7 +2,6 @@ import React, { FC, useEffect } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import useToken from '../../../../hooks/useToken';
 import {
   decreaseColumnCount,
   deleteColumnTAC,
@@ -18,11 +17,10 @@ const Column: FC = () => {
   const column = useAppSelector((store) => store.boardReducer.columns);
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const token = useToken();
 
   useEffect(() => {
-    dispatch(getAllColumnsTAC({ boardId: id as string, token }));
-  }, [dispatch, id, token]);
+    dispatch(getAllColumnsTAC({ boardId: id as string }));
+  }, [dispatch, id]);
 
   return (
     <>
@@ -42,7 +40,7 @@ const Column: FC = () => {
                     className={styles.delete}
                     onClick={() => {
                       dispatch(decreaseColumnCount());
-                      dispatch(deleteColumnTAC({ id: column._id, boardId: id as string, token }));
+                      dispatch(deleteColumnTAC({ id: column._id, boardId: id as string }));
                     }}
                   ></button>
                 </div>

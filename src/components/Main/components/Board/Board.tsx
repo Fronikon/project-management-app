@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { NavLink, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import useToken from '../../../../hooks/useToken';
 import {
   setColumns,
   setTasks,
@@ -21,7 +20,6 @@ const Board: FC = () => {
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const token = useToken();
 
   const updateSpecialTasksOrder = (tasks: TaskType[], columnId: string) => {
     for (let i = 0; i < tasks.length; i++) {
@@ -37,7 +35,7 @@ const Board: FC = () => {
         _id: tasks[i]._id,
       };
 
-      dispatch(updateTaskTAC({ taskData, token }));
+      dispatch(updateTaskTAC({ taskData }));
     }
   };
 
@@ -64,7 +62,7 @@ const Board: FC = () => {
           title: col[i].title,
           order: i,
         };
-        dispatch(updateColumnTAC({ columnData, boardId: id as string, id: col[i]._id, token }));
+        dispatch(updateColumnTAC({ columnData, boardId: id as string, id: col[i]._id }));
       }
 
       // Moving tasks
@@ -92,7 +90,7 @@ const Board: FC = () => {
             _id: task[i]._id,
           };
 
-          dispatch(updateTaskTAC({ taskData, token }));
+          dispatch(updateTaskTAC({ taskData }));
         }
         return;
       }

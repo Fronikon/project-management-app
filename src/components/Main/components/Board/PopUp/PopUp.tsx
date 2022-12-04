@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import TokenService from '../../../../../api/tokenApi';
 import textData from '../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
-import useToken from '../../../../../hooks/useToken';
 import {
   createColumnTAC,
   createTaskTAC,
@@ -32,7 +31,6 @@ const PopUp: FC = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const userId = TokenService.getUser();
-  const token = useToken();
 
   const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -48,7 +46,7 @@ const PopUp: FC = () => {
 
   const columnConfirm = () => {
     const columnData = { title: title, order: columnLength };
-    dispatch(createColumnTAC({ boardId: id as string, columnData, token }));
+    dispatch(createColumnTAC({ boardId: id as string, columnData }));
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());
@@ -75,7 +73,7 @@ const PopUp: FC = () => {
       boardId: id as string,
     };
 
-    dispatch(createTaskTAC({ taskData, token }));
+    dispatch(createTaskTAC({ taskData }));
     dispatch(toggleTask());
     dispatch(toggleModal());
     dispatch(resetColumnId());

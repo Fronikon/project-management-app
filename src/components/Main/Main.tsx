@@ -2,12 +2,12 @@ import React, { FC, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import styles from './Main.module.css';
 import { Boards, Board, PageNotFound, SignIn, SignUp, Welcome, Edit } from './components/index';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import useToken from '../../hooks/useToken';
 import PrivateRoute from '../../componentsUtils/PrivateRoute/PrivateRoute';
 import Loader from '../../componentsUtils/Loader/Loader';
 
 const Main: FC = () => {
-  const token = useAppSelector((store) => store.authReducer.token);
+  const token = useToken();
 
   return (
     <main className={styles.main}>

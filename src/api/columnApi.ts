@@ -1,39 +1,26 @@
 import { ColumnRequestType } from '../types/columnTypes';
 import { instance } from './instance';
 
-const getAllColumns = async (boardId: string, token: string) => {
-  const response = await instance.get(`boards/${boardId}/columns`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+const getAllColumns = async (boardId: string) => {
+  const response = await instance.get(`boards/${boardId}/columns`);
   return response;
 };
-const createColumn = async (boardId: string, columnData: ColumnRequestType, token: string) => {
+const createColumn = async (boardId: string, columnData: ColumnRequestType) => {
   const { title, order } = columnData;
   const body = { title, order };
 
-  const response = await instance.post(`boards/${boardId}/columns`, body, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const response = await instance.post(`boards/${boardId}/columns`, body);
   return response;
 };
-const deleteColumn = async (boardId: string, columnId: string, token: string) => {
-  const response = await instance.delete(`boards/${boardId}/columns/${columnId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+const deleteColumn = async (boardId: string, columnId: string) => {
+  const response = await instance.delete(`boards/${boardId}/columns/${columnId}`);
   return response;
 };
-const updateColumn = async (
-  boardId: string,
-  columnId: string,
-  columnData: ColumnRequestType,
-  token: string
-) => {
+const updateColumn = async (boardId: string, columnId: string, columnData: ColumnRequestType) => {
   const { title, order } = columnData;
   const body = { title, order };
 
-  await instance.put(`boards/${boardId}/columns/${columnId}`, body, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  await instance.put(`boards/${boardId}/columns/${columnId}`, body);
 };
 
 const ColumnService = { getAllColumns, createColumn, deleteColumn, updateColumn };

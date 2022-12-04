@@ -1,13 +1,11 @@
 import { TaskType } from '../store/reducers/boardReducer';
 import { instance } from './instance';
 
-const getColumnTasks = async (boardId: string, columnId: string, token: string) => {
-  const response = await instance.get(`boards/${boardId}/columns/${columnId}/tasks`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+const getColumnTasks = async (boardId: string, columnId: string) => {
+  const response = await instance.get(`boards/${boardId}/columns/${columnId}/tasks`);
   return response;
 };
-const createTask = async (taskData: TaskType, token: string) => {
+const createTask = async (taskData: TaskType) => {
   const { boardId, columnId, title, order, userId, description, color } = taskData;
   const body = {
     title,
@@ -18,28 +16,18 @@ const createTask = async (taskData: TaskType, token: string) => {
     users: [userId],
   };
 
-  const response = await instance.post(`boards/${boardId}/columns/${columnId}/tasks`, body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
+  const response = await instance.post(`boards/${boardId}/columns/${columnId}/tasks`, body);
   return response;
 };
-const deleteTask = async (boardId: string, columnId: string, taskId: string, token: string) => {
-  const respone = await instance.delete(`boards/${boardId}/columns/${columnId}/tasks/${taskId}`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+const deleteTask = async (boardId: string, columnId: string, taskId: string) => {
+  const respone = await instance.delete(`boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
   return respone;
 };
-const updateTask = async (taskData: TaskType, token: string) => {
+const updateTask = async (taskData: TaskType) => {
   const { boardId, color, columnId, description, order, title, userId, users, _id } = taskData;
   const body = { title, order, description, color, columnId, userId, users };
 
-  await instance.put(`boards/${boardId}/columns/${columnId}/tasks/${_id}`, body, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  await instance.put(`boards/${boardId}/columns/${columnId}/tasks/${_id}`, body);
 };
 
 const TaskService = {

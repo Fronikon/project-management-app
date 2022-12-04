@@ -1,32 +1,50 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 import ColumnService from '../../api/columnApi';
 import TaskService from '../../api/taskApi';
 import { ColumnRequestType } from '../../types/columnTypes';
+import { getErrorMessage } from '../../utils/getErrorMessage';
+import { RootState } from '../store';
 
 interface GetColumnTasksArgsType {
   boardId: string;
   columnId: string;
-  token: string;
 }
 
-export const getColumnTasksTAC = createAsyncThunk<TaskType[], GetColumnTasksArgsType>(
+interface ThunkApiType {
+  rejectValue: string;
+  state: RootState;
+}
+
+export const getColumnTasksTAC = createAsyncThunk<TaskType[], GetColumnTasksArgsType, ThunkApiType>(
   'task/getColumnTasks',
-  async ({ boardId, columnId, token }) => {
-    const response = await TaskService.getColumnTasks(boardId, columnId, token);
-    return await response.data;
+  async ({ boardId, columnId }, { rejectWithValue, getState }) => {
+    try {
+      const response = await TaskService.getColumnTasks(boardId, columnId);
+      return await response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 
 interface CreateTaskArgsType {
   taskData: TaskType;
-  token: string;
 }
 
-export const createTaskTAC = createAsyncThunk<TaskType, CreateTaskArgsType>(
+export const createTaskTAC = createAsyncThunk<TaskType, CreateTaskArgsType, ThunkApiType>(
   'task/createTask',
-  async ({ taskData, token }) => {
-    const response = await TaskService.createTask(taskData, token);
-    return response.data;
+  async ({ taskData }, { rejectWithValue, getState }) => {
+    try {
+      const response = await TaskService.createTask(taskData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 
@@ -34,66 +52,91 @@ interface DeleteTaskArgsType {
   boardId: string;
   columnId: string;
   taskId: string;
-  token: string;
 }
 
-export const deleteTaskTAC = createAsyncThunk<TaskType, DeleteTaskArgsType>(
+export const deleteTaskTAC = createAsyncThunk<TaskType, DeleteTaskArgsType, ThunkApiType>(
   'task/deleteTask',
-  async ({ boardId, columnId, taskId, token }) => {
-    const respone = await TaskService.deleteTask(boardId, columnId, taskId, token);
-    return respone.data;
+  async ({ boardId, columnId, taskId }, { rejectWithValue, getState }) => {
+    try {
+      const respone = await TaskService.deleteTask(boardId, columnId, taskId);
+      return respone.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 
 interface UpdateTaskArgsType {
   taskData: TaskType;
-  token: string;
 }
 
-export const updateTaskTAC = createAsyncThunk<void, UpdateTaskArgsType>(
+export const updateTaskTAC = createAsyncThunk<void, UpdateTaskArgsType, ThunkApiType>(
   'task/updateTask',
-  async ({ taskData, token }) => {
-    await TaskService.updateTask(taskData, token);
+  async ({ taskData }, { rejectWithValue, getState }) => {
+    try {
+      await TaskService.updateTask(taskData);
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 interface GetAllColumnsArgs {
   boardId: string;
-  token: string;
 }
 
-export const getAllColumnsTAC = createAsyncThunk<ColumnType[], GetAllColumnsArgs>(
+export const getAllColumnsTAC = createAsyncThunk<ColumnType[], GetAllColumnsArgs, ThunkApiType>(
   'column/getAllColumns',
-  async ({ boardId, token }) => {
-    const response = await ColumnService.getAllColumns(boardId, token);
-    return await response.data;
+  async ({ boardId }, { rejectWithValue, getState }) => {
+    try {
+      const response = await ColumnService.getAllColumns(boardId);
+      return await response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 
 interface CreateColumnArgs {
   boardId: string;
   columnData: ColumnRequestType;
-  token: string;
 }
 
-export const createColumnTAC = createAsyncThunk<ColumnType, CreateColumnArgs>(
+export const createColumnTAC = createAsyncThunk<ColumnType, CreateColumnArgs, ThunkApiType>(
   'column/createColumn',
-  async ({ boardId, columnData, token }) => {
-    const response = await ColumnService.createColumn(boardId, columnData, token);
-    return response.data;
+  async ({ boardId, columnData }, { rejectWithValue, getState }) => {
+    try {
+      const response = await ColumnService.createColumn(boardId, columnData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 
 interface DeleteColumnArgs {
   id: string;
   boardId: string;
-  token: string;
 }
 
-export const deleteColumnTAC = createAsyncThunk<ColumnType, DeleteColumnArgs>(
+export const deleteColumnTAC = createAsyncThunk<ColumnType, DeleteColumnArgs, ThunkApiType>(
   'column/deleteColumn',
-  async ({ boardId, id, token }) => {
-    const response = await ColumnService.deleteColumn(boardId, id, token);
-    return response.data;
+  async ({ boardId, id }, { rejectWithValue, getState }) => {
+    try {
+      const response = await ColumnService.deleteColumn(boardId, id);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 
@@ -101,13 +144,18 @@ interface UpdateColumnArgs {
   id: string;
   boardId: string;
   columnData: ColumnRequestType;
-  token: string;
 }
 
-export const updateColumnTAC = createAsyncThunk<void, UpdateColumnArgs>(
+export const updateColumnTAC = createAsyncThunk<void, UpdateColumnArgs, ThunkApiType>(
   'column/updateColumn',
-  async ({ columnData, boardId, id, token }) => {
-    await ColumnService.updateColumn(boardId, id, columnData, token);
+  async ({ columnData, boardId, id }, { rejectWithValue, getState }) => {
+    try {
+      await ColumnService.updateColumn(boardId, id, columnData);
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
   }
 );
 

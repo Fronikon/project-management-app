@@ -10,7 +10,6 @@ import {
   updateTaskTAC,
 } from '../../../../store/reducers/boardReducer';
 import { useParams } from 'react-router-dom';
-import useToken from '../../../../hooks/useToken';
 
 interface TypeProps {
   _id: string;
@@ -21,7 +20,6 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
   const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const token = useToken();
 
   const updateSpecialTasksOrder = (tasks: TaskType[], columnId: string) => {
     for (let i = 0; i < tasksLength[columnId]; i++) {
@@ -37,13 +35,13 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
         _id: tasks[i]._id,
       };
 
-      dispatch(updateTaskTAC({ taskData, token }));
+      dispatch(updateTaskTAC({ taskData }));
     }
   };
 
   useEffect(() => {
-    dispatch(getColumnTasksTAC({ columnId: _id, boardId: id as string, token }));
-  }, [dispatch, _id, id, token]);
+    dispatch(getColumnTasksTAC({ columnId: _id, boardId: id as string }));
+  }, [dispatch, _id, id]);
 
   return (
     <>
@@ -76,7 +74,6 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                             columnId: _id,
                             taskId: task._id,
                             boardId: id as string,
-                            token,
                           })
                         );
                         updateSpecialTasksOrder(tasks[_id], _id);

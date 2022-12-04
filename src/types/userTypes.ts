@@ -6,7 +6,6 @@ export interface UserPutRequestType {
 
 export interface UserPostRequestType {
   userId: string;
-  token: string;
 }
 
 export interface UserResponseType {
