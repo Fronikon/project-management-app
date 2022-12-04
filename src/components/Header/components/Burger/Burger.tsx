@@ -109,7 +109,7 @@ const Burger = () => {
           <>
             <li className={styles.burgerItem}>
               <NavLink className={styles.burgerSignIn} to="/edit" end>
-                <p className={styles.burgerSignInText}>{textData.header.edit[language]}</p>
+                <p className={styles.burgerSignInText}>{textData.header.editProfile[language]}</p>
               </NavLink>
             </li>
             <li className={styles.burgerItem}>

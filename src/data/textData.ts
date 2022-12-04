@@ -28,6 +28,10 @@ const textData = {
       ru: 'Изменить',
       eng: 'Edit',
     },
+    editProfile: {
+      ru: 'Изменить профиль',
+      eng: 'Edit profile',
+    },
     start: {
       ru: 'К доскам',
       eng: 'To boards',
