@@ -59,7 +59,7 @@ const Board: FC = () => {
       dispatch(setColumns(col));
       for (let i = 0; i < column.length; i++) {
         dispatch(
-          updateColumn({ title: col[i].title, order: i, boardId: id as string, id: col[i]._id })
+          updateColumn({ title: col[i].title, order: i, boardId: id as string, _id: col[i]._id })
         );
       }
 
@@ -125,6 +125,7 @@ const Board: FC = () => {
           {(provided) => (
             <div className={styles.wrapper} ref={provided.innerRef} {...provided.droppableProps}>
               <Column />
+              {provided.placeholder}
               <button
                 className={styles.addButton}
                 onClick={() => {
@@ -137,7 +138,6 @@ const Board: FC = () => {
                 to={'/boards'}
                 style={{ borderBottom: '2px dashed black' }}
               ></NavLink>
-              {provided.placeholder}
             </div>
           )}
         </Droppable>

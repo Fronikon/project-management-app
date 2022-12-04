@@ -6,7 +6,7 @@ interface apiColumnType {
   title: string;
   order: number;
   boardId: string;
-  id?: string;
+  _id?: string;
 }
 
 const url = 'https://pma-backend.onrender.com/boards';
@@ -56,7 +56,7 @@ export const updateColumn = createAsyncThunk<void, apiColumnType>(
   async (arg) => {
     const token = localStorage.getItem('token');
     await axios.put(
-      `${url}/${arg.boardId}/columns/${arg.id}`,
+      `${url}/${arg.boardId}/columns/${arg._id}`,
       {
         title: arg.title,
         order: arg.order,

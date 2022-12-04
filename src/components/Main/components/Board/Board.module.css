@@ -30,10 +30,13 @@
 }
 
 .titleColumn {
+  width: 331px;
+
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
   color: #fff;
+  word-wrap: break-word;
 }
 
 .delete {
@@ -118,8 +121,10 @@
 }
 
 .titleTask {
-  width: 85%;
+  width: 217px;
   padding: 20px 0 20px 40px;
+
+  word-wrap: break-word;
 }
 
 .deleteTask {
@@ -157,6 +162,7 @@
   line-height: 20px;
   color: #fff;
   letter-spacing: -0.011em;
+  word-wrap: break-word;
 
   mix-blend-mode: difference;
 }
