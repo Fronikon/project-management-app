@@ -4,8 +4,6 @@ import { Footer, Header, Main } from './components/index';
 import { useAppSelector, useAppDispatch } from './hooks/reduxHooks';
 import { logOut } from './store/reducers/authReducer';
 import tokenEvent from './utils/tokenEvent';
-import { useNavigate } from 'react-router-dom';
-import useToken from './hooks/useToken';
 import { cleanError } from './store/reducers/errorAndLoadingReducer';
 import modalStyles from './componentsUtils/Modal/Modal.module.css';
 import Modal from './componentsUtils/Modal/Modal';
@@ -13,9 +11,6 @@ import Modal from './componentsUtils/Modal/Modal';
 const App: FC = () => {
   const language = useAppSelector((store) => store.language.value);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const token = useToken();
-  const [logoutInProcess, setLogoutInProcess] = useState(false);
   const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const [isModalError, setIsModalError] = useState(false);
 
@@ -29,18 +24,10 @@ const App: FC = () => {
   }, [error]);
 
   useEffect(() => {
-    if (logoutInProcess && !token) {
-      navigate('signIn');
-      setLogoutInProcess(false);
-    }
-  }, [logoutInProcess, navigate, token]);
-
-  useEffect(() => {
     tokenEvent.on(() => {
       dispatch(logOut());
-      setLogoutInProcess(true);
     });
-  }, [dispatch, navigate]);
+  }, [dispatch]);
 
   useEffect(() => {
     localStorage.setItem('language', language);
