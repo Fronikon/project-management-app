@@ -1,0 +1,123 @@
+.burgerIcon {
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 40px;
+  height: 30px;
+  margin: auto 0;
+  margin-right: 100px;
+  margin-left: 40px;
+
+  color: #fff;
+
+  transition: transform 0.4s;
+}
+
+.burgerIcon::before,
+.burgerSpan,
+.burgerIcon::after {
+  content: "";
+
+  position: absolute;
+
+  width: 40px;
+  height: 2px;
+
+  background-color: #fff;
+
+  transition: transform 0.4s;
+}
+
+.burgerIcon::before {
+  top: 0;
+}
+
+.burgerIcon::after {
+  bottom: 0;
+}
+
+.burgerIconActive::before {
+  transform: rotate(-45deg) translate(-11px, 10px);
+}
+
+.burgerSpanNone {
+  display: none;
+}
+
+.burgerIconActive::after {
+  transform: rotate(45deg) translate(-9px, -10px);
+}
+
+.burgerIcon:hover {
+  transform: scale(1.2);
+}
+
+.burgerIcon:active {
+  transform: scale(1);
+}
+
+.burgerList {
+  position: fixed;
+  top: 80px;
+  transform: translateX(-100%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 20px;
+
+  list-style: none;
+
+  background-color: #222;
+
+  transition: transform 0.4s;
+}
+
+.active {
+  transform: translateX(0);
+}
+
+.burgerItem {
+  cursor: pointer;
+
+  font-size: 24px;
+  color: #fff;
+  text-decoration: none;
+
+  transition: all 0.4s;
+}
+
+.burgerHome,
+.burgerBoard,
+.burgerSignIn {
+  color: #fff;
+  text-decoration: none;
+}
+
+.burgerItem:hover {
+  transform: scale(1.2);
+}
+
+@media (min-width: 1281px) {
+  .burgerIcon {
+    display: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .burgerIcon {
+    margin-right: 72px;
+    margin-left: 20px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .burgerIcon {
+    margin-right: 0;
+  }
+}

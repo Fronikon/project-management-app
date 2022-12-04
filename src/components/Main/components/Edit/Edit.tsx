@@ -121,11 +121,11 @@ const Edit: FC = () => {
                 message: '2',
               },
             }}
-            defaultValue={''}
+            defaultValue={user.name}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextInputForm
                 onChangeText={onChange}
-                value={value || user.name}
+                value={value}
                 error={
                   !error?.message
                     ? ''
@@ -150,10 +150,11 @@ const Edit: FC = () => {
                 message: '2',
               },
             }}
+            defaultValue={user.login}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <TextInputForm
                 onChangeText={onChange}
-                value={value || user.login}
+                value={value}
                 error={
                   !error?.message
                     ? ''
