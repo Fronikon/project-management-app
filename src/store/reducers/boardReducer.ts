@@ -178,7 +178,17 @@ export interface ColumnType {
   boardId: string;
 }
 
+export interface taskChangeType {
+  taskId: string;
+  columnId: string;
+  value?: TaskType;
+}
+
 interface InitialStateType {
+  title: string;
+  description: string;
+  color: string;
+  order: number;
   columnId: string;
   taskId: string;
   columnLength: number;
@@ -186,12 +196,17 @@ interface InitialStateType {
   isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
-  isChangeModalOpen: boolean;
+  isChangeColumnModalOpen: boolean;
+  isChangeTaskModalOpen: boolean;
   columns: ColumnType[];
   tasks: { [index: string]: TaskType[] };
 }
 
 const initialState: InitialStateType = {
+  title: '',
+  description: '',
+  color: '#000000',
+  order: 0,
   columnId: '',
   taskId: '',
   columnLength: 0,
@@ -199,8 +214,9 @@ const initialState: InitialStateType = {
   isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,
-  isChangeModalOpen: false,
-  columns: [],
+  isChangeColumnModalOpen: false,
+  isChangeTaskModalOpen: false,
+  columns: [] as ColumnType[],
   tasks: {},
 };
 
@@ -217,8 +233,11 @@ const boardReducer = createSlice({
     toggleTask(state) {
       state.isTaskModalOpen = !state.isTaskModalOpen;
     },
-    toggleChange(state) {
-      state.isChangeModalOpen = !state.isChangeModalOpen;
+    toggleColumnChange(state) {
+      state.isChangeColumnModalOpen = !state.isChangeColumnModalOpen;
+    },
+    toggleTaskChange(state) {
+      state.isChangeTaskModalOpen = !state.isChangeTaskModalOpen;
     },
     setCurrentColumnId(state, action) {
       state.columnId = action.payload;
@@ -226,11 +245,28 @@ const boardReducer = createSlice({
     resetColumnId(state) {
       state.columnId = '';
     },
+    setCurrentTaskId(state, action: PayloadAction<taskChangeType>) {
+      state.taskId = action.payload.taskId;
+      state.columnId = action.payload.columnId;
+    },
+    resetTaskId(state) {
+      state.taskId = '';
+    },
     setColumns(state, action) {
       state.columns = action.payload;
     },
     setTasks(state, action) {
       state.tasks[action.payload.id] = action.payload.items;
+    },
+    updateSpecialTask(state, action: PayloadAction<TaskType>) {
+      const index = state.tasks[action.payload.columnId]
+        .map((x) => x._id)
+        .indexOf(action.payload._id);
+      state.tasks[action.payload.columnId].splice(index, 1, action.payload);
+    },
+    updateSpecialColumn(state, action: PayloadAction<ColumnType>) {
+      const index = state.columns.map((x) => x._id).indexOf(action.payload._id);
+      state.columns.splice(index, 1, action.payload);
     },
     zeroingTasks(state, action) {
       state.tasks[action.payload] = [];
@@ -246,6 +282,18 @@ const boardReducer = createSlice({
     },
     decreaseTasksCount(state, action) {
       state.tasksLength[action.payload] -= 1;
+    },
+    setTitle(state, action) {
+      state.title = action.payload;
+    },
+    setDescription(state, action) {
+      state.description = action.payload;
+    },
+    setColor(state, action) {
+      state.color = action.payload;
+    },
+    setOrder(state, action) {
+      state.order = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -298,13 +346,22 @@ export const {
   toggleModal,
   toggleColumn,
   toggleTask,
-  toggleChange,
+  toggleColumnChange,
+  toggleTaskChange,
   setCurrentColumnId,
+  setCurrentTaskId,
   resetColumnId,
+  resetTaskId,
   setColumns,
   setTasks,
   increaseColumnCount,
   decreaseColumnCount,
   increaseTasksCount,
   decreaseTasksCount,
+  updateSpecialTask,
+  updateSpecialColumn,
+  setTitle,
+  setDescription,
+  setColor,
+  setOrder,
 } = boardReducer.actions;

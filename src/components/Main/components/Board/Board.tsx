@@ -127,6 +127,7 @@ const Board: FC = () => {
           {(provided) => (
             <div className={styles.wrapper} ref={provided.innerRef} {...provided.droppableProps}>
               <Column />
+              {provided.placeholder}
               <button
                 className={styles.addButton}
                 onClick={() => {
@@ -139,7 +140,6 @@ const Board: FC = () => {
                 to={'/boards'}
                 style={{ borderBottom: '2px dashed black' }}
               ></NavLink>
-              {provided.placeholder}
             </div>
           )}
         </Droppable>

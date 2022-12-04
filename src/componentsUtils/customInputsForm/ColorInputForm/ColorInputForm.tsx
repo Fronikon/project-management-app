@@ -5,11 +5,12 @@ import InputFormWrapper from '../InputFormWrapper/InputFormWrapper';
 interface PropsType {
   onChangeColor: ChangeEventHandler;
   value: string;
+  label: string;
   error?: string;
 }
 
 const ColorInputForm: FC<PropsType> = (props) => {
-  const { onChangeColor, value, error } = props;
+  const { onChangeColor, value, error, label } = props;
 
   const id = useId();
 
@@ -17,7 +18,7 @@ const ColorInputForm: FC<PropsType> = (props) => {
     <InputFormWrapper error={error}>
       <div className={styles.field}>
         <label className={styles.labelfield} htmlFor={id}>
-          Color of the board
+          {label}
         </label>
         <input
           onChange={onChangeColor}

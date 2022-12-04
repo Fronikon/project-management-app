@@ -1,197 +1,92 @@
-import React, { FC, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import TokenService from '../../../../../api/tokenApi';
-import textData from '../../../../../data/textData';
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
+import React, { FC } from 'react';
+import { useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
-  createColumnTAC,
-  createTaskTAC,
-  increaseColumnCount,
-  increaseTasksCount,
-  resetColumnId,
   toggleColumn,
-  toggleModal,
+  toggleColumnChange,
   toggleTask,
+  toggleTaskChange,
 } from '../../../../../store/reducers/boardReducer';
-import styles from './PopUp.module.css';
+import Modal from '../../../../../componentsUtils/Modal/Modal';
+import CreateColumn from './Modals/createColumn';
+import CreateTask from './Modals/createTask';
+import EditColumn from './Modals/EditColumn';
+import EditTask from './Modals/EditTask';
+
+export interface PopUpType {
+  title: string;
+  description: string;
+}
 
 const PopUp: FC = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [color, setColor] = useState('#000000');
-
-  const isModalOpen = useAppSelector((store) => store.boardReducer.isModalOpen);
   const isColumnModalOpen = useAppSelector((store) => store.boardReducer.isColumnModalOpen);
   const isTaskModalOpen = useAppSelector((store) => store.boardReducer.isTaskModalOpen);
-  const isChangeModalOpen = useAppSelector((store) => store.boardReducer.isChangeModalOpen);
-  const language = useAppSelector((store) => store.language.value);
-  const columnId = useAppSelector((store) => store.boardReducer.columnId);
-  const columnLength = useAppSelector((store) => store.boardReducer.columnLength);
-  const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
-  const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const userId = TokenService.getUser();
+  const isChangeColumnModalOpen = useAppSelector(
+    (store) => store.boardReducer.isChangeColumnModalOpen
+  );
+  const isChangeTaskModalOpen = useAppSelector((store) => store.boardReducer.isChangeTaskModalOpen);
 
-  const titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+  const closeCreateColumnModal = () => {
+    toggleColumn();
   };
 
-  const descriptionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescription(e.target.value);
+  const closeCreateTaskModal = () => {
+    toggleTask();
   };
 
-  const colorHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColor(e.target.value);
+  const closeEditColumnModal = () => {
+    toggleColumnChange();
   };
 
-  const columnConfirm = () => {
-    const columnData = { title: title, order: columnLength };
-    dispatch(createColumnTAC({ boardId: id as string, columnData }));
-    dispatch(toggleColumn());
-    dispatch(toggleModal());
-    dispatch(resetColumnId());
-    setTitle('');
-    dispatch(increaseColumnCount());
+  const closeEditTaskModal = () => {
+    toggleTaskChange();
   };
 
-  const columnCancel = () => {
-    dispatch(toggleColumn());
-    dispatch(toggleModal());
-    dispatch(resetColumnId());
-    setTitle('');
+  const renderCreateColumn = () => {
+    if (isColumnModalOpen) {
+      return (
+        <Modal closeModal={closeCreateColumnModal}>
+          <CreateColumn closeModal={closeCreateColumnModal} />
+        </Modal>
+      );
+    }
   };
 
-  const taskConfirm = () => {
-    const taskData = {
-      title: title,
-      order: tasksLength[columnId],
-      columnId: columnId,
-      description: description,
-      color: color,
-      userId: userId as string,
-      users: [userId as string],
-      boardId: id as string,
-    };
-
-    dispatch(createTaskTAC({ taskData }));
-    dispatch(toggleTask());
-    dispatch(toggleModal());
-    dispatch(resetColumnId());
-    setTitle('');
-    setDescription('');
-    setColor('#000000');
-    dispatch(increaseTasksCount(columnId));
+  const renderCreateTask = () => {
+    if (isTaskModalOpen) {
+      return (
+        <Modal closeModal={closeCreateTaskModal}>
+          <CreateTask closeModal={closeCreateTaskModal} />
+        </Modal>
+      );
+    }
   };
 
-  const taskCancel = () => {
-    dispatch(toggleTask());
-    dispatch(toggleModal());
-    dispatch(resetColumnId());
-    setTitle('');
-    setDescription('');
-    setColor('#000000');
+  const renderEditColumn = () => {
+    if (isChangeColumnModalOpen) {
+      return (
+        <Modal closeModal={closeEditColumnModal}>
+          <EditColumn closeModal={closeEditColumnModal} />
+        </Modal>
+      );
+    }
+  };
+
+  const renderEditTask = () => {
+    if (isChangeTaskModalOpen) {
+      return (
+        <Modal closeModal={closeEditTaskModal}>
+          <EditTask closeModal={closeEditTaskModal} />
+        </Modal>
+      );
+    }
   };
 
   return (
     <>
-      {isModalOpen && (
-        <div className={styles.popup}>
-          {isColumnModalOpen && (
-            <div className={styles.newColumnModal}>
-              <h2 className={styles.modalHeading}>{textData.boardsPage.newColumn[language]}</h2>
-              <fieldset className={styles.fieldset}>
-                <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                <input
-                  type="text"
-                  placeholder="Placeholder"
-                  onChange={titleHandler}
-                  className={styles.input}
-                />
-              </fieldset>
-              <div className={styles.btnsWrapper}>
-                <button onClick={columnConfirm} className={styles.confirm}>
-                  {textData.general.confirmModal.confirmButton[language]}
-                </button>
-                <button className={styles.cancel} onClick={columnCancel}>
-                  {textData.general.confirmModal.cancelButton[language]}
-                </button>
-              </div>
-            </div>
-          )}
-          {isTaskModalOpen && (
-            <div className={styles.newTaskModal}>
-              <h2 className={styles.modalHeading}>{textData.boardsPage.newTask[language]}</h2>
-              <div className={styles.modalInputsWrapper}>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                  <input
-                    type="text"
-                    placeholder="Placeholder"
-                    className={styles.input}
-                    onChange={titleHandler}
-                  />
-                </fieldset>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>
-                    {textData.boardsPage.description[language]}
-                  </legend>
-                  <input
-                    type="text"
-                    placeholder="Placeholder"
-                    className={styles.input}
-                    onChange={descriptionHandler}
-                  />
-                </fieldset>
-                <div className={`${styles.colorWrapper} ${styles.input}`}>
-                  <div className={styles.colorTextWrapper}>
-                    <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
-                  </div>
-                  <input type="color" className={styles.color} onChange={colorHandler} />
-                </div>
-              </div>
-              <div className={styles.btnsWrapper}>
-                <button className={styles.confirm} onClick={taskConfirm}>
-                  {textData.general.confirmModal.confirmButton[language]}
-                </button>
-                <button className={styles.cancel} onClick={taskCancel}>
-                  {textData.general.confirmModal.cancelButton[language]}
-                </button>
-              </div>
-            </div>
-          )}
-          {isChangeModalOpen && (
-            <div className={styles.newChangeModal}>
-              <h2 className={styles.modalHeading}>{textData.boardsPage.changeTask[language]}</h2>
-              <div className={styles.modalInputsWrapper}>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>{textData.boardsPage.title[language]}</legend>
-                  <input type="text" placeholder="Placeholder" className={styles.input} />
-                </fieldset>
-                <fieldset className={styles.fieldset}>
-                  <legend className={styles.legend}>
-                    {textData.boardsPage.description[language]}
-                  </legend>
-                  <input type="text" placeholder="Placeholder" className={styles.input} />
-                </fieldset>
-                <div className={`${styles.colorWrapper} ${styles.input}`}>
-                  <div className={styles.colorTextWrapper}>
-                    <p className={styles.colorText}>{textData.boardsPage.taskColor[language]}</p>
-                  </div>
-                  <input type="color" className={styles.color} />
-                </div>
-              </div>
-              <div className={styles.btnsWrapper}>
-                <button className={styles.confirm}>
-                  {textData.general.confirmModal.confirmButton[language]}
-                </button>
-                <button className={styles.cancel}>
-                  {textData.general.confirmModal.cancelButton[language]}
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+      {renderCreateColumn()}
+      {renderCreateTask()}
+      {renderEditColumn()}
+      {renderEditTask()}
     </>
   );
 };
