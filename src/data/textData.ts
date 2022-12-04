@@ -118,6 +118,14 @@ const textData = {
       ru: 'Доска будет удалена. Вы уверены?',
       eng: 'The board will be removed. Are you sure?',
     },
+    questionConfirmingDeleteColumn: {
+      ru: 'Колонка будет удалена. Вы уверены?',
+      eng: 'The column will be removed. Are you sure?',
+    },
+    questionConfirmingDeleteTask: {
+      ru: 'Задание будет удалено. Вы уверены?',
+      eng: 'The task will be removed. Are you sure?',
+    },
     todo: {
       ru: 'К выполнению',
       eng: 'To do',
