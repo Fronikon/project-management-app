@@ -1,50 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
 import CreateBoardForm from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm';
 import Modal from '../../../../componentsUtils/Modal/Modal';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import useToken from '../../../../hooks/useToken';
-import { switchEng, switchRu } from '../../../../store/reducers/languageReducer';
-import { logOut } from '../../../../store/slices/sliceAuth';
+import { logOut } from '../../../../store/reducers/authReducer';
 import styles from './Burger.module.css';
 
 const Burger = () => {
   const language = useAppSelector((store) => store.language.value);
   const token = useToken();
   const dispatch = useAppDispatch();
-  const [isModal, setIsModal] = useState(false);
   const navigate = useNavigate();
-  const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
   const burgerRef = useRef<HTMLUListElement>(null);
+  const [isModal, setIsModal] = useState(false);
+  const [isOpenCreateBoardModal, setIsOpenCreateBoardModal] = useState(false);
   const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener('scroll', function () {
-      if (headerRef.current) {
-        if (window.pageYOffset > 0) {
-          headerRef.current.classList.add(styles.isSticky);
-        } else {
-          headerRef.current.classList.remove(styles.isSticky);
-        }
-      }
-    });
-  }, []);
-
-  const switchCheck = () => {
-    if (language === 'eng') {
-      dispatch(switchRu());
-    } else {
-      dispatch(switchEng());
-    }
-  };
 
   const closeModalLogOut = () => {
     setIsModal(false);
   };
 
-  const onClick = () => {
+  const openLogOut = () => {
     setIsModal(true);
   };
 
@@ -76,11 +55,19 @@ const Burger = () => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener('click', function (e: MouseEvent): void {
-      if (active && e.target !== burgerRef.current) setActive(false);
-    });
-  }, []);
+  const renderModalLogOut = () => {
+    if (isModal) {
+      return (
+        <Modal closeModal={closeModalLogOut}>
+          <ConfirmAction
+            question={textData.authPage.logOut[language]}
+            confirm={confirm}
+            cancel={cancel}
+          />
+        </Modal>
+      );
+    }
+  };
 
   return (
     <>
@@ -94,8 +81,6 @@ const Burger = () => {
           className={active ? `${styles.burgerSpan} ${styles.burgerSpanNone}` : styles.burgerSpan}
         />
       </div>
-      {renderCreateBoardModal()}
-
       <ul
         className={active ? `${styles.burgerList} ${styles.active}` : styles.burgerList}
         onClick={() => setActive(false)}
@@ -128,7 +113,7 @@ const Burger = () => {
               </NavLink>
             </li>
             <li className={styles.burgerItem}>
-              <div className={styles.burgerSignUp} onClick={onClick}>
+              <div className={styles.burgerSignUp} onClick={openLogOut}>
                 <p className={styles.burgerSignUpText}>{textData.header.exit[language]}</p>
               </div>
             </li>
@@ -148,6 +133,8 @@ const Burger = () => {
           </>
         )}
       </ul>
+      {renderModalLogOut()}
+      {renderCreateBoardModal()}
     </>
   );
 };

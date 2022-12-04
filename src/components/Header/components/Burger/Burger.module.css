@@ -94,7 +94,8 @@
 
 .burgerHome,
 .burgerBoard,
-.burgerSignIn {
+.burgerSignIn,
+.burgerSignUp {
   color: #fff;
   text-decoration: none;
 }
