@@ -197,7 +197,7 @@
 .back {
   cursor: pointer;
 
-  width: 76px;
+  min-width: 76px;
   height: 76px;
 
   background-color: rgb(255 255 255 / 40%);
