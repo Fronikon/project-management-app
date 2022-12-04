@@ -129,17 +129,13 @@ const Board: FC = () => {
               <Column />
               {provided.placeholder}
               <button
-                className={styles.addButton}
+                className={`${styles.addButton} ${styles.addButtonColumn}`}
                 onClick={() => {
                   dispatch(toggleModal());
                   dispatch(toggleColumn());
                 }}
               ></button>
-              <NavLink
-                className={styles.back}
-                to={'/boards'}
-                style={{ borderBottom: '2px dashed black' }}
-              ></NavLink>
+              <NavLink className={styles.back} to={'/boards'}></NavLink>
             </div>
           )}
         </Droppable>

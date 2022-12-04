@@ -96,7 +96,9 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                     }}
                   ></button>
                 </div>
-                <p className={styles.descriptionTask}>{task.description}</p>
+                <div className={styles.descriptionWrapper}>
+                  <p className={styles.descriptionTask}>{task.description}</p>
+                </div>
               </div>
             );
           }}
