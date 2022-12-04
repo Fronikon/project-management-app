@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { createColumn, deleteColumn, getAllColumns } from '../../api/columnApi';
 import { createTask, deleteTask, getColumnTasks } from '../../api/taskApi';
 
@@ -156,7 +156,6 @@ const boardReducer = createSlice({
             (a, b) => a.order - b.order
           );
           state.tasksLength[action.payload[0].columnId] = action.payload.length;
-          console.log(state.tasks[action.payload[0].columnId]);
           return;
         }
       })
