@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { updateTasks } from '../../../../../../api/taskApi';
 import CancelButton from '../../../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import ConfirmButton from '../../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import ColorInputForm from '../../../../../../componentsUtils/customInputsForm/ColorInputForm/ColorInputForm';
@@ -18,6 +17,7 @@ import {
   toggleModal,
   toggleTaskChange,
   updateSpecialTask,
+  updateTaskTAC,
 } from '../../../../../../store/reducers/boardReducer';
 import { PopUpType } from '../PopUp';
 import styles from '../PopUp.module.css';
@@ -61,7 +61,7 @@ const EditTask: FC<PropsType> = ({ closeModal }) => {
       _id: taskId,
     };
 
-    dispatch(updateTasks(updatedTask));
+    dispatch(updateTaskTAC({ taskData: updatedTask }));
     dispatch(updateSpecialTask(updatedTask));
     dispatch(toggleTaskChange());
     dispatch(toggleModal());

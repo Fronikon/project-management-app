@@ -7,17 +7,16 @@ import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/Con
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { deleteUserById, getUser, putUser } from '../../../../api/userApi';
 import CancelButton from '../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import DeleteButton from '../../../../componentsUtils/buttons/DeleteButton/DeleteButton';
-import { logOut } from '../../../../store/slices/sliceAuth';
 import Modal from '../../../../componentsUtils/Modal/Modal';
 import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
 import ConfirmAction from '../../../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
-import useToken from '../../../../hooks/useToken';
 import useUserId from '../../../../hooks/useUserId';
 import Loader from '../../../../componentsUtils/Loader/Loader';
-import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
+import { cleanError } from '../../../../store/reducers/errorAndLoadingReducer';
+import { changeUserTAC, deleteUserTAC, getUserTAC } from '../../../../store/reducers/userReducer';
+import { logOut } from '../../../../store/reducers/authReducer';
 
 export interface SignUpType {
   name: string;
@@ -36,7 +35,6 @@ const Edit: FC = () => {
   const navigate = useNavigate();
   const language = useAppSelector((store) => store.language.value);
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
-  const token = useToken();
   const userId = useUserId();
   const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const [isModal, setIsModal] = useState(false);
@@ -51,7 +49,7 @@ const Edit: FC = () => {
   } = useForm<SignUpType>();
 
   const confirm = async (user: SignUpType) => {
-    const response = await dispatch(putUser({ userId, token, user }));
+    const response = await dispatch(changeUserTAC({ user, userId }));
     if (typeof response.payload !== 'string') navigate(-1);
   };
 
@@ -74,7 +72,7 @@ const Edit: FC = () => {
 
   const confirmModal = async () => {
     setIsModal(false);
-    await dispatch(deleteUserById({ userId, token }));
+    await dispatch(deleteUserTAC({ userId }));
     dispatch(logOut());
     navigate('/');
   };
@@ -89,11 +87,11 @@ const Edit: FC = () => {
 
   useEffect(() => {
     (async () => {
-      const temp = (await dispatch(getUser({ userId, token }))).payload as UserResponseType;
+      const temp = (await dispatch(getUserTAC({ userId }))).payload as UserResponseType;
       setUser(temp);
       reset({ name: temp.name, login: temp.login });
     })();
-  }, [dispatch, reset, token, userId]);
+  }, [dispatch, reset, userId]);
 
   return (
     <>

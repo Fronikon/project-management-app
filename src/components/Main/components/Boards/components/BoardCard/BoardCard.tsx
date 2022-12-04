@@ -7,7 +7,6 @@ import { BoardType } from '../../../../../../types/boardsTypes';
 import styles from './BoardCard.module.css';
 import textData from './../../../../../../data/textData';
 import EditBoardForm from '../../../../../../componentsUtils/forms/EditBoardForm/EditBoardForm';
-import useToken from '../../../../../../hooks/useToken';
 import { useNavigate } from 'react-router-dom';
 
 interface PropsType {
@@ -17,7 +16,6 @@ interface PropsType {
 const BoardCard: FC<PropsType> = ({ board }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const token = useToken();
 
   const [statusDeleteBoardModal, setStatusDeleteBoardModal] = useState(false);
   const [statusEditBoardModal, setStatusEditBoardModal] = useState(false);
@@ -25,9 +23,7 @@ const BoardCard: FC<PropsType> = ({ board }) => {
   const language = useAppSelector((store) => store.language.value);
 
   const deleteBoard = () => {
-    if (token) {
-      dispatch(deleteBoardTAC({ id: board._id, token }));
-    }
+    dispatch(deleteBoardTAC({ id: board._id }));
   };
 
   const closeEditModal = () => setStatusEditBoardModal(false);

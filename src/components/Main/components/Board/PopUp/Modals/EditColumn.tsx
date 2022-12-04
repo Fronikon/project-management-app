@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { updateColumn } from '../../../../../../api/columnApi';
 import CancelButton from '../../../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import ConfirmButton from '../../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
@@ -13,6 +12,7 @@ import {
   setTitle,
   toggleColumnChange,
   toggleModal,
+  updateColumnTAC,
   updateSpecialColumn,
 } from '../../../../../../store/reducers/boardReducer';
 import { PopUpType } from '../PopUp';
@@ -43,10 +43,11 @@ const EditColumn: FC<PropsType> = ({ closeModal }) => {
       boardId: id as string,
       _id: columnId,
     };
+    const { boardId, _id, ...columnData } = updatedColumn;
 
     dispatch(toggleColumnChange());
     dispatch(toggleModal());
-    dispatch(updateColumn(updatedColumn));
+    dispatch(updateColumnTAC({ columnData, boardId, id: _id }));
     dispatch(updateSpecialColumn(updatedColumn));
     dispatch(resetColumnId());
     dispatch(setTitle(''));

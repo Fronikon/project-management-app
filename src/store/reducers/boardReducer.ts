@@ -1,6 +1,163 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { createColumn, deleteColumn, getAllColumns } from '../../api/columnApi';
-import { createTask, deleteTask, getColumnTasks } from '../../api/taskApi';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
+import ColumnService from '../../api/columnApi';
+import TaskService from '../../api/taskApi';
+import { ColumnRequestType } from '../../types/columnTypes';
+import { getErrorMessage } from '../../utils/getErrorMessage';
+import { RootState } from '../store';
+
+interface GetColumnTasksArgsType {
+  boardId: string;
+  columnId: string;
+}
+
+interface ThunkApiType {
+  rejectValue: string;
+  state: RootState;
+}
+
+export const getColumnTasksTAC = createAsyncThunk<TaskType[], GetColumnTasksArgsType, ThunkApiType>(
+  'task/getColumnTasks',
+  async ({ boardId, columnId }, { rejectWithValue, getState }) => {
+    try {
+      const response = await TaskService.getColumnTasks(boardId, columnId);
+      return await response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+
+interface CreateTaskArgsType {
+  taskData: TaskType;
+}
+
+export const createTaskTAC = createAsyncThunk<TaskType, CreateTaskArgsType, ThunkApiType>(
+  'task/createTask',
+  async ({ taskData }, { rejectWithValue, getState }) => {
+    try {
+      const response = await TaskService.createTask(taskData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+
+interface DeleteTaskArgsType {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+}
+
+export const deleteTaskTAC = createAsyncThunk<TaskType, DeleteTaskArgsType, ThunkApiType>(
+  'task/deleteTask',
+  async ({ boardId, columnId, taskId }, { rejectWithValue, getState }) => {
+    try {
+      const respone = await TaskService.deleteTask(boardId, columnId, taskId);
+      return respone.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+
+interface UpdateTaskArgsType {
+  taskData: TaskType;
+}
+
+export const updateTaskTAC = createAsyncThunk<void, UpdateTaskArgsType, ThunkApiType>(
+  'task/updateTask',
+  async ({ taskData }, { rejectWithValue, getState }) => {
+    try {
+      await TaskService.updateTask(taskData);
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+interface GetAllColumnsArgs {
+  boardId: string;
+}
+
+export const getAllColumnsTAC = createAsyncThunk<ColumnType[], GetAllColumnsArgs, ThunkApiType>(
+  'column/getAllColumns',
+  async ({ boardId }, { rejectWithValue, getState }) => {
+    try {
+      const response = await ColumnService.getAllColumns(boardId);
+      return await response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+
+interface CreateColumnArgs {
+  boardId: string;
+  columnData: ColumnRequestType;
+}
+
+export const createColumnTAC = createAsyncThunk<ColumnType, CreateColumnArgs, ThunkApiType>(
+  'column/createColumn',
+  async ({ boardId, columnData }, { rejectWithValue, getState }) => {
+    try {
+      const response = await ColumnService.createColumn(boardId, columnData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+
+interface DeleteColumnArgs {
+  id: string;
+  boardId: string;
+}
+
+export const deleteColumnTAC = createAsyncThunk<ColumnType, DeleteColumnArgs, ThunkApiType>(
+  'column/deleteColumn',
+  async ({ boardId, id }, { rejectWithValue, getState }) => {
+    try {
+      const response = await ColumnService.deleteColumn(boardId, id);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
+
+interface UpdateColumnArgs {
+  id: string;
+  boardId: string;
+  columnData: ColumnRequestType;
+}
+
+export const updateColumnTAC = createAsyncThunk<void, UpdateColumnArgs, ThunkApiType>(
+  'column/updateColumn',
+  async ({ columnData, boardId, id }, { rejectWithValue, getState }) => {
+    try {
+      await ColumnService.updateColumn(boardId, id, columnData);
+    } catch (error) {
+      return rejectWithValue(
+        getErrorMessage(error as Error | AxiosError, getState().language.value)
+      );
+    }
+  }
+);
 
 export interface TaskType {
   title: string;
@@ -141,7 +298,7 @@ const boardReducer = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllColumns.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
+      .addCase(getAllColumnsTAC.fulfilled, (state, action: PayloadAction<ColumnType[]>) => {
         state.columns = action.payload;
         state.columns = state.columns.sort((a, b) => a.order - b.order);
         state.columnLength = state.columns.length;
@@ -150,7 +307,7 @@ const boardReducer = createSlice({
           state.tasksLength[action.payload[i]._id] = 0;
         }
       })
-      .addCase(getColumnTasks.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
+      .addCase(getColumnTasksTAC.fulfilled, (state, action: PayloadAction<TaskType[]>) => {
         if (action.payload.length > 0) {
           state.tasks[action.payload[0].columnId] = action.payload.sort(
             (a, b) => a.order - b.order
@@ -159,19 +316,19 @@ const boardReducer = createSlice({
           return;
         }
       })
-      .addCase(createColumn.fulfilled, (state, action: PayloadAction<ColumnType>) => {
+      .addCase(createColumnTAC.fulfilled, (state, action: PayloadAction<ColumnType>) => {
         state.columns.push(action.payload);
         state.tasks[action.payload._id] = [];
         state.tasksLength[action.payload._id] = 0;
       })
-      .addCase(createTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
+      .addCase(createTaskTAC.fulfilled, (state, action: PayloadAction<TaskType>) => {
         state.tasks[action.payload.columnId].push(action.payload);
       })
-      .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<ColumnType>) => {
+      .addCase(deleteColumnTAC.fulfilled, (state, action: PayloadAction<ColumnType>) => {
         const index = state.columns.map((x) => x._id).indexOf(action.payload._id);
         state.columns.splice(index, 1);
       })
-      .addCase(deleteTask.fulfilled, (state, action: PayloadAction<TaskType>) => {
+      .addCase(deleteTaskTAC.fulfilled, (state, action: PayloadAction<TaskType>) => {
         const index = state.tasks[action.payload.columnId]
           .map((x) => x._id)
           .indexOf(action.payload._id);

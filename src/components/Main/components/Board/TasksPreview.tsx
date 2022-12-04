@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import styles from './Board.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import { deleteTask, getColumnTasks, updateTasks } from '../../../../api/taskApi';
 import { Draggable } from 'react-beautiful-dnd';
 import {
   decreaseTasksCount,
+  deleteTaskTAC,
+  getColumnTasksTAC,
   setColor,
   setCurrentTaskId,
   setDescription,
@@ -13,6 +14,7 @@ import {
   TaskType,
   toggleModal,
   toggleTaskChange,
+  updateTaskTAC,
 } from '../../../../store/reducers/boardReducer';
 import { useParams } from 'react-router-dom';
 
@@ -28,24 +30,24 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
 
   const updateSpecialTasksOrder = (tasks: TaskType[], columnId: string) => {
     for (let i = 0; i < tasksLength[columnId]; i++) {
-      dispatch(
-        updateTasks({
-          title: tasks[i].title,
-          order: i,
-          description: tasks[i].description,
-          color: tasks[i].color,
-          columnId: columnId,
-          userId: tasks[i].userId,
-          users: tasks[i].users,
-          boardId: id as string,
-          _id: tasks[i]._id,
-        })
-      );
+      const taskData = {
+        title: tasks[i].title,
+        order: i,
+        description: tasks[i].description,
+        color: tasks[i].color,
+        columnId: columnId,
+        userId: tasks[i].userId,
+        users: tasks[i].users,
+        boardId: id as string,
+        _id: tasks[i]._id,
+      };
+
+      dispatch(updateTaskTAC({ taskData }));
     }
   };
 
   useEffect(() => {
-    dispatch(getColumnTasks({ _id, boardId: id as string }));
+    dispatch(getColumnTasksTAC({ columnId: _id, boardId: id as string }));
   }, [dispatch, _id, id]);
 
   return (
@@ -88,7 +90,7 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                       if (task._id !== undefined) {
                         dispatch(decreaseTasksCount(_id));
                         dispatch(
-                          deleteTask({ columnId: _id, taskId: task._id, boardId: id as string })
+                          deleteTaskTAC({ columnId: _id, taskId: task._id, boardId: id as string })
                         ).finally(() => updateSpecialTasksOrder(tasks[_id], _id));
                       }
                     }}

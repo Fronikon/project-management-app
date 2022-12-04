@@ -1,5 +1,15 @@
-import { signUp, signIn } from '../api/authApi';
-import { deleteUserById, getUser, putUser } from '../api/userApi';
+import { signInTAC, signUpTAC } from '../store/reducers/authReducer';
+import { changeUserTAC, deleteUserTAC, getUserTAC } from '../store/reducers/userReducer';
+import {
+  updateColumnTAC,
+  deleteColumnTAC,
+  createColumnTAC,
+  getAllColumnsTAC,
+  updateTaskTAC,
+  deleteTaskTAC,
+  getColumnTasksTAC,
+  createTaskTAC,
+} from '../store/reducers/boardReducer';
 import {
   addBoardTAC,
   deleteBoardTAC,
@@ -8,11 +18,19 @@ import {
 } from '../store/reducers/boardsReducer';
 
 export const requestArray = [
-  signIn,
-  signUp,
-  getUser,
-  deleteUserById,
-  putUser,
+  updateColumnTAC,
+  deleteColumnTAC,
+  createColumnTAC,
+  getAllColumnsTAC,
+  updateTaskTAC,
+  deleteTaskTAC,
+  getColumnTasksTAC,
+  createTaskTAC,
+  signInTAC,
+  signUpTAC,
+  getUserTAC,
+  deleteUserTAC,
+  changeUserTAC,
   getBoardsTAC,
   addBoardTAC,
   editBoardTAC,

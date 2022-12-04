@@ -1,18 +1,15 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { signIn } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import signInStyles from './SignIn.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
-import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
-import Modal from '../../../../componentsUtils/Modal/Modal';
-import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
 import Loader from '../../../../componentsUtils/Loader/Loader';
+import { signInTAC } from '../../../../store/reducers/authReducer';
 
 export interface SignInType {
   login: string;
@@ -22,9 +19,7 @@ export interface SignInType {
 const SignIn: FC = () => {
   const dispatch = useAppDispatch();
   const language = useAppSelector((store) => store.language.value);
-  const error = useAppSelector((store) => store.errorAndLoadingReducer.error);
   const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
-  const [isModalError, setIsModalError] = useState(false);
 
   const {
     handleSubmit,
@@ -33,17 +28,8 @@ const SignIn: FC = () => {
   } = useForm<SignInType>();
 
   const onSubmit = async (user: SignInType) => {
-    await dispatch(signIn(user));
+    await dispatch(signInTAC(user));
   };
-
-  const closeModalError = () => {
-    setIsModalError(false);
-    dispatch(cleanError());
-  };
-
-  useEffect(() => {
-    if (error) setIsModalError(true);
-  }, [error]);
 
   return (
     <>
@@ -120,14 +106,6 @@ const SignIn: FC = () => {
             {textData.authPage.warningLink[language]}
           </Link>
         </div>
-
-        {isModalError && (
-          <Modal closeModal={closeModalError}>
-            <div className={modalStyles.modalWrapper}>
-              <h2>{error}</h2>
-            </div>
-          </Modal>
-        )}
       </form>
       {isLoading && <Loader />}
     </>
