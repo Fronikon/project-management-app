@@ -1,14 +1,5 @@
-.letterD,
 .letterK {
   position: absolute;
-}
-
-.letterD {
-  top: 107px;
-  left: 299px;
-}
-
-.letterK {
   top: 820px;
   left: 1103px;
 }
@@ -107,11 +98,6 @@
 }
 
 @media screen and (max-width: 1680px) {
-  .letterD {
-    top: 107px;
-    left: 199px;
-  }
-
   .letterK {
     top: 820px;
     left: 953px;
@@ -130,11 +116,6 @@
 }
 
 @media screen and (max-width: 1542px) {
-  .letterD {
-    top: 107px;
-    left: 99px;
-  }
-
   .letterK {
     top: 820px;
     left: 853px;
@@ -173,10 +154,6 @@
 }
 
 @media screen and (max-width: 1430px) {
-  .letterD {
-    display: none;
-  }
-
   .letterK {
     display: none;
   }
@@ -191,14 +168,6 @@
 }
 
 @media screen and (max-width: 1192px) {
-  .letterD {
-    display: none;
-  }
-
-  .letterK {
-    display: none;
-  }
-
   .textWrapper {
     width: 968px;
     height: auto;
