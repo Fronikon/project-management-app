@@ -38,9 +38,8 @@ const Column: FC = () => {
             >
               <div className={styles.column}>
                 <div className={styles.headingWrapper}>
-                  <h2 className={styles.titleColumn}>{column.title}</h2>
-                  <button
-                    className={styles.edit}
+                  <h2
+                    className={styles.titleColumn}
                     onClick={() => {
                       dispatch(setCurrentColumnId(column._id));
                       dispatch(setTitle(column.title));
@@ -48,7 +47,9 @@ const Column: FC = () => {
                       dispatch(toggleModal());
                       dispatch(toggleColumnChange());
                     }}
-                  ></button>
+                  >
+                    {column.title}
+                  </h2>
                   <button
                     className={styles.delete}
                     onClick={() => {
