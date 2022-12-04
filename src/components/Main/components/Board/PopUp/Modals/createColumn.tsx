@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { createColumn } from '../../../../../../api/columnApi';
 import CancelButton from '../../../../../../componentsUtils/buttons/CancelButton/CancelButton';
 import ConfirmButton from '../../../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/reduxHooks';
 import {
+  createColumnTAC,
   increaseColumnCount,
   resetColumnId,
   setOrder,
@@ -35,7 +35,12 @@ const CreateColumn: FC<PropsType> = ({ closeModal }) => {
   } = useForm<PopUpType>();
 
   const columnConfirm = (data: PopUpType) => {
-    dispatch(createColumn({ title: data.title, order: columnLength, boardId: id as string }));
+    const columnData = {
+      title: data.title,
+      order: columnLength,
+    };
+
+    dispatch(createColumnTAC({ columnData, boardId: id as string }));
     dispatch(toggleColumn());
     dispatch(toggleModal());
     dispatch(resetColumnId());

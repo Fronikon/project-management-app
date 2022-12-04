@@ -1,69 +1,27 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { ColumnType } from '../store/reducers/boardReducer';
+import { ColumnRequestType } from '../types/columnTypes';
+import { instance } from './instance';
 
-interface apiColumnType {
-  title: string;
-  order: number;
-  boardId: string;
-  _id?: string;
-}
+const getAllColumns = async (boardId: string) => {
+  const response = await instance.get(`boards/${boardId}/columns`);
+  return response;
+};
+const createColumn = async (boardId: string, columnData: ColumnRequestType) => {
+  const { title, order } = columnData;
+  const body = { title, order };
 
-const url = 'https://pma-backend.onrender.com/boards';
+  const response = await instance.post(`boards/${boardId}/columns`, body);
+  return response;
+};
+const deleteColumn = async (boardId: string, columnId: string) => {
+  const response = await instance.delete(`boards/${boardId}/columns/${columnId}`);
+  return response;
+};
+const updateColumn = async (boardId: string, columnId: string, columnData: ColumnRequestType) => {
+  const { title, order } = columnData;
+  const body = { title, order };
 
-export const getAllColumns = createAsyncThunk<ColumnType[], { boardId: string }>(
-  'column/getAllColumns',
-  async (arg) => {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(`${url}/${arg.boardId}/columns`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return await response.data;
-  }
-);
+  await instance.put(`boards/${boardId}/columns/${columnId}`, body);
+};
 
-export const createColumn = createAsyncThunk<ColumnType, apiColumnType>(
-  'column/createColumn',
-  async (arg) => {
-    const token = localStorage.getItem('token');
-    const response = await axios.post(
-      `${url}/${arg.boardId}/columns`,
-      {
-        title: arg.title,
-        order: arg.order,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return response.data;
-  }
-);
-
-export const deleteColumn = createAsyncThunk<ColumnType, { id: string; boardId: string }>(
-  'column/deleteColumn',
-  async (arg) => {
-    const token = localStorage.getItem('token');
-    const response = await axios.delete(`${url}/${arg.boardId}/columns/${arg.id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    return response.data;
-  }
-);
-
-export const updateColumn = createAsyncThunk<void, apiColumnType>(
-  'column/updateColumn',
-  async (arg) => {
-    const token = localStorage.getItem('token');
-    await axios.put(
-      `${url}/${arg.boardId}/columns/${arg._id}`,
-      {
-        title: arg.title,
-        order: arg.order,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-  }
-);
+const ColumnService = { getAllColumns, createColumn, deleteColumn, updateColumn };
+export default ColumnService;

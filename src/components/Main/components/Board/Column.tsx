@@ -1,10 +1,11 @@
 import React, { FC, useEffect } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
-import { deleteColumn, getAllColumns } from '../../../../api/columnApi';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   decreaseColumnCount,
+  deleteColumnTAC,
+  getAllColumnsTAC,
   setCurrentColumnId,
   setOrder,
   setTitle,
@@ -21,7 +22,7 @@ const Column: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getAllColumns({ boardId: id as string }));
+    dispatch(getAllColumnsTAC({ boardId: id as string }));
   }, [dispatch, id]);
 
   return (
@@ -52,7 +53,7 @@ const Column: FC = () => {
                     className={styles.delete}
                     onClick={() => {
                       dispatch(decreaseColumnCount());
-                      dispatch(deleteColumn({ id: column._id, boardId: id as string }));
+                      dispatch(deleteColumnTAC({ id: column._id, boardId: id as string }));
                     }}
                   ></button>
                 </div>

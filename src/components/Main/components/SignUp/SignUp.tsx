@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../../../../componentsUtils/forms/CreateBoardForm/CreateBoardForm.module.css';
 import formsStyles from '../../../../componentsUtils/forms/forms.module.css';
 import modalStyles from '../../../../componentsUtils/Modal/Modal.module.css';
-import { signUp } from '../../../../api/authApi';
 import ConfirmButton from '../../../../componentsUtils/buttons/ConfirmButton/ConfirmButton';
 import TextInputForm from '../../../../componentsUtils/customInputsForm/TextInputForm/TextInputForm';
 import textData from '../../../../data/textData';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import Modal from '../../../../componentsUtils/Modal/Modal';
-import { cleanError } from '../../../../store/slices/sliceErrorAndLoading';
+import { cleanError } from '../../../../store/reducers/errorAndLoadingReducer';
 import Loader from '../../../../componentsUtils/Loader/Loader';
+import { signUpTAC } from '../../../../store/reducers/authReducer';
 
 export interface SignUpType {
   name: string;
@@ -34,7 +34,7 @@ const SignUp: FC = () => {
   } = useForm<SignUpType>();
 
   const onSubmit = async (user: SignUpType) => {
-    const response = await dispatch(signUp(user));
+    const response = await dispatch(signUpTAC(user));
     if (typeof response.payload !== 'string') navigate('/signIn');
   };
 

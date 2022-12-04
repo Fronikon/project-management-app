@@ -236,17 +236,13 @@ const textData = {
     eng: 'Sorry, there is no such page',
   },
   serverErrors: {
-    loginAlready: {
-      ru: 'Пользователь с таким логином уже зарегистрирован',
-      eng: 'A user with this login is already registered',
-    },
     wrongLoginOrPassword: {
       ru: 'Неверный логин или пароль',
       eng: 'Wrong login or password',
     },
-    userNotFound: {
-      ru: 'Пользователь не найден!',
-      eng: 'User was not founded!',
+    notFound: {
+      ru: 'Не найден',
+      eng: 'Not founded',
     },
     loginAlreadyExist: {
       ru: 'Логин уже существует',
@@ -255,6 +251,10 @@ const textData = {
     otherError: {
       ru: 'Что-то пошло не так, попробуйте позже',
       eng: 'Something went wrong, try again later',
+    },
+    youAreNotLoggedIn: {
+      ru: 'Вы не авторизованы',
+      eng: 'You are not logged in',
     },
   },
   general: {
