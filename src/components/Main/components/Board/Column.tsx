@@ -3,8 +3,6 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
-  decreaseColumnCount,
-  deleteColumnTAC,
   getAllColumnsTAC,
   setCurrentColumnId,
   setOrder,

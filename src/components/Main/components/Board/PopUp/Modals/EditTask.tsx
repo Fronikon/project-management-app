@@ -14,7 +14,6 @@ import {
   setDescription,
   setOrder,
   setTitle,
-  toggleTaskChange,
   updateSpecialTask,
   updateTaskTAC,
 } from '../../../../../../store/reducers/boardReducer';
@@ -62,7 +61,6 @@ const EditTask: FC<PropsType> = ({ closeModal }) => {
 
     dispatch(updateTaskTAC({ taskData: updatedTask }));
     dispatch(updateSpecialTask(updatedTask));
-    dispatch(toggleTaskChange());
     dispatch(resetColumnId());
     dispatch(resetTaskId());
     dispatch(setTitle(''));
@@ -73,7 +71,6 @@ const EditTask: FC<PropsType> = ({ closeModal }) => {
   };
 
   const taskChangeCancel = () => {
-    dispatch(toggleTaskChange());
     dispatch(resetColumnId());
     dispatch(resetTaskId());
     dispatch(setTitle(''));

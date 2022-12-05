@@ -3,17 +3,14 @@ import styles from './Board.module.css';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { Draggable } from 'react-beautiful-dnd';
 import {
-  decreaseTasksCount,
-  deleteTaskTAC,
   getColumnTasksTAC,
   setColor,
   setCurrentTaskId,
   setDescription,
   setOrder,
   setTitle,
-  TaskType,
   toggleTaskChange,
-  updateTaskTAC,
+  toggleTaskDelete,
 } from '../../../../store/reducers/boardReducer';
 import { useParams } from 'react-router-dom';
 
@@ -23,27 +20,8 @@ interface TypeProps {
 
 const TasksPreview: FC<TypeProps> = ({ _id }) => {
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
-  const tasksLength = useAppSelector((store) => store.boardReducer.tasksLength);
   const { id } = useParams();
   const dispatch = useAppDispatch();
-
-  const updateSpecialTasksOrder = (tasks: TaskType[], columnId: string) => {
-    for (let i = 0; i < tasksLength[columnId]; i++) {
-      const taskData = {
-        title: tasks[i].title,
-        order: i,
-        description: tasks[i].description,
-        color: tasks[i].color,
-        columnId: columnId,
-        userId: tasks[i].userId,
-        users: tasks[i].users,
-        boardId: id as string,
-        _id: tasks[i]._id,
-      };
-
-      dispatch(updateTaskTAC({ taskData }));
-    }
-  };
 
   useEffect(() => {
     dispatch(getColumnTasksTAC({ columnId: _id, boardId: id as string }));
@@ -86,10 +64,8 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                     className={`${styles.delete} ${styles.deleteTask}`}
                     onClick={async () => {
                       if (task._id !== undefined) {
-                        dispatch(decreaseTasksCount(_id));
-                        dispatch(
-                          deleteTaskTAC({ columnId: _id, taskId: task._id, boardId: id as string })
-                        ).finally(() => updateSpecialTasksOrder(tasks[_id], _id));
+                        dispatch(setCurrentTaskId({ taskId: task._id, columnId: _id }));
+                        dispatch(toggleTaskDelete());
                       }
                     }}
                   ></button>

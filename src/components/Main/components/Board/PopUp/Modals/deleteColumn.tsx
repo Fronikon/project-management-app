@@ -7,7 +7,6 @@ import {
   decreaseColumnCount,
   deleteColumnTAC,
   resetColumnId,
-  toggleColumnDelete,
 } from '../../../../../../store/reducers/boardReducer';
 
 interface PropsType {
@@ -24,13 +23,11 @@ const DeleteColumn: FC<PropsType> = ({ closeModal }) => {
     dispatch(decreaseColumnCount());
     dispatch(deleteColumnTAC({ id: columnId, boardId: id as string }));
     dispatch(resetColumnId());
-    dispatch(toggleColumnDelete());
     closeModal();
   };
 
   const deleteCancel = () => {
     dispatch(resetColumnId());
-    dispatch(toggleColumnDelete());
     closeModal();
   };
 

@@ -6,6 +6,7 @@ import {
   toggleColumnDelete,
   toggleTask,
   toggleTaskChange,
+  toggleTaskDelete,
 } from '../../../../../store/reducers/boardReducer';
 import Modal from '../../../../../componentsUtils/Modal/Modal';
 import CreateColumn from './Modals/createColumn';
@@ -13,6 +14,8 @@ import CreateTask from './Modals/createTask';
 import EditColumn from './Modals/EditColumn';
 import EditTask from './Modals/EditTask';
 import DeleteColumn from './Modals/deleteColumn';
+import DeleteTask from './Modals/deleteTask';
+import { useDispatch } from 'react-redux';
 
 export interface PopUpType {
   title: string;
@@ -29,25 +32,31 @@ const PopUp: FC = () => {
   const isDeleteColumnModalOpen = useAppSelector(
     (store) => store.boardReducer.isDeleteColumnModalOpen
   );
+  const isDeleteTaskModalOpen = useAppSelector((store) => store.boardReducer.isDeleteTaskModalOpen);
+  const dispatch = useDispatch();
 
   const closeCreateColumnModal = () => {
-    toggleColumn();
+    dispatch(toggleColumn());
   };
 
   const closeCreateTaskModal = () => {
-    toggleTask();
+    dispatch(toggleTask());
   };
 
   const closeEditColumnModal = () => {
-    toggleColumnChange();
+    dispatch(toggleColumnChange());
   };
 
   const closeEditTaskModal = () => {
-    toggleTaskChange();
+    dispatch(toggleTaskChange());
   };
 
   const closeDeleteColumnModal = () => {
-    toggleColumnDelete();
+    dispatch(toggleColumnDelete());
+  };
+
+  const closeDeleteTaskModal = () => {
+    dispatch(toggleTaskDelete());
   };
 
   const renderCreateColumn = () => {
@@ -90,11 +99,21 @@ const PopUp: FC = () => {
     }
   };
 
-  const renderDeleteTask = () => {
+  const renderDeleteColumn = () => {
     if (isDeleteColumnModalOpen) {
       return (
         <Modal closeModal={closeDeleteColumnModal}>
           <DeleteColumn closeModal={closeDeleteColumnModal} />
+        </Modal>
+      );
+    }
+  };
+
+  const renderDeleteTask = () => {
+    if (isDeleteTaskModalOpen) {
+      return (
+        <Modal closeModal={closeDeleteTaskModal}>
+          <DeleteTask closeModal={closeDeleteTaskModal} />
         </Modal>
       );
     }
@@ -106,6 +125,7 @@ const PopUp: FC = () => {
       {renderCreateTask()}
       {renderEditColumn()}
       {renderEditTask()}
+      {renderDeleteColumn()}
       {renderDeleteTask()}
     </>
   );

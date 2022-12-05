@@ -15,7 +15,6 @@ import {
   setDescription,
   setOrder,
   setTitle,
-  toggleTask,
 } from '../../../../../../store/reducers/boardReducer';
 import { PopUpType } from '../PopUp';
 import styles from '../PopUp.module.css';
@@ -56,7 +55,6 @@ const CreateTask: FC<PropsType> = ({ closeModal }) => {
     };
 
     dispatch(createTaskTAC({ taskData }));
-    dispatch(toggleTask());
     dispatch(resetColumnId());
     dispatch(setTitle(''));
     dispatch(setDescription(''));
@@ -67,7 +65,6 @@ const CreateTask: FC<PropsType> = ({ closeModal }) => {
   };
 
   const taskCancel = () => {
-    dispatch(toggleTask());
     dispatch(resetColumnId());
     dispatch(setTitle(''));
     dispatch(setDescription(''));

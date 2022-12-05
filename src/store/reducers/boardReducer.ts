@@ -241,6 +241,9 @@ const boardReducer = createSlice({
     toggleColumnDelete(state) {
       state.isDeleteColumnModalOpen = !state.isDeleteColumnModalOpen;
     },
+    toggleTaskDelete(state) {
+      state.isDeleteTaskModalOpen = !state.isDeleteTaskModalOpen;
+    },
     setCurrentColumnId(state, action) {
       state.columnId = action.payload;
     },
@@ -350,6 +353,7 @@ export const {
   toggleColumnChange,
   toggleTaskChange,
   toggleColumnDelete,
+  toggleTaskDelete,
   setCurrentColumnId,
   setCurrentTaskId,
   resetColumnId,

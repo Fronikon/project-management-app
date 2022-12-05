@@ -10,7 +10,6 @@ import {
   resetColumnId,
   setOrder,
   setTitle,
-  toggleColumnChange,
   updateColumnTAC,
   updateSpecialColumn,
 } from '../../../../../../store/reducers/boardReducer';
@@ -44,7 +43,6 @@ const EditColumn: FC<PropsType> = ({ closeModal }) => {
     };
     const { boardId, _id, ...columnData } = updatedColumn;
 
-    dispatch(toggleColumnChange());
     dispatch(updateColumnTAC({ columnData, boardId, id: _id }));
     dispatch(updateSpecialColumn(updatedColumn));
     dispatch(resetColumnId());
@@ -54,7 +52,6 @@ const EditColumn: FC<PropsType> = ({ closeModal }) => {
   };
 
   const columnChangeCancel = () => {
-    dispatch(toggleColumnChange());
     dispatch(resetColumnId());
     dispatch(setTitle(''));
     dispatch(setOrder(0));
