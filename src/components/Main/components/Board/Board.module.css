@@ -31,12 +31,20 @@
   padding: 20px 20px 0;
 }
 
+.columnForm {
+  position: relative;
+}
+
+.columnForm div {
+  padding: 0;
+}
+
 .titleColumn {
   cursor: pointer;
 
   overflow: hidden;
 
-  width: 85%;
+  width: 95%;
   max-height: 36px;
 
   font-size: 24px;
@@ -55,6 +63,18 @@
 
 .titleColumn:active {
   transform: scale(1);
+}
+
+.buttons {
+  position: absolute;
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+
+  font-size: 14px;
 }
 
 .delete,

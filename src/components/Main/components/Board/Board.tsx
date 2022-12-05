@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { NavLink, useParams } from 'react-router-dom';
+import Loader from '../../../../componentsUtils/Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   setColumns,
@@ -18,6 +19,7 @@ import PopUp from './PopUp/PopUp';
 const Board: FC = () => {
   const column = useAppSelector((store) => store.boardReducer.columns);
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
+  const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
@@ -141,6 +143,7 @@ const Board: FC = () => {
         </Droppable>
       </DragDropContext>
       <PopUp />
+      {isLoading && <Loader />}
     </>
   );
 };
