@@ -14,7 +14,7 @@ const Main: FC = () => {
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Welcome />} />
-          <Route element={<PrivateRoute isAllowed={!token} />}>
+          <Route element={<PrivateRoute path="/boards" isAllowed={!token} />}>
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/signIn" element={<SignIn />} />
           </Route>
