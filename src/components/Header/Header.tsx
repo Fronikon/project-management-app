@@ -18,6 +18,7 @@ import Modal from '../../componentsUtils/Modal/Modal';
 import ConfirmAction from '../../componentsUtils/forms/ConfirmActionForm/ConfirmActionForm';
 import CreateBoardForm from './../../componentsUtils/forms/CreateBoardForm/CreateBoardForm';
 import useToken from '../../hooks/useToken';
+import { Burger } from './components';
 
 const Header: FC = () => {
   const language = useAppSelector((store) => store.language.value);
@@ -96,6 +97,7 @@ const Header: FC = () => {
         </Modal>
       )}
       <header ref={headerRef} className={styles.headerWrapper}>
+        <Burger />
         <div className={styles.leftBlock}>
           <h1 className={styles.heading}>Doska</h1>
           <div className={styles.buttons}>

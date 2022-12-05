@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { NavLink, useParams } from 'react-router-dom';
+import Loader from '../../../../componentsUtils/Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import {
   setColumns,
@@ -18,6 +19,7 @@ import PopUp from './PopUp/PopUp';
 const Board: FC = () => {
   const column = useAppSelector((store) => store.boardReducer.columns);
   const tasks = useAppSelector((store) => store.boardReducer.tasks);
+  const isLoading = useAppSelector((store) => store.errorAndLoadingReducer.isLoading);
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
@@ -129,22 +131,19 @@ const Board: FC = () => {
               <Column />
               {provided.placeholder}
               <button
-                className={styles.addButton}
+                className={`${styles.addButton} ${styles.addButtonColumn}`}
                 onClick={() => {
                   dispatch(toggleModal());
                   dispatch(toggleColumn());
                 }}
               ></button>
-              <NavLink
-                className={styles.back}
-                to={'/boards'}
-                style={{ borderBottom: '2px dashed black' }}
-              ></NavLink>
+              <NavLink className={styles.back} to={'/boards'}></NavLink>
             </div>
           )}
         </Droppable>
       </DragDropContext>
       <PopUp />
+      {isLoading && <Loader />}
     </>
   );
 };

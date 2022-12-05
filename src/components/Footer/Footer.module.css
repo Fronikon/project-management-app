@@ -1,4 +1,6 @@
 .footerWrapper {
+  z-index: 10;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -10,7 +12,7 @@
 
 .githubLink,
 .year {
-  font-size: 36px;
+  font-size: 24px;
   color: #fff;
 }
 
@@ -53,15 +55,15 @@
 
 @media screen and (max-width: 1505px) {
   .logo {
-    margin-left: 20px;
+    margin-left: 40px;
   }
 
   .year {
-    margin-right: 20px;
+    margin-right: 40px;
   }
 }
 
-@media screen and (max-width: 1385px) {
+@media screen and (max-width: 1150px) {
   .footerWrapper {
     height: auto;
     padding: 10px 0;
@@ -79,5 +81,10 @@
 @media screen and (max-width: 680px) {
   .footerWrapper {
     flex-direction: column;
+  }
+
+  .logo,
+  .year {
+    margin: 0;
   }
 }

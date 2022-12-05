@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import styles from './Welcome.module.css';
 import cards from '../../../../assets/img/other/cards.png';
-import D from '../../../../assets/img/other/letterD.png';
 import K from '../../../../assets/img/other/letterK.png';
 import Team from './Team/Team';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
@@ -41,7 +40,6 @@ const Welcome: FC = () => {
         </ul>
         <p className={styles.teamText}>{textData.welcomePage.team[language]}</p>
       </div>
-      <img src={D} alt="D" className={styles.letterD} />
       <img src={K} alt="K" className={styles.letterK} />
     </div>
   );
