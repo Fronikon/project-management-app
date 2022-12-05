@@ -193,11 +193,12 @@ interface InitialStateType {
   taskId: string;
   columnLength: number;
   tasksLength: { [index: string]: number };
-  isModalOpen: boolean;
   isColumnModalOpen: boolean;
   isTaskModalOpen: boolean;
   isChangeColumnModalOpen: boolean;
   isChangeTaskModalOpen: boolean;
+  isDeleteColumnModalOpen: boolean;
+  isDeleteTaskModalOpen: boolean;
   columns: ColumnType[];
   tasks: { [index: string]: TaskType[] };
 }
@@ -211,11 +212,12 @@ const initialState: InitialStateType = {
   taskId: '',
   columnLength: 0,
   tasksLength: {},
-  isModalOpen: false,
   isColumnModalOpen: false,
   isTaskModalOpen: false,
   isChangeColumnModalOpen: false,
   isChangeTaskModalOpen: false,
+  isDeleteColumnModalOpen: false,
+  isDeleteTaskModalOpen: false,
   columns: [] as ColumnType[],
   tasks: {},
 };
@@ -224,9 +226,6 @@ const boardReducer = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    toggleModal(state) {
-      state.isModalOpen = !state.isModalOpen;
-    },
     toggleColumn(state) {
       state.isColumnModalOpen = !state.isColumnModalOpen;
     },
@@ -238,6 +237,9 @@ const boardReducer = createSlice({
     },
     toggleTaskChange(state) {
       state.isChangeTaskModalOpen = !state.isChangeTaskModalOpen;
+    },
+    toggleColumnDelete(state) {
+      state.isDeleteColumnModalOpen = !state.isDeleteColumnModalOpen;
     },
     setCurrentColumnId(state, action) {
       state.columnId = action.payload;
@@ -343,11 +345,11 @@ const boardReducer = createSlice({
 export default boardReducer.reducer;
 
 export const {
-  toggleModal,
   toggleColumn,
   toggleTask,
   toggleColumnChange,
   toggleTaskChange,
+  toggleColumnDelete,
   setCurrentColumnId,
   setCurrentTaskId,
   resetColumnId,

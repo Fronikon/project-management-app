@@ -12,7 +12,6 @@ import {
   setOrder,
   setTitle,
   TaskType,
-  toggleModal,
   toggleTaskChange,
   updateTaskTAC,
 } from '../../../../store/reducers/boardReducer';
@@ -80,7 +79,6 @@ const TasksPreview: FC<TypeProps> = ({ _id }) => {
                       dispatch(setDescription(task.description));
                       dispatch(setColor(task.color));
                       dispatch(setOrder(task.order));
-                      dispatch(toggleModal());
                       dispatch(toggleTaskChange());
                     }}
                   ></button>

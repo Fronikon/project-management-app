@@ -13,7 +13,6 @@ import {
   setOrder,
   setTitle,
   toggleColumn,
-  toggleModal,
 } from '../../../../../../store/reducers/boardReducer';
 import { PopUpType } from '../PopUp';
 import styles from '../PopUp.module.css';
@@ -42,7 +41,6 @@ const CreateColumn: FC<PropsType> = ({ closeModal }) => {
 
     dispatch(createColumnTAC({ columnData, boardId: id as string }));
     dispatch(toggleColumn());
-    dispatch(toggleModal());
     dispatch(resetColumnId());
     dispatch(setTitle(''));
     dispatch(setOrder(0));
@@ -52,7 +50,6 @@ const CreateColumn: FC<PropsType> = ({ closeModal }) => {
 
   const columnCancel = () => {
     dispatch(toggleColumn());
-    dispatch(toggleModal());
     dispatch(resetColumnId());
     dispatch(setTitle(''));
     dispatch(setOrder(0));

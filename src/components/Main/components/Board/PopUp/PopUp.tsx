@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../../../hooks/reduxHooks';
 import {
   toggleColumn,
   toggleColumnChange,
+  toggleColumnDelete,
   toggleTask,
   toggleTaskChange,
 } from '../../../../../store/reducers/boardReducer';
@@ -11,6 +12,7 @@ import CreateColumn from './Modals/createColumn';
 import CreateTask from './Modals/createTask';
 import EditColumn from './Modals/EditColumn';
 import EditTask from './Modals/EditTask';
+import DeleteColumn from './Modals/deleteColumn';
 
 export interface PopUpType {
   title: string;
@@ -24,6 +26,9 @@ const PopUp: FC = () => {
     (store) => store.boardReducer.isChangeColumnModalOpen
   );
   const isChangeTaskModalOpen = useAppSelector((store) => store.boardReducer.isChangeTaskModalOpen);
+  const isDeleteColumnModalOpen = useAppSelector(
+    (store) => store.boardReducer.isDeleteColumnModalOpen
+  );
 
   const closeCreateColumnModal = () => {
     toggleColumn();
@@ -39,6 +44,10 @@ const PopUp: FC = () => {
 
   const closeEditTaskModal = () => {
     toggleTaskChange();
+  };
+
+  const closeDeleteColumnModal = () => {
+    toggleColumnDelete();
   };
 
   const renderCreateColumn = () => {
@@ -81,12 +90,23 @@ const PopUp: FC = () => {
     }
   };
 
+  const renderDeleteTask = () => {
+    if (isDeleteColumnModalOpen) {
+      return (
+        <Modal closeModal={closeDeleteColumnModal}>
+          <DeleteColumn closeModal={closeDeleteColumnModal} />
+        </Modal>
+      );
+    }
+  };
+
   return (
     <>
       {renderCreateColumn()}
       {renderCreateTask()}
       {renderEditColumn()}
       {renderEditTask()}
+      {renderDeleteTask()}
     </>
   );
 };

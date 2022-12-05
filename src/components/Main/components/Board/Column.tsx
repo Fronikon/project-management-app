@@ -10,7 +10,7 @@ import {
   setOrder,
   setTitle,
   toggleColumnChange,
-  toggleModal,
+  toggleColumnDelete,
   toggleTask,
 } from '../../../../store/reducers/boardReducer';
 import styles from './Board.module.css';
@@ -45,15 +45,14 @@ const Column: FC = () => {
                       dispatch(setCurrentColumnId(column._id));
                       dispatch(setTitle(column.title));
                       dispatch(setOrder(column.order));
-                      dispatch(toggleModal());
                       dispatch(toggleColumnChange());
                     }}
                   ></button>
                   <button
                     className={styles.delete}
                     onClick={() => {
-                      dispatch(decreaseColumnCount());
-                      dispatch(deleteColumnTAC({ id: column._id, boardId: id as string }));
+                      dispatch(setCurrentColumnId(column._id));
+                      dispatch(toggleColumnDelete());
                     }}
                   ></button>
                 </div>
@@ -70,7 +69,6 @@ const Column: FC = () => {
                         className={styles.addButton}
                         onClick={() => {
                           dispatch(setCurrentColumnId(column._id));
-                          dispatch(toggleModal());
                           dispatch(toggleTask());
                         }}
                       ></button>

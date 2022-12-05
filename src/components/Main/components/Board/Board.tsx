@@ -7,7 +7,6 @@ import {
   setTasks,
   TaskType,
   toggleColumn,
-  toggleModal,
   updateColumnTAC,
   updateTaskTAC,
 } from '../../../../store/reducers/boardReducer';
@@ -131,7 +130,6 @@ const Board: FC = () => {
               <button
                 className={styles.addButton}
                 onClick={() => {
-                  dispatch(toggleModal());
                   dispatch(toggleColumn());
                 }}
               ></button>
