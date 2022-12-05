@@ -151,12 +151,12 @@ const textData = {
       eng: 'Description',
     },
     taskColor: {
-      ru: 'Выберите цвет задания',
-      eng: 'Choose the color of the task',
+      ru: 'Цвет задания',
+      eng: 'Color of the task',
     },
     boardColor: {
-      ru: 'Выберите цвет доски',
-      eng: 'Сhoose the color of the board',
+      ru: 'Цвет доски',
+      eng: 'Color of the board',
     },
     newTask: {
       ru: 'Новое задание',

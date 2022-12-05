@@ -140,7 +140,9 @@ const TaskItem: FC<TaskItemPropsType> = ({ _id, id, index, task }) => {
                   onClick={openDeleteModal}
                 ></button>
               </div>
-              <p className={styles.descriptionTask}>{task.description}</p>
+              <div className={styles.descriptionWrapper}>
+                <p className={styles.descriptionTask}>{task.description}</p>
+              </div>
             </div>
           );
         }}

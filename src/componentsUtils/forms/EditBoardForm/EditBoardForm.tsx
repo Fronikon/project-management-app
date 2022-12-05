@@ -98,7 +98,7 @@ const EditBoardForm: FC<PropsType> = ({ closeModal, board }) => {
             <ColorInputForm
               onChangeColor={onChange}
               value={value}
-              label={textData.boardsPage.title[language]}
+              label={textData.boardsPage.boardColor[language]}
             />
           )}
         />
