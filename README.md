@@ -1,5 +1,5 @@
 # Project Management App
-Deploy: https://rss-pma-fronikon.netlify.app
+Deploy applications: https://rss-pma-fronikon.netlify.app
 
 Main dependencies:
 - TypeScript
