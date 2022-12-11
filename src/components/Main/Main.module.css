@@ -1,0 +1,13 @@
+.main {
+  flex: 1;
+
+  background-image: url("../../assets/img/other/letterD.png");
+  background-repeat: no-repeat;
+  background-position: 20% 20%;
+}
+
+@media screen and (max-width: 700px) {
+  .main {
+    background-image: none;
+  }
+}

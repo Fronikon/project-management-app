@@ -1,0 +1,276 @@
+.headerWrapper {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 80px;
+
+  background-color: #000;
+
+  transition: background-color 500ms;
+}
+
+.isSticky {
+  background-color: rgb(0 0 0 / 69.8%);
+}
+
+.leftBlock,
+.languageText {
+  display: flex;
+  align-items: center;
+}
+
+.rightBlock {
+  display: flex;
+  gap: 36px;
+
+  margin: 0 64px 0 0;
+}
+
+.auth {
+  display: flex;
+  gap: 36px;
+}
+
+.home,
+.board,
+.addBoard,
+.signIn,
+.signUp {
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+  text-decoration: none;
+
+  background-color: transparent;
+
+  transition: 0.4s;
+}
+
+.addBoard {
+  border: none;
+  outline: none;
+}
+
+.language {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin-bottom: 5px;
+
+  background-color: transparent;
+  border: none;
+}
+
+.heading {
+  margin: 0 164px 0 53px;
+
+  font-size: 64px;
+  color: #fff;
+}
+
+.buttonText,
+.languageEng {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #fff;
+}
+
+.languageEng,
+.languageRus {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: rgb(155 155 155);
+}
+
+.activeLanguage {
+  color: #fff;
+}
+
+.languageText {
+  gap: 14px;
+
+  margin-top: 12px;
+}
+
+/* Toggle switch */
+
+.switch {
+  position: relative;
+
+  display: inline-block;
+
+  width: 138px;
+  height: 20px;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+
+  opacity: 0;
+}
+
+.slider {
+  cursor: pointer;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: transparent;
+  border: 2px solid #fff;
+
+  transition: 0.4s;
+}
+
+.buttons {
+  display: flex;
+  gap: 1em;
+}
+
+.signIn:hover,
+.signUp:hover,
+.board:hover,
+.addBoard:hover,
+.home:hover,
+.slider:hover {
+  transform: scale(1.2);
+}
+
+.signIn:active,
+.signUp:active,
+.board:active,
+.addBoard:active,
+.home:active,
+.slider:active {
+  transform: scale(1);
+}
+
+.slider::before {
+  content: "";
+
+  position: absolute;
+
+  width: 26px;
+  height: 26px;
+
+  background-color: white;
+
+  transition: 0.4s;
+}
+
+.sliderEng::before {
+  left: 78px;
+}
+
+.sliderRu::before {
+  left: 0;
+}
+
+.slider.round {
+  border-radius: 5px;
+}
+
+.slider.round::before {
+  width: 53px;
+  height: 12px;
+
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 1280px) {
+  .leftBlock {
+    margin: 0;
+  }
+
+  .rightBlock {
+    margin-right: 40px;
+  }
+
+  .heading {
+    margin: 0;
+  }
+
+  .buttons,
+  .auth {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .heading {
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .rightBlock {
+    margin-right: 20px;
+  }
+
+  .languageText {
+    gap: 8px;
+  }
+
+  .switch {
+    width: 110px;
+  }
+
+  .languageEng,
+  .languageRus {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+
+  .sliderEng::before {
+    left: 50px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .heading {
+    position: absolute;
+
+    overflow: hidden;
+
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+
+    white-space: nowrap;
+
+    clip: rect(0 0 0 0);
+    clip-path: inset(100%);
+    border: 0;
+  }
+}

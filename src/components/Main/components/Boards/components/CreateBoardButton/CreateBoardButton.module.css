@@ -1,0 +1,45 @@
+.addBoard {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgb(255 255 255 / 20%);
+  border: 2px dashed #444;
+
+  transition: scale 300ms;
+}
+
+.addBoard:hover {
+  scale: 1.05;
+}
+
+.addBoard:active {
+  scale: 1.03;
+}
+
+.addBoardPlus {
+  position: relative;
+
+  width: 60px;
+  height: 60px;
+
+  border: 2px solid #444;
+}
+
+.gorizontalLine,
+.verticalLine {
+  position: absolute;
+  top: calc(50% - 1px);
+  left: calc(50% - 45%);
+
+  width: 90%;
+  height: 2px;
+
+  background-color: #444;
+}
+
+.verticalLine {
+  transform: rotate(90deg);
+}
