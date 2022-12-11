@@ -1,4 +1,5 @@
 # Project Management App
+Deploy: https://rss-pma-fronikon.netlify.app
 
 Main dependencies:
 - TypeScript
@@ -6,6 +7,7 @@ Main dependencies:
 - Redux Toolkit
 - React Hook Form
 - React Router Dom
+- React Drag and Drop
 - Axios
 - EsLint
 - Prettier
